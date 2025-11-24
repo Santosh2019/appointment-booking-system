@@ -59,7 +59,6 @@ public class Patient {
     @Pattern(regexp = "^[2-9]{1}[0-9]{11}$", message = "Invalid Aadhar number")
     private String aadharCard;
 
-
     @PrePersist
     public void generateId() {
         this.patientId = UUID.randomUUID().toString();

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/patient")
 public class PatientController {
-
     private PatientService patientService;
 
     public PatientController(PatientService patientService) {
@@ -23,6 +22,7 @@ public class PatientController {
 
     @PostMapping
     public ResponseEntity saveUser(@RequestBody PatientDto patientDto) throws ResourceNotFoundException {
+
         patientService.addPatient(patientDto);
         return new ResponseEntity(ApplicationConstants.DOCTOR_SAVED, HttpStatus.CREATED);
     }
