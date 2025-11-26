@@ -61,7 +61,7 @@ public class DoctorServiceImpl implements DoctorServices {
         if (doctorDto.getPanCard() == null || doctorDto.getPanCard().isEmpty()) {
             throw new ResourceNotFoundException("PAN should not be null");
         }
-
+        //checks duplicates
         if (doctorRepo.findByDoctorName(doctorDto.getDoctorName()).isPresent())
             throw new ResourceNotFoundException("Doctor name already exists");
 

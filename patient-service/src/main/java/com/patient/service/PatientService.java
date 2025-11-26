@@ -2,16 +2,13 @@ package com.patient.service;
 
 
 import com.patient.dto.PatientDto;
-import com.patient.entity.Patient;
 import com.patient.exception.ResourceNotFoundException;
-
 public interface PatientService {
-
     public PatientDto addPatient(PatientDto patientDto) throws ResourceNotFoundException;
 
-    public PatientDto updateDetails(String aadharCard);
+    public PatientDto updateDetails(String aadharCard, PatientDto patient) throws ResourceNotFoundException;
 
-    public Patient getDetails(String aadharCard) throws ResourceNotFoundException;
+    public PatientDto getDetails(String aadharCard) throws ResourceNotFoundException;
 
     public void deleteDetails(String aadharCard) throws ResourceNotFoundException;
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PatientRepo extends JpaRepository<Patient, Integer> {
+public interface PatientRepo extends JpaRepository<Patient, String> {
 
     Optional<Patient> findByEmail(String email);
 
@@ -16,5 +16,7 @@ public interface PatientRepo extends JpaRepository<Patient, Integer> {
     Optional<Patient> findByFullName(String fullName);
 
     Optional<Patient> findByAadharCard(String aadharCard);
+
+    void deleteByAadharCard(String aadharCard);
 
 }

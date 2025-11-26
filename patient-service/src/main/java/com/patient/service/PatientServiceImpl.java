@@ -2,72 +2,104 @@ package com.patient.service;
 
 import com.patient.dto.PatientDto;
 import com.patient.entity.Patient;
+import com.patient.exception.DuplicateResourceException;
 import com.patient.exception.ResourceNotFoundException;
 import com.patient.repo.PatientRepo;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class PatientServiceImpl implements PatientService {
 
-    private PatientRepo patientRepo;
+    private static final Logger logger = LoggerFactory.getLogger(PatientServiceImpl.class);
 
-    private ModelMapper modelMapper;
+    private final PatientRepo patientRepo;
+    private final ModelMapper modelMapper;
 
-    public PatientServiceImpl(PatientRepo patientRepo, ModelMapper modelMapper) {
-        this.patientRepo = patientRepo;
-        this.modelMapper = modelMapper;
+    @Override
+    public PatientDto addPatient(PatientDto patientDto) {
+        logger.info("Attempting to register new patient with Aadhar: {}", patientDto.getAadharCard());
+        validatePatient(patientDto);                                      // Validate required fields & uniqueness
+        Patient patientEntity = modelMapper.map(patientDto, Patient.class);
+        Patient savedPatient = patientRepo.save(patientEntity);
+        logger.info("Patient registered successfully | ID: {} | Aadhar: {}",
+                savedPatient.getPatientId(), savedPatient.getAadharCard());
+        return modelMapper.map(savedPatient, PatientDto.class);
     }
 
     @Override
-    public PatientDto addPatient(PatientDto patientDto) throws ResourceNotFoundException {
-        validatePatient(patientDto);
-        Patient isSaved = modelMapper.map(patientDto, Patient.class);
-        Patient save = patientRepo.save(isSaved);
-        return modelMapper.map(save, PatientDto.class);
+    public PatientDto updateDetails(String aadharCard, PatientDto patientDto) throws ResourceNotFoundException {
+        logger.info("Updating patient details for Aadhar Card: {}", aadharCard);
+
+        Patient existingPatient = patientRepo.findByAadharCard(aadharCard)
+                .orElseThrow(() -> {
+                    logger.warn("Update failed — Patient not found with Aadhar: {}", aadharCard);
+                    return new ResourceNotFoundException("Patient not found with Aadhar Card: " + aadharCard);
+                });
+        modelMapper.map(patientDto, existingPatient);
+        Patient updatedPatient = patientRepo.save(existingPatient);
+        logger.info("Patient details updated successfully for Aadhar: {}", aadharCard);
+        return modelMapper.map(updatedPatient, PatientDto.class);
     }
 
     @Override
-    public PatientDto updateDetails(String aadharCard) {
-        return null;
-    }
-
-    @Override
-    public Patient getDetails(String aadharCard) throws ResourceNotFoundException {
-        return null;
+    public PatientDto getDetails(String aadharCard) throws ResourceNotFoundException {
+        logger.info("Fetching patient details for Aadhar Card: {}", aadharCard);
+        Patient patient = patientRepo.findByAadharCard(aadharCard)
+                .orElseThrow(() -> {
+                    logger.warn("Patient not found with Aadhar Card: {}", aadharCard);
+                    return new ResourceNotFoundException("Patient not found with Aadhar Card: " + aadharCard);
+                });
+        logger.info("Patient details retrieved successfully for Aadhar: {}", aadharCard);
+        return modelMapper.map(patient, PatientDto.class);
     }
 
     @Override
     public void deleteDetails(String aadharCard) throws ResourceNotFoundException {
+        logger.info("Attempting to delete patient with Aadhar Card: {}", aadharCard);
 
+        Patient patient = patientRepo.findByAadharCard(aadharCard)
+                .orElseThrow(() -> {
+                    logger.warn("Delete failed — Patient not found with Aadhar: {}", aadharCard);
+                    return new ResourceNotFoundException("Patient not found with Aadhar Card: " + aadharCard);
+                });
+
+        patientRepo.delete(patient);
+        logger.info("Patient deleted successfully | Aadhar: {}", aadharCard);
     }
 
-    private void validatePatient(PatientDto patientDto) throws ResourceNotFoundException {
+    /*Validates required fields and checks for duplicates during patient creation*/
+    private void validatePatient(PatientDto patientDto) {
+        logger.debug("Validating patient data for Aadhar: {}", patientDto.getAadharCard());
 
-        if (patientDto.getAadharCard() == null || patientDto.getAadharCard().isEmpty()) {
-            throw new ResourceNotFoundException("Patient Aadhar should not be null");
+        if (patientDto.getAadharCard() == null || patientDto.getAadharCard().trim().isEmpty()) {
+            throw new DuplicateResourceException("Aadhar Card is required");
         }
-        if (patientDto.getEmail() == null || patientDto.getEmail().isEmpty()) {
-            throw new ResourceNotFoundException("Patient Email should not be null");
+        if (patientDto.getEmail() == null || patientDto.getEmail().trim().isEmpty()) {
+            throw new DuplicateResourceException("Email is required");
         }
-        if (patientDto.getAadharCard() == null || patientDto.getAadharCard().isEmpty()) {
-            throw new ResourceNotFoundException("Aadhaar should not be null");
-        }
-        if (patientDto.getMobile() == null || patientDto.getMobile().isEmpty()) {
-            throw new ResourceNotFoundException("Mobile Number should not be null");
+        if (patientDto.getMobile() == null || patientDto.getMobile().trim().isEmpty()) {
+            throw new DuplicateResourceException("Mobile number is required");
         }
 
-        //checks duplicates
-        if (patientRepo.findByFullName(patientDto.getFullName()).isPresent())
-            throw new ResourceNotFoundException("Patient name already exists");
-
-        if (patientRepo.findByMobile(patientDto.getMobile()).isPresent())
-            throw new ResourceNotFoundException("Mobile number already exists");
-
-        if (patientRepo.findByEmail(patientDto.getEmail()).isPresent())
-            throw new ResourceNotFoundException("Email already exists");
-
-        if (patientRepo.findByAadharCard(patientDto.getAadharCard()).isPresent())
-            throw new ResourceNotFoundException("Aadhaar already exists");
+        // Duplicate checks
+        if (patientRepo.findByAadharCard(patientDto.getAadharCard()).isPresent()) {
+            logger.warn("Registration blocked — Duplicate Aadhar Card: {}", patientDto.getAadharCard());
+            throw new DuplicateResourceException("Aadhar Card already exists");
+        }
+        if (patientRepo.findByEmail(patientDto.getEmail()).isPresent()) {
+            logger.warn("Registration blocked — Duplicate email: {}", patientDto.getEmail());
+            throw new DuplicateResourceException("Email already in use");
+        }
+        if (patientRepo.findByMobile(patientDto.getMobile()).isPresent()) {
+            logger.warn("Registration blocked — Duplicate mobile: {}", patientDto.getMobile());
+            throw new DuplicateResourceException("Mobile number already registered");
+        }
     }
 }

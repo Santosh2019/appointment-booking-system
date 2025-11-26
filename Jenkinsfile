@@ -1,9 +1,8 @@
 pipeline {
     agent any
-
     tools {
-        maven 'Maven'   // Jenkins मध्ये configure केलेले tool name
-        jdk 'JDK17'     // किंवा तुझ्या Jenkins मधील JDK चे नाव
+        maven 'Maven'
+        jdk 'JDK17'
     }
     stages {
         stage('Clone Repository') {
