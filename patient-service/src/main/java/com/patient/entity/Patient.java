@@ -50,7 +50,6 @@ public class Patient {
     @Column(nullable = false, unique = true, length = 12)
     private String aadharCard;
 
-    // Auto-generate UUID if DB doesn't support UUID generation
     @PrePersist
     private void ensureId() {
         if (this.patientId == null) {

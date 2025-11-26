@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/patients")  // plural is REST standard
+@RequestMapping("/api/v1/patients")
 @RequiredArgsConstructor
 public class PatientController {
 
@@ -24,6 +24,7 @@ public class PatientController {
     public ResponseEntity<PatientDto> savePatient(@Valid @RequestBody PatientDto patientDto) throws ResourceNotFoundException {
         logger.debug("POST /api/v1/patients → Creating patient | Aadhar: {}", maskAadhar(patientDto.getAadharCard()));
         PatientDto saved = patientService.addPatient(patientDto);
+        saved.setAadharCard(maskAadhar(saved.getAadharCard()));
         logger.debug("Patient created successfully | Aadhar ending: {}", maskAadhar(saved.getAadharCard()));
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
@@ -32,6 +33,7 @@ public class PatientController {
     public ResponseEntity<PatientDto> getPatient(@PathVariable String aadharCard) throws ResourceNotFoundException {
         logger.debug("GET /api/v1/patients/{} → Fetching patient", maskAadhar(aadharCard));
         PatientDto patient = patientService.getDetails(aadharCard);
+        patient.setAadharCard(maskAadhar(patient.getAadharCard()));
         logger.debug("Patient fetched successfully | Aadhar ending: {}", maskAadhar(aadharCard));
         return ResponseEntity.ok(patient);
     }
@@ -51,7 +53,7 @@ public class PatientController {
     }
 
     @DeleteMapping("/{aadharCard}")
-    public ResponseEntity<Void> deletePatient(@PathVariable String aadharCard) throws ResourceNotFoundException {
+    public ResponseEntity<String> deletePatient(@PathVariable String aadharCard) throws ResourceNotFoundException {
         logger.debug("DELETE /api/v1/patients/{} → Deleting patient", maskAadhar(aadharCard));
         patientService.deleteDetails(aadharCard);
         logger.debug("Patient deleted successfully | Aadhar ending: {}", maskAadhar(aadharCard));
@@ -59,7 +61,9 @@ public class PatientController {
     }
 
     private String maskAadhar(String aadhar) {
-        if (aadhar == null || aadhar.length() < 4) return "XXXX";
+        if (aadhar == null || aadhar.length() < 4) {
+            return "XXXX-XXXX-XXXX";
+        }
         return "XXXX-XXXX-" + aadhar.substring(aadhar.length() - 4);
     }
 }
