@@ -1,4 +1,4 @@
-package com.patient.ApplicationConstants;
+package com.patient.applicationConstants;
 
 public final class ApplicationConstants {
 

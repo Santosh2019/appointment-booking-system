@@ -1,5 +1,5 @@
 // File: src/main/java/com/patient/config/BeanConfig.java   (नाव बदला!)
-package com.patient.ModelMapperConfig;
+package com.patient.modelmapperconfig;
 
 import com.patient.dto.PatientDto;
 import com.patient.entity.Patient;

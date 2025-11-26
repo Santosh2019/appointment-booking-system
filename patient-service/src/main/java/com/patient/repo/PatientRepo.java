@@ -17,6 +17,4 @@ public interface PatientRepo extends JpaRepository<Patient, String> {
 
     Optional<Patient> findByAadharCard(String aadharCard);
 
-    void deleteByAadharCard(String aadharCard);
-
 }

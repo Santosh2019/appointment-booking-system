@@ -1,5 +1,7 @@
 package com.patient.controller;
 
+import com.patient.dto.ActivationResponseDto;
+import com.patient.dto.ApiResponse;
 import com.patient.dto.PatientDto;
 import com.patient.exception.ResourceNotFoundException;
 import com.patient.service.PatientService;
@@ -38,18 +40,22 @@ public class PatientController {
         return ResponseEntity.ok(patient);
     }
 
-    @PatchMapping("/{aadharCard}")
-    public ResponseEntity<PatientDto> updatePatient(
-            @PathVariable String aadharCard,
-            @RequestBody PatientDto patientDto) throws ResourceNotFoundException {
+    @PatchMapping("/{aadharCard}/activate")
+    public ResponseEntity<ApiResponse<ActivationResponseDto>> activatePatient(
+            @PathVariable String aadharCard) throws ResourceNotFoundException {
+        PatientDto activated = patientService.activatePatient(aadharCard);
 
-        logger.debug("PATCH /api/v1/patients/{} → Partial update | Mobile: {}, Email: {}",
-                maskAadhar(aadharCard),
-                patientDto.getMobile(),
-                patientDto.getEmail());
-        PatientDto updated = patientService.updateDetails(aadharCard, patientDto);
-        logger.debug("Patient updated successfully | Aadhar ending: {}", maskAadhar(aadharCard));
-        return ResponseEntity.ok(updated);
+        ActivationResponseDto responseData = new ActivationResponseDto(
+                activated.getFullName(),
+                maskAadhar(activated.getAadharCard()),
+                activated.getPatientId(),
+                true
+        );
+        ApiResponse<ActivationResponseDto> response = new ApiResponse<>(
+                "Patient account activated successfully",
+                responseData
+        );
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{aadharCard}")
@@ -59,6 +65,7 @@ public class PatientController {
         logger.debug("Patient deleted successfully | Aadhar ending: {}", maskAadhar(aadharCard));
         return ResponseEntity.noContent().build();
     }
+
 
     private String maskAadhar(String aadhar) {
         if (aadhar == null || aadhar.length() < 4) {

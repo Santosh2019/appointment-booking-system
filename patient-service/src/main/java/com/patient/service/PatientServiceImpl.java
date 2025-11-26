@@ -74,6 +74,35 @@ public class PatientServiceImpl implements PatientService {
         logger.info("Patient deleted successfully | Aadhar: {}", aadharCard);
     }
 
+    @Override
+    public PatientDto activatePatient(String aadharCard) throws ResourceNotFoundException {
+        // 1. Patient शोधा (Active/Inactive दोन्ही)
+        Patient patient = patientRepo.findByAadharCard(aadharCard)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Patient not found with Aadhar: " + maskAadhar(aadharCard)));
+
+        // 2. Already active असेल तर error द्या (optional – चांगली practice)
+        if (patient.isActive()) {
+            throw new DuplicateResourceException(
+                    "Patient is already active | Aadhar ending: " + maskAadhar(aadharCard));
+        }
+        patient.setActive(true);
+        Patient savedPatient = patientRepo.save(patient);
+
+        logger.info("Patient activated successfully | Aadhar ending: {}", maskAadhar(aadharCard));
+
+        PatientDto dto = modelMapper.map(savedPatient, PatientDto.class);
+
+        dto.setAadharCard(maskAadhar(dto.getAadharCard()));
+
+        return dto;
+    }
+
+    private String maskAadhar(String aadhar) {
+        if (aadhar == null || aadhar.length() < 4) return "XXXX-XXXX-XXXX";
+        return "XXXX-XXXX-" + aadhar.substring(aadhar.length() - 4);
+    }
+
     /*Validates required fields and checks for duplicates during patient creation*/
     private void validatePatient(PatientDto patientDto) {
         logger.debug("Validating patient data for Aadhar: {}", patientDto.getAadharCard());

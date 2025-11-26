@@ -1,15 +1,23 @@
 package com.doctor.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
-@Table(name = "doctors")
-@Setter
+@Table(
+        name = "doctors",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"mobile", "email_id", "aadhar_card", "pan_card"})
+        }
+)
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,49 +25,58 @@ import java.time.LocalDate;
 public class Doctor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long docId;
+    @Column(name = "doc_id", length = 36, updatable = false, nullable = false)
+    private String docId = UUID.randomUUID().toString();  // Auto-generate on object creation
 
-    @NotBlank(message = "Doctor name is mandatory")
-    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
+    @Column(name = "doctor_name", nullable = false, length = 50)
     private String doctorName;
 
-    @NotBlank(message = "Mobile number is required")
-    @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid Indian mobile number")
+    @Column(name = "mobile", nullable = false, length = 10, unique = true)
     private String mobile;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Please provide a valid email address")
+    @Column(name = "email_id", nullable = false, length = 100, unique = true)
     private String emailId;
 
-    @NotBlank(message = "Aadhar card is mandatory")
-    @Pattern(regexp = "^\\d{12}$", message = "Aadhar must be exactly 12 digits")
-    @Column(unique = true)
+    @Column(name = "aadhar_card", nullable = false, length = 12, unique = true)
     private String aadharCard;
 
-    @NotBlank(message = "PAN card is required")
-    @Pattern(regexp = "^[A-Z]{5}[0-9]{4}[A-Z]{1}$", message = "Invalid PAN card format")
-    @Column(unique = true)
+    @Column(name = "pan_card", nullable = false, length = 10, unique = true)
     private String panCard;
 
-    @NotNull(message = "Date of birth is required")
-    @Past(message = "Date of birth must be in the past")
+    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
-    @NotBlank(message = "Gender is required")
-    @Pattern(regexp = "Male|Female|Other", message = "Gender must be Male, Female or Other")
+    @Column(name = "gender", nullable = false, length = 10)
     private String gender;
 
-    @NotBlank(message = "Years of experience is required")
-    @Pattern(regexp = "\\d+", message = "Experience must be a number")
-    @Size(max = 2, message = "Experience cannot exceed 99 years")
+    @Column(name = "year_of_experience", nullable = false, length = 2)
     private String yearOfExperience;
 
-    @NotBlank(message = "Qualification is required")
-    @Size(min = 2, max = 100)
+    @Column(name = "qualification", nullable = false, length = 100)
     private String qualification;
 
-    @NotBlank(message = "Specialization is mandatory")
-    @Size(min = 3, max = 50)
+    @Column(name = "specialization", nullable = false, length = 50)
     private String specialization;
+
+    // Optional: ensure ID even if someone sets it to null
+    @PrePersist
+    private void ensureId() {
+        if (docId == null || docId.isBlank()) {
+            docId = UUID.randomUUID().toString();
+        }
+    }
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    @Column(name = "created_by", length = 50)
+    private String createdBy;
+
+    @Column(name = "updated_by", length = 50)
+    private String updatedBy;
 }

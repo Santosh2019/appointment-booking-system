@@ -4,79 +4,74 @@ import com.doctor.dto.DoctorDto;
 import com.doctor.entity.Doctor;
 import com.doctor.exception.ResourceNotFoundException;
 import com.doctor.repo.DoctorRepo;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
+@Transactional
 public class DoctorServiceImpl implements DoctorServices {
 
-    private DoctorRepo doctorRepo;
+    private static final Logger log = LoggerFactory.getLogger(DoctorServiceImpl.class);
 
-    private ModelMapper modelMapper;
-
-    public DoctorServiceImpl(DoctorRepo doctorRepo, ModelMapper modelMapper) {
-        this.doctorRepo = doctorRepo;
-        this.modelMapper = modelMapper;
-    }
+    private final DoctorRepo doctorRepo;
+    private final ModelMapper modelMapper;
 
     @Override
-    public DoctorDto addDoctor(DoctorDto doctorDto) throws ResourceNotFoundException {
+    public DoctorDto addDoctor(DoctorDto doctorDto) {
+        log.info("=== ADD DOCTOR REQUEST RECEIVED ===");
+        log.info("Name: {}, Mobile: {}, Aadhaar: {}",
+                doctorDto.getDoctorName(), doctorDto.getMobile(), doctorDto.getAadharCard());
+
         validateDoctor(doctorDto);
-        Doctor doctor = modelMapper.map(doctorDto, Doctor.class);
-        Doctor save = doctorRepo.save(doctor);
-        return modelMapper.map(save, DoctorDto.class);
+
+        Doctor doctorEntity = modelMapper.map(doctorDto, Doctor.class);
+        Doctor savedDoctor = doctorRepo.save(doctorEntity);
+        log.info("Doctor saved in DB with ID: {}", savedDoctor.getDocId());
+        DoctorDto responseDto = modelMapper.map(savedDoctor, DoctorDto.class);
+        log.info("MASKING AADHAAR BEFORE SENDING RESPONSE:");
+        log.info("   Original Aadhaar : {}", savedDoctor.getAadharCard());
+        log.info("   Masked Aadhaar   : {}", responseDto.getAadharCard());
+        return responseDto;
     }
 
     @Override
-    public DoctorDto updateDetails(String aadharCard) {
-        return null;
+    public DoctorDto getDetails(String aadharCard) throws ResourceNotFoundException {
+        log.info("=== FETCH DOCTOR BY AADHAAR: {} ===", aadharCard);
+        Doctor doctor = doctorRepo.findByAadharCard(aadharCard)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with Aadhaar: " + aadharCard));
+        DoctorDto dto = modelMapper.map(doctor, DoctorDto.class);
+        log.info("MASKING AADHAAR IN GET RESPONSE:");
+        log.info("   DB Value    : {}", doctor.getAadharCard());
+        log.info("   Sent Value  : {}", dto.getAadharCard());
+        log.info("=== DOCTOR DETAILS RETURNED ===\n");
+        return dto;
     }
 
     @Override
-    public Doctor getDetails(String aadharCard) throws ResourceNotFoundException {
-        return doctorRepo.findByAadharCard(aadharCard).orElseThrow(() -> new ResourceNotFoundException(
-                "Doctor Not Found with Aadhaar Card: " + aadharCard));
+    public DoctorDto updateDetails(String aadharCard, DoctorDto doctorDto) throws ResourceNotFoundException {
+        Doctor existing = doctorRepo.findByAadharCard(aadharCard)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found"));
+        modelMapper.map(doctorDto, existing);
+        Doctor updated = doctorRepo.save(existing);
+        return modelMapper.map(updated, DoctorDto.class);
     }
 
     @Override
     public void deleteDetails(String aadharCard) throws ResourceNotFoundException {
-        Doctor doctor = doctorRepo.findByAadharCard(aadharCard).orElseThrow(() -> new ResourceNotFoundException("Doctor Not found"));
+        Doctor doctor = doctorRepo.findByAadharCard(aadharCard)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found"));
         doctorRepo.delete(doctor);
-
     }
 
-    private void validateDoctor(DoctorDto doctorDto) throws ResourceNotFoundException {
-        if (doctorDto.getDoctorName() == null || doctorDto.getDoctorName().isEmpty()) {
-            throw new ResourceNotFoundException("Doctor Name should not be null");
-        }
-        if (doctorDto.getMobile() == null || doctorDto.getMobile().isEmpty()) {
-            throw new ResourceNotFoundException("Mobile Number should not be null");
-        }
-        if (doctorDto.getEmailId() == null || doctorDto.getEmailId().isEmpty()) {
-            throw new ResourceNotFoundException("Email should not be null");
-        }
-        if (doctorDto.getAadharCard() == null || doctorDto.getAadharCard().isEmpty()) {
-            throw new ResourceNotFoundException("Aadhaar should not be null");
-        }
-        if (doctorDto.getPanCard() == null || doctorDto.getPanCard().isEmpty()) {
-            throw new ResourceNotFoundException("PAN should not be null");
-        }
-        //checks duplicates
-        if (doctorRepo.findByDoctorName(doctorDto.getDoctorName()).isPresent())
-            throw new ResourceNotFoundException("Doctor name already exists");
-
-        if (doctorRepo.findByMobile(doctorDto.getMobile()).isPresent())
-            throw new ResourceNotFoundException("Mobile number already exists");
-
-        if (doctorRepo.findByEmailId(doctorDto.getEmailId()).isPresent())
-            throw new ResourceNotFoundException("Email already exists");
-
-        if (doctorRepo.findByAadharCard(doctorDto.getAadharCard()).isPresent())
-            throw new ResourceNotFoundException("Aadhaar already exists");
-
-        if (doctorRepo.findByPanCard(doctorDto.getPanCard()).isPresent())
-            throw new ResourceNotFoundException("PAN already exists");
+    private void validateDoctor(DoctorDto dto) {
+        if (dto.getAadharCard() == null || dto.getAadharCard().trim().isEmpty())
+            throw new IllegalArgumentException("Aadhaar is required");
+        if (doctorRepo.findByAadharCard(dto.getAadharCard()).isPresent())
+            throw new IllegalArgumentException("Aadhaar already exists");
     }
 }
-
-
