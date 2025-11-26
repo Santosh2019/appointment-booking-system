@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -73,5 +75,37 @@ public class DoctorServiceImpl implements DoctorServices {
             throw new IllegalArgumentException("Aadhaar is required");
         if (doctorRepo.findByAadharCard(dto.getAadharCard()).isPresent())
             throw new IllegalArgumentException("Aadhaar already exists");
+    }
+
+    // doctor-service → service/DoctorServiceImpl.java
+
+    @Override
+    public List<DoctorDto> getAllDoctors() {
+        return doctorRepo.findAll().stream()
+                .map(doctor -> modelMapper.map(doctor, DoctorDto.class))
+                .peek(dto -> dto.setAadharCard(maskAadhar(dto.getAadharCard()))) // masking
+                .toList();
+    }
+
+    @Override
+    public DoctorDto getDoctorById(String doctorId) throws ResourceNotFoundException {
+        Doctor doctor = doctorRepo.findById(doctorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found"));
+        DoctorDto dto = modelMapper.map(doctor, DoctorDto.class);
+        dto.setAadharCard(maskAadhar(dto.getAadharCard())); // masked
+        return dto;
+    }
+
+    @Override
+    public List<DoctorDto> getDoctorsBySpecialization(String specialization) {
+        return doctorRepo.findBySpecializationContainingIgnoreCase(specialization).stream()
+                .map(doctor -> modelMapper.map(doctor, DoctorDto.class))
+                .peek(dto -> dto.setAadharCard(maskAadhar(dto.getAadharCard())))
+                .toList();
+    }
+
+    private String maskAadhar(String aadhar) {
+        if (aadhar == null || aadhar.length() < 4) return "XXXX-XXXX-XXXX";
+        return "XXXX-XXXX-" + aadhar.substring(aadhar.length() - 4);
     }
 }
