@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ModelMapperConfig {
-
     private static final Logger log = LoggerFactory.getLogger(ModelMapperConfig.class);
 
     @Bean

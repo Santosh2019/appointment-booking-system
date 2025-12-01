@@ -5,7 +5,7 @@ import com.appointement.response.AppointmentResponse;
 
 import java.util.List;
 
-public interface AppointmetnService {
+public interface AppointmentService {
     AppointmentResponse bookAppointment(AppointmentRequest request);
 
     List<AppointmentResponse> getAppointmentsByPatientId(String patientId);

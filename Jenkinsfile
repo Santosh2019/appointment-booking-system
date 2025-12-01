@@ -1,40 +1,91 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven'
-        jdk 'JDK17'
+        maven 'Maven-3.9'
+        jdk   'JDK-17'
     }
+
+    environment {
+        DOCKERHUB = 'santoshlimbale76'
+        TAG       = "${BUILD_NUMBER}"
+    }
+
     stages {
-        stage('Clone Repository') {
+        stage('Cleanup') {
+            steps { cleanWs() }
+        }
+
+        stage('Checkout') {
             steps {
-                git url: 'https://github.com/Santosh2019/appointment-booking-system.git',
-                    branch: 'master'
+                checkout scm
             }
         }
-        stage('Build Project') {
+
+        stage('Maven Build & Test') {
             steps {
-                sh 'mvn clean package'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
-        stage('List Artifacts') {
+
+        stage('Build Docker Images') {
             steps {
-                sh 'ls -l */target/*.jar'
+                script {
+                    def services = ['appointment-service', 'patient-service', 'doctor-service',
+                                    'au-service', 'api-gateway-service', 'eureka-service']
+
+                    services.each { service ->
+                        sh "mvn spring-boot:build-image -pl ${service} -DskipTests -Dspring-boot.build-image.imageName=${DOCKERHUB}/${service}:${TAG}"
+                    }
+                }
             }
         }
-        stage('Deploy') {
+
+        stage('Push to Docker Hub') {
             steps {
-                echo "Deploying services..."
-                // Patient Service
-                sh '''
-                    echo "Starting Patient Service..."
-                    nohup java -jar patient-service/target/patient-service-0.0.1-SNAPSHOT.jar > patient.log 2>&1 &
-                '''
-                // Doctor Service
-                sh '''
-                    echo "Starting Doctor Service..."
-                    nohup java -jar doctor-service/target/doctor-service-0.0.1-SNAPSHOT.jar > doctor.log 2>&1 &
-                '''
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
+                                                usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+
+                    sh '''
+                        docker push ${DOCKERHUB}/appointment-service:${TAG}
+                        docker push ${DOCKERHUB}/patient-service:${TAG}
+                        docker push ${DOCKERHUB}/doctor-service:${TAG}
+                        docker push ${DOCKERHUB}/au-service:${TAG}
+                        docker push ${DOCKERHUB}/api-gateway-service:${TAG}
+                        docker push ${DOCKERHUB}/eureka-service:${TAG}
+                    '''
+                }
             }
+        }
+
+        stage('Tag as Latest (Optional)') {
+            when { branch 'main' }
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
+                                                usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                    sh '''
+                        docker tag ${DOCKERHUB}/appointment-service:${TAG} ${DOCKERHUB}/appointment-service:latest
+                        docker tag ${DOCKERHUB}/patient-service:${TAG} ${DOCKERHUB}/patient-service:latest
+                        docker tag ${DOCKERHUB}/doctor-service:${TAG} ${DOCKERHUB}/doctor-service:latest
+                        docker tag ${DOCKERHUB}/au-service:${TAG} ${DOCKERHUB}/au-service:latest
+                        docker tag ${DOCKERHUB}/api-gateway-service:${TAG} ${DOCKERHUB}/api-gateway-service:latest
+                        docker tag ${DOCKERHUB}/eureka-service:${TAG} ${DOCKERHUB}/eureka-service:latest
+
+                        docker push ${DOCKERHUB}/appointment-service:latest
+                        docker push ${DOCKERHUB}/patient-service:latest
+                        docker push ${DOCKERHUB}/doctor-service:latest
+                        docker push ${DOCKERHUB}/au-service:latest
+                        docker push ${DOCKERHUB}/api-gateway-service:latest
+                        docker push ${DOCKERHUB}/eureka-service:latest
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
         }
     }
 }

@@ -17,6 +17,8 @@ public class DoctorDto {
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String doctorName;
 
+    private String doctorId;
+
     @NotBlank(message = "Mobile number is required")
     @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid Indian mobile number")
     private String mobile;

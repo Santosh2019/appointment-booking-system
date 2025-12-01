@@ -1,0 +1,7 @@
+com\aps\AuServiceApplication.class
+com\aps\controller\AuthController.class
+com\aps\service\UserDetailsServiceImpl.class
+com\aps\repo\UserRepository.class
+com\aps\config\SecurityConfig.class
+com\aps\entity\User.class
+com\aps\util\JwtUtil.class

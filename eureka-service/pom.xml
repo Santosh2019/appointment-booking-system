@@ -11,9 +11,26 @@
 
     <artifactId>eureka-service</artifactId>
 
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-    </properties>
+    <dependencies>
+        <!-- ONLY THIS ONE DEPENDENCY -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+        </dependency>
+    </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <image>
+                        <name>santoshlimbale76/${project.artifactId}:latest</name>
+                    </image>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

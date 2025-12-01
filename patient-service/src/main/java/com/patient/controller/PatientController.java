@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,22 +20,33 @@ import org.springframework.web.bind.annotation.*;
 public class PatientController {
 
     private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
-
     private final PatientService patientService;
 
     @PostMapping
-    public ResponseEntity<PatientDto> savePatient(@Valid @RequestBody PatientDto patientDto) throws ResourceNotFoundException {
+    public ResponseEntity<PatientDto> savePatient(@Valid @RequestBody PatientDto patientDto) {
         logger.debug("POST /api/v1/patients → Creating patient | Aadhar: {}", maskAadhar(patientDto.getAadharCard()));
-        PatientDto saved = patientService.addPatient(patientDto);
+        PatientDto saved = null;
+        try {
+            saved = patientService.addPatient(patientDto);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
         saved.setAadharCard(maskAadhar(saved.getAadharCard()));
         logger.debug("Patient created successfully | Aadhar ending: {}", maskAadhar(saved.getAadharCard()));
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{aadharCard}")
-    public ResponseEntity<PatientDto> getPatient(@PathVariable String aadharCard) throws ResourceNotFoundException {
+
+    @GetMapping("/aadharCard/{aadharCard}")
+    @PreAuthorize("hasRole('PATIENT') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public ResponseEntity<PatientDto> getPatient(@PathVariable("aadharCard") String aadharCard) {
         logger.debug("GET /api/v1/patients/{} → Fetching patient", maskAadhar(aadharCard));
-        PatientDto patient = patientService.getDetails(aadharCard);
+        PatientDto patient = null;
+        try {
+            patient = patientService.getDetails(aadharCard);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
         patient.setAadharCard(maskAadhar(patient.getAadharCard()));
         logger.debug("Patient fetched successfully | Aadhar ending: {}", maskAadhar(aadharCard));
         return ResponseEntity.ok(patient);
@@ -42,8 +54,13 @@ public class PatientController {
 
     @PatchMapping("/{aadharCard}/activate")
     public ResponseEntity<ApiResponse<ActivationResponseDto>> activatePatient(
-            @PathVariable String aadharCard) throws ResourceNotFoundException {
-        PatientDto activated = patientService.activatePatient(aadharCard);
+            @PathVariable String aadharCard) {
+        PatientDto activated = null;
+        try {
+            activated = patientService.activatePatient(aadharCard);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
 
         ActivationResponseDto responseData = new ActivationResponseDto(
                 activated.getFullName(),
@@ -58,14 +75,23 @@ public class PatientController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{aadharCard}")
-    public ResponseEntity<String> deletePatient(@PathVariable String aadharCard) throws ResourceNotFoundException {
+    @DeleteMapping("/delete/{aadharCard}")
+    public ResponseEntity<String> deletePatient(@PathVariable String aadharCard) {
         logger.debug("DELETE /api/v1/patients/{} → Deleting patient", maskAadhar(aadharCard));
-        patientService.deleteDetails(aadharCard);
+        try {
+            patientService.deleteDetails(aadharCard);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
         logger.debug("Patient deleted successfully | Aadhar ending: {}", maskAadhar(aadharCard));
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{patientId}")
+    public ResponseEntity<PatientDto> getPatientById(@PathVariable("patientId") String patientId) {
+        PatientDto patient = patientService.getPatientById(patientId);
+        return ResponseEntity.ok(patient);
+    }
 
     private String maskAadhar(String aadhar) {
         if (aadhar == null || aadhar.length() < 4) {

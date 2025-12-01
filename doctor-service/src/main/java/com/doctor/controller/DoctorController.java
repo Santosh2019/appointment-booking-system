@@ -31,34 +31,38 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedDoctor);
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<DoctorDto>> getAllDoctors() {
         log.info("Fetching all doctors list for patient app");
         List<DoctorDto> doctors = doctorServices.getAllDoctors();
-        // Mask Aadhaar in all doctors
         doctors.forEach(doc -> doc.setAadharCard(maskAadhar(doc.getAadharCard())));
         return ResponseEntity.ok(doctors);
     }
 
     @GetMapping("/specialization/{specialization}")
-    public ResponseEntity<List<DoctorDto>> getDoctorsBySpecialization(
-            @PathVariable String specialization) {
+    public ResponseEntity<List<DoctorDto>> getDoctorsBySpecialization(@PathVariable("specialization") String specialization) {
         log.info("Fetching doctors by specialization: {}", specialization);
         List<DoctorDto> doctors = doctorServices.getDoctorsBySpecialization(specialization);
         doctors.forEach(doc -> doc.setAadharCard(maskAadhar(doc.getAadharCard())));
         return ResponseEntity.ok(doctors);
     }
 
-    @GetMapping("/{aadharCard}")
-    public ResponseEntity<DoctorDto> getDoctorByAadharCard(@PathVariable String aadharCard) throws ResourceNotFoundException {
+    @GetMapping("/aadhar/{aadharCard}")
+    public ResponseEntity<DoctorDto> getDoctorByAadharCard(
+            @PathVariable("aadharCard") String aadharCard) {
         log.info("Fetching doctor by Aadhaar ending → {}", maskAadhar(aadharCard));
-        DoctorDto doctor = doctorServices.getDetails(aadharCard);
-        doctor.setAadharCard(maskAadhar(doctor.getAadharCard())); // Mask here
+        DoctorDto doctor = null;
+        try {
+            doctor = doctorServices.getDetails(aadharCard);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
+        doctor.setAadharCard(maskAadhar(doctor.getAadharCard()));
         return ResponseEntity.ok(doctor);
     }
 
     @GetMapping("/id/{doctorId}")
-    public ResponseEntity<DoctorDto> getDoctorById(@PathVariable String doctorId) throws ResourceNotFoundException {
+    public ResponseEntity<DoctorDto> getDoctorById(@PathVariable("doctorId") String doctorId) throws ResourceNotFoundException {
         DoctorDto doctor = doctorServices.getDoctorById(doctorId);
         return ResponseEntity.ok(doctor);
     }

@@ -1,4 +1,4 @@
-package com.appointement.common;
+package com.doctor.common;
 
 import org.springframework.stereotype.Component;
 

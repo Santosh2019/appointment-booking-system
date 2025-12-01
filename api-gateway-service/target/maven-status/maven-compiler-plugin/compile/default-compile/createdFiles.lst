@@ -1,0 +1,3 @@
+com\hospital\filter\JwtAuthenticationFilter$Config.class
+com\hospital\filter\JwtAuthenticationFilter.class
+com\hospital\ApiGatewayServiceApplication.class

@@ -1,7 +1,4 @@
-package com.doctor.exception;
-
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+package com.appointement.exception;
 
 
 public class DuplicateResourceException extends Exception{

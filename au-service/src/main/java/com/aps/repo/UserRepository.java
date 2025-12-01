@@ -1,4 +1,4 @@
-package com.aps.repository;
+package com.aps.repo;
 
 import com.aps.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

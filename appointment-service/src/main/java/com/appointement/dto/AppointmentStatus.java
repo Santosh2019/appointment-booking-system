@@ -1,2 +1,8 @@
-package com.appointement.dto;public class AppointmentStatus {
+package com.appointement.dto;
+
+public enum AppointmentStatus {
+    SCHEDULED,
+    CONFIRMED,
+    CANCELLED,
+    COMPLETED
 }

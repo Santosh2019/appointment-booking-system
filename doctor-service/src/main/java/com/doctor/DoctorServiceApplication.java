@@ -2,10 +2,12 @@ package com.doctor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication/*
-@EntityScan(basePackages = "com.doctor.entity")
-@EnableJpaRepositories(basePackages = "com.doctor.repo")*/
+@SpringBootApplication
+@EnableFeignClients
+@EnableDiscoveryClient
 public class DoctorServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(DoctorServiceApplication.class, args);

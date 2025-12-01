@@ -25,9 +25,8 @@ import java.util.UUID;
 public class Doctor {
 
     @Id
-    @Column(name = "doc_id", length = 36, updatable = false, nullable = false)
-    private String docId = UUID.randomUUID().toString();  // Auto-generate on object creation
-
+    @Column(name = "doctor_Id", length = 36, updatable = false, nullable = false)
+    private String doctorId;
     @Column(name = "doctor_name", nullable = false, length = 50)
     private String doctorName;
 
@@ -58,11 +57,10 @@ public class Doctor {
     @Column(name = "specialization", nullable = false, length = 50)
     private String specialization;
 
-    // Optional: ensure ID even if someone sets it to null
     @PrePersist
     private void ensureId() {
-        if (docId == null || docId.isBlank()) {
-            docId = UUID.randomUUID().toString();
+        if (doctorId == null || doctorId.isBlank()) {
+            doctorId = UUID.randomUUID().toString();
         }
     }
 
