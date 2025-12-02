@@ -27,32 +27,28 @@ pipeline {
                 bat 'mvn -B -DskipTests clean package'
             }
         }
+stage('Build & Push All Docker Images') {
+    steps {
+        bat '''
+            docker login -u santoshlimbale76 -p Santosh@123
 
-        stage('Build & Push All Docker Images') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
-                                                 usernameVariable: 'USER',
-                                                 passwordVariable: 'PASS')]) {
-                    bat '''
-                        echo %PASS% | docker login -u %USER% --password-stdin
+            mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/appointment-service:%TAG%     -pl appointment-service
+            mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/patient-service:%TAG%        -pl patient-service
+            mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/doctor-service:%TAG%         -pl doctor-service
+            mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/au-service:%TAG%             -pl au-service
+            mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/api-gateway-service:%TAG%    -pl api-gateway-service
+            mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/eureka-service:%TAG%        -pl eureka-service
 
-                        mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/appointment-service:%TAG%     -pl appointment-service
-                        mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/patient-service:%TAG%        -pl patient-service
-                        mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/doctor-service:%TAG%         -pl doctor-service
-                        mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/au-service:%TAG%             -pl au-service
-                        mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/api-gateway-service:%TAG%    -pl api-gateway-service
-                        mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/eureka-service:%TAG%        -pl eureka-service
-
-                        docker push %DOCKERHUB%/appointment-service:%TAG%
-                        docker push %DOCKERHUB%/patient-service:%TAG%
-                        docker push %DOCKERHUB%/doctor-service:%TAG%
-                        docker push %DOCKERHUB%/au-service:%TAG%
-                        docker push %DOCKERHUB%/api-gateway-service:%TAG%
-                        docker push %DOCKERHUB%/eureka-service:%TAG%
-                    '''
-                }
-            }
+            docker push %DOCKERHUB%/appointment-service:%TAG%
+            docker push %DOCKERHUB%/patient-service:%TAG%
+            docker push %DOCKERHUB%/doctor-service:%TAG%
+            docker push %DOCKERHUB%/au-service:%TAG%
+            docker push %DOCKERHUB%/api-gateway-service:%TAG%
+            docker push %DOCKERHUB%/eureka-service:%TAG%
+        '''
         }
+    }
+}
 
         stage('Tag as Latest (main branch only)') {
             when { branch 'main' }
