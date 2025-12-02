@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     tools {
         maven '3.9.6'
         jdk   'JDK 17'
@@ -7,23 +8,32 @@ pipeline {
 
     environment {
         DOCKERHUB         = 'santoshlimbale76'
-        TAG              = "${BUILD_NUMBER}"
+        TAG               = "${BUILD_NUMBER}"
+        = "${BUILD_NUMBER}"
         DOCKER_HOST       = 'tcp://192.168.99.100:2376'
         DOCKER_TLS_VERIFY = '1'
         DOCKER_CERT_PATH  = 'C:\\Users\\santo\\.docker\\machine\\machines\\default'
     }
 
     stages {
-        {
-        stage('Clean & Checkout') { steps { cleanWs(); checkout scm } }
+        stage('Clean & Checkout') {
+            steps {
+                cleanWs()
+                checkout scm
+            }
+        }
 
         stage('Maven Compile') {
-            steps { bat 'mvn -B -DskipTests clean package' }
+            steps {
+                bat 'mvn -B -DskipTests clean package'
+            }
         }
 
         stage('Build + Push All Images') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
+                                                 usernameVariable: 'USER',
+                                                 passwordVariable: 'PASS')]) {
                     bat '''
                         echo %PASS% | docker login -u %USER% --password-stdin
 
@@ -68,6 +78,8 @@ pipeline {
     }
 
     post {
-        always { cleanWs() }
+        always {
+            cleanWs()
+        }
     }
 }
