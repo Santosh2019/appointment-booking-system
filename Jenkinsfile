@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven '3.9.6'          // Make sure this name exists in Jenkins → Global Tool Configuration
+        maven '3.9.6'      // ← make sure this exact name exists in Global Tool Configuration
         jdk   'JDK 17'
     }
 
@@ -17,19 +17,16 @@ pipeline {
         }
 
         stage('Checkout') {
-            steps {
-                checkout scm
-            }
+            steps { checkout scm }
         }
 
         stage('Maven Build & Test') {
             steps {
-                // -B = batch mode (non-interactive), works the same on Windows
                 bat 'mvn -B -DskipTests clean package'
             }
         }
 
-        stage('Build Docker Images') {
+        stage('Build Docker Images (Spring Boot)') {
             steps {
                 script {
                     def services = [
@@ -43,6 +40,8 @@ pipeline {
 
                     services.each { service ->
                         bat """
+                            "C:\\docker-machine\\docker-machine.exe" env default | ForEach-Object { invoke-expression \$_ }
+
                             mvn spring-boot:build-image ^
                               -pl ${service} ^
                               -DskipTests ^
@@ -60,10 +59,11 @@ pipeline {
                     usernameVariable: 'USER',
                     passwordVariable: 'PASS'
                 )]) {
-                    // Docker login works the same on Windows
-                    bat 'echo %PASS% | docker login -u %USER% --password-stdin'
-
                     bat """
+                        "C:\\docker-machine\\docker-machine.exe" env default | ForEach-Object { invoke-expression \$_ }
+
+                        echo %PASS% | docker login -u %USER% --password-stdin
+
                         docker push ${DOCKERHUB}/appointment-service:${TAG}
                         docker push ${DOCKERHUB}/patient-service:${TAG}
                         docker push ${DOCKERHUB}/doctor-service:${TAG}
@@ -75,7 +75,7 @@ pipeline {
             }
         }
 
-        stage('Tag as Latest (Optional)') {
+        stage('Tag as Latest (main branch only)') {
             when { branch 'main' }
             steps {
                 withCredentials([usernamePassword(
@@ -83,15 +83,17 @@ pipeline {
                     usernameVariable: 'USER',
                     passwordVariable: 'PASS'
                 )]) {
-                    bat 'echo %PASS% | docker login -u %USER% --password-stdin'
-
                     bat """
-                        docker tag ${DOCKERHUB}/appointment-service:${TAG} ${DOCKERHUB}/appointment-service:latest
-                        docker tag ${DOCKERHUB}/patient-service:${TAG} ${DOCKERHUB}/patient-service:latest
-                        docker tag ${DOCKERHUB}/doctor-service:${TAG} ${DOCKERHUB}/doctor-service:latest
-                        docker tag ${DOCKERHUB}/au-service:${TAG} ${DOCKERHUB}/au-service:latest
-                        docker tag ${DOCKERHUB}/api-gateway-service:${TAG} ${DOCKERHUB}/api-gateway-service:latest
-                        docker tag ${DOCKERHUB}/eureka-service:${TAG} ${DOCKERHUB}/eureka-service:latest
+                        "C:\\docker-machine\\docker-machine.exe" env default | ForEach-Object { invoke-expression \$_ }
+
+                        echo %PASS% | docker login -u %USER% --password-stdin
+
+                        docker tag ${DOCKERHUB}/appointment-service:${TAG}     ${DOCKERHUB}/appointment-service:latest
+                        docker tag ${DOCKERHUB}/patient-service:${TAG}         ${DOCKERHUB}/patient-service:latest
+                        docker tag ${DOCKERHUB}/doctor-service:${TAG}          ${DOCKERHUB}/doctor-service:latest
+                        docker tag ${DOCKERHUB}/au-service:${TAG}              ${DOCKERHUB}/au-service:latest
+                        docker tag ${DOCKERHUB}/api-gateway-service:${TAG}     ${DOCKERHUB}/api-gateway-service:latest
+                        docker tag ${DOCKERHUB}/eureka-service:${TAG}          ${DOCKERHUB}/eureka-service:latest
 
                         docker push ${DOCKERHUB}/appointment-service:latest
                         docker push ${DOCKERHUB}/patient-service:latest
