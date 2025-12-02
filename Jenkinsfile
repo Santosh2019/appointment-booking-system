@@ -9,7 +9,6 @@ pipeline {
     environment {
         DOCKERHUB         = 'santoshlimbale76'
         TAG               = "${BUILD_NUMBER}"
-        = "${BUILD_NUMBER}"
         DOCKER_HOST       = 'tcp://192.168.99.100:2376'
         DOCKER_TLS_VERIFY = '1'
         DOCKER_CERT_PATH  = 'C:\\Users\\santo\\.docker\\machine\\machines\\default'
@@ -29,7 +28,7 @@ pipeline {
             }
         }
 
-        stage('Build + Push All Images') {
+        stage('Build & Push All Docker Images') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
                                                  usernameVariable: 'USER',
@@ -55,7 +54,7 @@ pipeline {
             }
         }
 
-        stage('Tag as latest — main branch only') {
+        stage('Tag as Latest (main branch only)') {
             when { branch 'main' }
             steps {
                 bat '''
