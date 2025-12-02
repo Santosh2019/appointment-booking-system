@@ -9,7 +9,7 @@ pipeline {
     environment {
         DOCKERHUB = 'santoshlimbale76'
         TAG       = "${BUILD_NUMBER}"
-        DOCKER_HOST = 'tcp://192.168.99.100:2376
+        DOCKER_HOST = 'tcp://192.168.99.100:2376'
     }
 
     stages {
