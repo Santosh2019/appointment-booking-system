@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven '3.9.6'      // ← make sure this exact name exists in Global Tool Configuration
+        maven '3.9.6'
         jdk   'JDK 17'
     }
 
@@ -12,15 +12,11 @@ pipeline {
     }
 
     stages {
-        stage('Cleanup') {
-            steps { cleanWs() }
-        }
+        stage('Cleanup') { steps { cleanWs() } }
 
-        stage('Checkout') {
-            steps { checkout scm }
-        }
+        stage('Checkout') { steps { checkout scm } }
 
-        stage('Maven Build & Test') {
+        stage('Maven Build') {
             steps {
                 bat 'mvn -B -DskipTests clean package'
             }
@@ -30,18 +26,13 @@ pipeline {
             steps {
                 script {
                     def services = [
-                        'appointment-service',
-                        'patient-service',
-                        'doctor-service',
-                        'au-service',
-                        'api-gateway-service',
-                        'eureka-service'
+                        'appointment-service', 'patient-service', 'doctor-service',
+                        'au-service', 'api-gateway-service', 'eureka-service'
                     ]
 
                     services.each { service ->
                         bat """
-                            "C:\\docker-machine\\docker-machine.exe" env default | ForEach-Object { invoke-expression \$_ }
-
+                            call "C:\\docker-machine\\docker-machine.exe" env default
                             mvn spring-boot:build-image ^
                               -pl ${service} ^
                               -DskipTests ^
@@ -54,13 +45,10 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-credentials',
-                    usernameVariable: 'USER',
-                    passwordVariable: 'PASS'
-                )]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
+                                                 usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     bat """
-                        "C:\\docker-machine\\docker-machine.exe" env default | ForEach-Object { invoke-expression \$_ }
+                        call "C:\\docker-machine\\docker-machine.exe" env default
 
                         echo %PASS% | docker login -u %USER% --password-stdin
 
@@ -78,13 +66,10 @@ pipeline {
         stage('Tag as Latest (main branch only)') {
             when { branch 'main' }
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-credentials',
-                    usernameVariable: 'USER',
-                    passwordVariable: 'PASS'
-                )]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
+                                                 usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     bat """
-                        "C:\\docker-machine\\docker-machine.exe" env default | ForEach-Object { invoke-expression \$_ }
+                        call "C:\\docker-machine\\docker-machine.exe" env default
 
                         echo %PASS% | docker login -u %USER% --password-stdin
 
@@ -108,8 +93,6 @@ pipeline {
     }
 
     post {
-        always {
-            cleanWs()
-        }
+        always { cleanWs() }
     }
 }
