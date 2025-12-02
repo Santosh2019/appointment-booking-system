@@ -1,7 +1,8 @@
 pipeline {
     agent any
+
     tools {
-        maven '3.9.6'
+        maven '3.9.6'          // Make sure this name exists in Jenkins → Global Tool Configuration
         jdk   'JDK 17'
     }
 
@@ -23,18 +24,30 @@ pipeline {
 
         stage('Maven Build & Test') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                // -B = batch mode (non-interactive), works the same on Windows
+                bat 'mvn -B -DskipTests clean package'
             }
         }
 
         stage('Build Docker Images') {
             steps {
                 script {
-                    def services = ['appointment-service', 'patient-service', 'doctor-service',
-                                    'au-service', 'api-gateway-service', 'eureka-service']
+                    def services = [
+                        'appointment-service',
+                        'patient-service',
+                        'doctor-service',
+                        'au-service',
+                        'api-gateway-service',
+                        'eureka-service'
+                    ]
 
                     services.each { service ->
-                        sh "mvn spring-boot:build-image -pl ${service} -DskipTests -Dspring-boot.build-image.imageName=${DOCKERHUB}/${service}:${TAG}"
+                        bat """
+                            mvn spring-boot:build-image ^
+                              -pl ${service} ^
+                              -DskipTests ^
+                              -Dspring-boot.build-image.imageName=${DOCKERHUB}/${service}:${TAG}
+                        """
                     }
                 }
             }
@@ -42,18 +55,22 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
-                                                usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PASS'
+                )]) {
+                    // Docker login works the same on Windows
+                    bat 'echo %PASS% | docker login -u %USER% --password-stdin'
 
-                    sh '''
+                    bat """
                         docker push ${DOCKERHUB}/appointment-service:${TAG}
                         docker push ${DOCKERHUB}/patient-service:${TAG}
                         docker push ${DOCKERHUB}/doctor-service:${TAG}
                         docker push ${DOCKERHUB}/au-service:${TAG}
                         docker push ${DOCKERHUB}/api-gateway-service:${TAG}
                         docker push ${DOCKERHUB}/eureka-service:${TAG}
-                    '''
+                    """
                 }
             }
         }
@@ -61,10 +78,14 @@ pipeline {
         stage('Tag as Latest (Optional)') {
             when { branch 'main' }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
-                                                usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh '''
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PASS'
+                )]) {
+                    bat 'echo %PASS% | docker login -u %USER% --password-stdin'
+
+                    bat """
                         docker tag ${DOCKERHUB}/appointment-service:${TAG} ${DOCKERHUB}/appointment-service:latest
                         docker tag ${DOCKERHUB}/patient-service:${TAG} ${DOCKERHUB}/patient-service:latest
                         docker tag ${DOCKERHUB}/doctor-service:${TAG} ${DOCKERHUB}/doctor-service:latest
@@ -78,11 +99,12 @@ pipeline {
                         docker push ${DOCKERHUB}/au-service:latest
                         docker push ${DOCKERHUB}/api-gateway-service:latest
                         docker push ${DOCKERHUB}/eureka-service:latest
-                    '''
+                    """
                 }
             }
         }
     }
+
     post {
         always {
             cleanWs()
