@@ -56,7 +56,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         String assignedDoctorId;
         DoctorDto doctor;
 
-        if (request.getDoctorId() != null && !request.getDoctorId().isEmpty()) {
+        if(request.getDoctorId() != null && !request.getDoctorId().isEmpty()) {
             doctor = doctorFeignClient.getDoctorById(request.getDoctorId());
             assignedDoctorId = doctor.getDoctorId();
         } else {

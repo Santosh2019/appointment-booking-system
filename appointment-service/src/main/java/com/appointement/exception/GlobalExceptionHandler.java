@@ -82,10 +82,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleFeignException(FeignException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", ex.status());
+        int status = ex.status();
+        if (status < 100 || status > 599) {
+            status = 503; // fallback: Service Unavailable
+        }
+        body.put("status", status);
         body.put("error", "Downstream Service Error");
         body.put("message", ex.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.valueOf(ex.status()));
+
+        return new ResponseEntity<>(body, HttpStatus.valueOf(status));
     }
+
 
 }

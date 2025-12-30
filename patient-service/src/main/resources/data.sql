@@ -3,7 +3,7 @@
 INSERT INTO patients (
     patient_id, full_name, mobile, email, gender, date_of_birth,
     address, city, state, pincode, aadhar_card,
-    is_active, created_at, updated_at, created_by, updated_by
+    isActive, created_at, updated_at, created_by, updated_by
 ) VALUES
 ('PAT-10001', 'Ramu Pawar', '9876541356', 'ramu.pawar92@gmail.com', 'Male', '1992-05-14',
  'Flat 203, Green Valley, Balewadi', 'Patna', 'Bihar', '411045', '546782239998',

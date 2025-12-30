@@ -5,6 +5,7 @@ import com.doctor.dto.DoctorDto;
 import com.doctor.entity.Doctor;
 import com.doctor.exception.ResourceNotFoundException;
 import com.doctor.repo.DoctorRepo;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -92,6 +93,7 @@ public class DoctorServiceImpl implements DoctorServices {
     }
 
     @Override
+    @CircuitBreaker(name = "doctorService")
     public List<DoctorDto> getDoctorsBySpecialization(String specialization) {
         return doctorRepo.findBySpecializationContainingIgnoreCase(specialization).stream()
                 .map(doctor -> modelMapper.map(doctor, DoctorDto.class))

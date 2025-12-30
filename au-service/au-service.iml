@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_X">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_16">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -33,8 +33,6 @@
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-websocket:10.1.40" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:6.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:6.2.6" level="project" />
-    <orderEntry type="library" name="Maven: io.micrometer:micrometer-observation:1.14.6" level="project" />
-    <orderEntry type="library" name="Maven: io.micrometer:micrometer-commons:1.14.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:6.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:6.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:6.2.6" level="project" />
@@ -65,7 +63,6 @@
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:6.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:6.2.6" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:2.0.17" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:6.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.9.24" level="project" />
     <orderEntry type="library" name="Maven: com.mysql:mysql-connector-j:9.1.0" level="project" />
@@ -156,5 +153,28 @@
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-oauth2-jose:6.4.5" level="project" />
     <orderEntry type="library" name="Maven: com.nimbusds:nimbus-jose-jwt:9.37.3" level="project" />
     <orderEntry type="library" name="Maven: com.github.stephenc.jcip:jcip-annotations:1.0-1" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-spring-boot3:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-spring6:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-annotations:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-consumer:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-core:2.2.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.github.resilience4j:resilience4j-circularbuffer:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-framework-common:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:2.0.17" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-micrometer:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.micrometer:micrometer-core:1.14.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.hdrhistogram:HdrHistogram:2.2.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.latencyutils:LatencyUtils:2.0.3" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-bulkhead:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-circuitbreaker:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-retry:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-ratelimiter:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-timelimiter:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-actuator:3.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator-autoconfigure:3.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator:3.4.5" level="project" />
+    <orderEntry type="library" name="Maven: io.micrometer:micrometer-observation:1.14.6" level="project" />
+    <orderEntry type="library" name="Maven: io.micrometer:micrometer-commons:1.14.6" level="project" />
+    <orderEntry type="library" name="Maven: io.micrometer:micrometer-jakarta9:1.14.6" level="project" />
   </component>
 </module>

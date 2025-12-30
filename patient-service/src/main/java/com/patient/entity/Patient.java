@@ -55,8 +55,8 @@ public class Patient {
     @Column(nullable = false, unique = true, length = 12)
     private String aadharCard;
 
-    @Column(name = "is_active", nullable = false)
-    private boolean isActive = false;
+    @Column(name = "isActive", nullable = false)
+    private Boolean isActive = false;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

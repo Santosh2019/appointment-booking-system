@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/api-gateway-service/api-gateway-service.iml" filepath="$PROJECT_DIR$/api-gateway-service/api-gateway-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/appointment-service/appointment-service.iml" filepath="$PROJECT_DIR$/appointment-service/appointment-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/appointment-ui-service/appointment-ui-service.iml" filepath="$PROJECT_DIR$/appointment-ui-service/appointment-ui-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/appointmet-booking-system.iml" filepath="$PROJECT_DIR$/appointmet-booking-system.iml" />
       <module fileurl="file://$PROJECT_DIR$/au-service/au-service.iml" filepath="$PROJECT_DIR$/au-service/au-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/doctor-service/doctor-service.iml" filepath="$PROJECT_DIR$/doctor-service/doctor-service.iml" />
