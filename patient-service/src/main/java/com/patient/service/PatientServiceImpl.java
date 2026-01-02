@@ -110,12 +110,12 @@ public class PatientServiceImpl implements PatientService {
             e.printStackTrace();
         }
 
-        if (patient.getIsActive()) {
+       /* if (patient.getIsActive()) {
             throw new DuplicateResourceException(
                     "Patient is already active | Aadhar ending: " + maskAadhar(aadharCard));
         }
-
-        patient.setIsActive(true);
+*/
+        // patient.setIsActive(true);
         Patient savedPatient = patientRepo.save(patient);
 
         logger.info("Patient activated successfully | Aadhar ending: {}", maskAadhar(aadharCard));

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "patient-service")
-@Retry(name = "patient-service", fallbackMethod = "fallBackPatient")
+//@Retry(name = "patient-service", fallbackMethod = "fallBackPatient")
 public interface PatientFeignClient {
 
     @GetMapping("/api/v1/patients/{patientId}")

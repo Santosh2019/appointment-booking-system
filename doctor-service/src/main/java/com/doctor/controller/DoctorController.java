@@ -40,7 +40,8 @@ public class DoctorController {
     }
 
     @GetMapping("/specialization/{specialization}")
-    public ResponseEntity<List<DoctorDto>> getDoctorsBySpecialization(@PathVariable("specialization") String specialization) {
+    public ResponseEntity<List<DoctorDto>> getDoctorsBySpecialization(
+            @PathVariable("specialization") String specialization) {
         log.info("Fetching doctors by specialization: {}", specialization);
         List<DoctorDto> doctors = doctorServices.getDoctorsBySpecialization(specialization);
         doctors.forEach(doc -> doc.setAadharCard(maskAadhar(doc.getAadharCard())));

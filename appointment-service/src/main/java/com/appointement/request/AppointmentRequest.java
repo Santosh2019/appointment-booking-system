@@ -1,5 +1,7 @@
 package com.appointement.request;
 
+import com.appointement.dto.AppointmentReason;
+import com.appointement.dto.AppointmentStatus;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +12,10 @@ import java.time.LocalDateTime;
 
 @Data
 public class AppointmentRequest {
+
+    @NotBlank
+    private String fullName;
+
     @NotBlank
     private String patientId;
     @FutureOrPresent
@@ -18,7 +24,6 @@ public class AppointmentRequest {
     private String doctorId;
 
     private String specialization;
-    @NotBlank
-    @Size(max = 200)
-    private String reason;
+    @NotNull
+    private AppointmentReason reason;
 }
