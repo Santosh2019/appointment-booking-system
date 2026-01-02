@@ -1,23 +1,20 @@
 package com.appointement.entity;
 
 import com.appointement.common.IdGenerator;
+import com.appointement.dto.AppointmentReason;
 import com.appointement.dto.AppointmentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
-@ToString
-@Getter
-@Setter
 @Table(name = "appointments", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"doctorId", "appointmentDate"})
 })
+@Data
 public class Appointment {
     private String doctorName;
     @Id
@@ -31,14 +28,14 @@ public class Appointment {
     private LocalDateTime appointmentDate;
     private String specialization;
 
+    private AppointmentStatus status;
+
     public Appointment() {
         this.createdAt = LocalDateTime.now();
     }
 
     @Enumerated(EnumType.STRING)
-    private AppointmentStatus status = AppointmentStatus.SCHEDULED;
-
-    private String reason;
+    private AppointmentReason reason;
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public void generateId(IdGenerator idGen) {
