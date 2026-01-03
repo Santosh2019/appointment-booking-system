@@ -34,14 +34,16 @@ pipeline {
                 REM ==============================
                 docker login -u santoshlimbale76 -p Santosh@123
 
-                mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/appointment-service:%TAG% -pl appointment-service
-                mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/patient-service:%TAG% -pl patient-service
-                mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/doctor-service:%TAG% -pl doctor-service
-                mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/au-service:%TAG% -pl au-service
-                mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/api-gateway-service:%TAG% -pl api-gateway-service
-                mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/eureka-service:%TAG% -pl eureka-service
-                mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=%DOCKERHUB%/appointment-ui-service:%TAG% -pl appointment-ui-service
+                REM ========== Build Docker Images ==========
+                docker build -t %DOCKERHUB%/appointment-service:%TAG% ./appointment-service
+                docker build -t %DOCKERHUB%/patient-service:%TAG% ./patient-service
+                docker build -t %DOCKERHUB%/doctor-service:%TAG% ./doctor-service
+                docker build -t %DOCKERHUB%/au-service:%TAG% ./au-service
+                docker build -t %DOCKERHUB%/api-gateway-service:%TAG% ./api-gateway-service
+                docker build -t %DOCKERHUB%/eureka-service:%TAG% ./eureka-service
+                docker build -t %DOCKERHUB%/appointment-ui-service:%TAG% ./appointment-ui-service
 
+                REM ========== Push Docker Images ==========
                 docker push %DOCKERHUB%/appointment-service:%TAG%
                 docker push %DOCKERHUB%/patient-service:%TAG%
                 docker push %DOCKERHUB%/doctor-service:%TAG%
@@ -59,6 +61,7 @@ pipeline {
             }
             steps {
                 bat '''
+                REM ========== Tag as Latest ==========
                 docker tag %DOCKERHUB%/appointment-service:%TAG% %DOCKERHUB%/appointment-service:latest
                 docker tag %DOCKERHUB%/patient-service:%TAG% %DOCKERHUB%/patient-service:latest
                 docker tag %DOCKERHUB%/doctor-service:%TAG% %DOCKERHUB%/doctor-service:latest
@@ -67,6 +70,7 @@ pipeline {
                 docker tag %DOCKERHUB%/eureka-service:%TAG% %DOCKERHUB%/eureka-service:latest
                 docker tag %DOCKERHUB%/appointment-ui-service:%TAG% %DOCKERHUB%/appointment-ui-service:latest
 
+                REM ========== Push Latest Tags ==========
                 docker push %DOCKERHUB%/appointment-service:latest
                 docker push %DOCKERHUB%/patient-service:latest
                 docker push %DOCKERHUB%/doctor-service:latest
