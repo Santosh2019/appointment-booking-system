@@ -1,14 +1,17 @@
-# Use an official OpenJDK runtime as a parent image
-FROM eclipse-temurin:17-jdk-alpine
+# Use lightweight JRE (smaller image, sufficient for running JAR)
+FROM eclipse-temurin:17-jre-alpine
 
-# Set working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the built JAR from target folder
+# Copy the pre-built JAR from Maven build
 COPY target/api-gateway-service-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the port configured in application.properties
+# Expose the API Gateway port
 EXPOSE 8081
 
-# Run the JAR
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+# Prevent encoding issues on Windows Jenkins agents
+ENV JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8"
+
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
