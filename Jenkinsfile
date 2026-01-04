@@ -30,7 +30,7 @@ pipeline {
             steps {
                 bat '''
                 REM ==============================
-                REM TEMPORARY HARD-CODED LOGIN
+                REM HARD-CODED DOCKER LOGIN (as requested)
                 REM ==============================
                 docker login -u santoshlimbale76 -p Santosh@123
 
@@ -55,12 +55,15 @@ pipeline {
             }
         }
 
-        stage('Tag as Latest (main branch only)') {
+        stage('Tag as Latest (master branch only)') {
             when {
-                branch 'main'
+                branch 'master'   // Fixed: Your repo uses 'master', not 'main'
             }
             steps {
                 bat '''
+                REM Hard-coded login again for latest tagging
+                docker login -u santoshlimbale76 -p Santosh@123
+
                 REM ========== Tag as Latest ==========
                 docker tag %DOCKERHUB%/appointment-service:%TAG% %DOCKERHUB%/appointment-service:latest
                 docker tag %DOCKERHUB%/patient-service:%TAG% %DOCKERHUB%/patient-service:latest
