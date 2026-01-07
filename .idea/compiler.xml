@@ -20,12 +20,12 @@
       <module name="api-gateway-service" target="16" />
       <module name="appointment-booking-system" target="16" />
       <module name="appointment-service" target="16" />
-      <module name="appointment-ui-service" target="16" />
+      <module name="appointment-ui-service" target="17" />
       <module name="appointmet-booking-system" target="16" />
-      <module name="au-service" target="16" />
+      <module name="au-service" target="17" />
       <module name="common-models" target="17" />
-      <module name="doctor-service" target="16" />
-      <module name="eureka-service" target="16" />
+      <module name="doctor-service" target="17" />
+      <module name="eureka-service" target="17" />
       <module name="patient-service" target="17" />
     </bytecodeTargetLevel>
   </component>
