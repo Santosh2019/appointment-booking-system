@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Registration | Appointment Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body { background-color: #f5f8fc; font-family: "Segoe UI", sans-serif; }
+        .card { border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .card-header { background-color: #0d6efd; border-radius: 15px 15px 0 0 !important; }
+        .form-label { font-weight: 600; }
+        .text-danger small { font-size: 0.875em; }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-primary shadow-sm">
+    <div class="container-fluid">
+        <a th:href="@{/dashboard}" class="navbar-brand text-white">
+            <i class="fas fa-arrow-left me-2"></i> Back to Dashboard
+        </a>
+        <div class="navbar-brand mx-auto text-white">
+            <i class="fas fa-calendar-check me-2"></i> Appointment Management System
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+
+            <div class="card">
+                <div class="card-header text-white text-center py-4">
+                    <h3><i class="fas fa-user-md me-3"></i> Doctor Registration</h3>
+                </div>
+
+                <div class="card-body p-5">
+
+                    <!-- Success / Info after registration -->
+                    <div th:if="${successMessage}" class="alert alert-success text-center" role="alert">
+                        <i class="fas fa-check-circle fa-3x mb-3 text-success"></i>
+                        <h4>Registration Successful!</h4>
+                        <p class="mb-3">[[${successMessage}]]</p>
+                        <a th:href="@{/login}" class="btn btn-primary btn-lg px-5">
+                            Proceed to Login
+                        </a>
+                    </div>
+
+                    <!-- Error message -->
+                    <div th:if="${errorMessage}" class="alert alert-danger text-center mb-4">
+                        <i class="fas fa-exclamation-triangle me-2"></i> [[${errorMessage}]]
+                    </div>
+
+                    <!-- The actual registration form -->
+                    <form th:unless="${successMessage}"
+                          th:action="@{/register/doctor}"
+                          th:object="${doctorDto}"
+                          method="post"
+                          class="needs-validation"
+                          novalidate>
+
+                        <div class="mb-3">
+                            <label class="form-label">Doctor's Full Name <span class="text-danger">*</span></label>
+                            <input type="text" th:field="*{doctorName}" class="form-control" placeholder="Dr. John Doe" required>
+                            <div class="text-danger mt-1" th:if="${#fields.hasErrors('doctorName')}">
+                                <small th:errors="*{doctorName}"></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
+                            <input type="text" th:field="*{mobile}" class="form-control" placeholder="9876543210" maxlength="10" required>
+                            <div class="text-danger mt-1" th:if="${#fields.hasErrors('mobile')}">
+                                <small th:errors="*{mobile}"></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                            <input type="email" th:field="*{email}" class="form-control" placeholder="doctor@example.com" required>
+                            <div class="text-danger mt-1" th:if="${#fields.hasErrors('email')}">
+                                <small th:errors="*{email}"></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Aadhaar Card Number <span class="text-danger">*</span></label>
+                            <input type="text" th:field="*{aadharCard}" class="form-control" placeholder="123456789012" maxlength="12" required>
+                            <div class="text-danger mt-1" th:if="${#fields.hasErrors('aadharCard')}">
+                                <small th:errors="*{aadharCard}"></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">PAN Card Number <span class="text-danger">*</span></label>
+                            <input type="text" th:field="*{panCard}" class="form-control" placeholder="ABCDE1234F" style="text-transform:uppercase" required>
+                            <div class="text-danger mt-1" th:if="${#fields.hasErrors('panCard')}">
+                                <small th:errors="*{panCard}"></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                            <input type="date" th:field="*{dateOfBirth}" class="form-control" required>
+                            <div class="text-danger mt-1" th:if="${#fields.hasErrors('dateOfBirth')}">
+                                <small th:errors="*{dateOfBirth}"></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Gender <span class="text-danger">*</span></label>
+                            <select th:field="*{gender}" class="form-select" required>
+                                <option value="">-- Select Gender --</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div class="text-danger mt-1" th:if="${#fields.hasErrors('gender')}">
+                                <small th:errors="*{gender}"></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Years of Experience <span class="text-danger">*</span></label>
+                            <input type="number" th:field="*{experience}" class="form-control" min="0" max="99" placeholder="5" required>
+                            <div class="text-danger mt-1" th:if="${#fields.hasErrors('experience')}">
+                                <small th:errors="*{experience}"></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Qualification <span class="text-danger">*</span></label>
+                            <input type="text" th:field="*{qualification}" class="form-control" placeholder="MBBS, MD (Cardiology)" required>
+                            <div class="text-danger mt-1" th:if="${#fields.hasErrors('qualification')}">
+                                <small th:errors="*{qualification}"></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Specialization <span class="text-danger">*</span></label>
+                            <select th:field="*{specialization}" class="form-select" required>
+                                <option value="">-- Select Specialization --</option>
+                                <option value="Cardiologist">Cardiologist</option>
+                                <option value="Dermatologist">Dermatologist</option>
+                                <option value="Dentist">Dentist</option>
+                                <option value="Orthopedic">Orthopedic</option>
+                                <option value="Neurologist">Neurologist</option>
+                                <option value="Pediatrician">Pediatrician</option>
+                                <option value="General Physician">General Physician</option>
+                                <option value="ENT Specialist">ENT Specialist</option>
+                                <option value="Gynecologist">Gynecologist</option>
+                                <option value="Psychiatrist">Psychiatrist</option>
+                            </select>
+                            <div class="text-danger mt-1" th:if="${#fields.hasErrors('specialization')}">
+                                <small th:errors="*{specialization}"></small>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-user-plus me-2"></i> Register as Doctor
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p>Already registered? <a th:href="@{/login}" class="text-primary">Login here</a></p>
+                        <p>Are you a patient? <a th:href="@{/register/patient}" class="text-primary">Register as Patient</a></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

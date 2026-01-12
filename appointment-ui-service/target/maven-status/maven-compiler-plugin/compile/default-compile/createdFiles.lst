@@ -1,0 +1,17 @@
+com\appointment\controller\DoctorProxyController.class
+com\appointment\controller\AppointmentUIController.class
+com\appointment\feignclient\DoctorFeignClient.class
+com\appointment\config\FeignAuthInterceptor.class
+com\appointment\config\AppConfig.class
+com\appointment\response\AppointmentResponse.class
+com\appointment\feignclient\AppointmentBookingClient.class
+com\appointment\dto\PatientDto.class
+com\appointment\dto\AppointmentDto.class
+com\appointment\feignclient\DoctorClientFallbackFactory$1.class
+com\appointment\dto\DoctorDto.class
+com\appointment\feignclient\DoctorClientFallbackFactory.class
+com\appointment\AppointmentUiServiceApplication.class
+com\appointment\response\AppointmentStatus.class
+com\appointment\feignclient\PatientFeignClient.class
+com\appointment\controller\AuthController.class
+com\appointment\service\ServiceImpl.class

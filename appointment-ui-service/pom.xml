@@ -109,6 +109,9 @@
                         <goals>
                             <goal>repackage</goal>
                         </goals>
+                        <configuration>
+                            <classifier>exec</classifier>  <!-- or 'boot', 'uber', etc. -->
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
