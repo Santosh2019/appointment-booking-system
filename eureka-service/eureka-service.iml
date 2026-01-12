@@ -105,23 +105,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.angus:angus-activation:2.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.jaxb:txw2:4.0.5" level="project" />
     <orderEntry type="library" name="Maven: com.sun.istack:istack-commons-runtime:4.1.2" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-spring-boot3:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-spring6:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-annotations:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-consumer:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-core:2.2.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: io.github.resilience4j:resilience4j-circularbuffer:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-framework-common:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:2.0.17" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-micrometer:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: io.micrometer:micrometer-core:1.14.6" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.hdrhistogram:HdrHistogram:2.2.2" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.latencyutils:LatencyUtils:2.0.3" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-bulkhead:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-circuitbreaker:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-retry:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-ratelimiter:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-timelimiter:2.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-actuator:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:3.4.5" level="project" />
@@ -143,5 +126,23 @@
     <orderEntry type="library" name="Maven: io.micrometer:micrometer-observation:1.14.6" level="project" />
     <orderEntry type="library" name="Maven: io.micrometer:micrometer-commons:1.14.6" level="project" />
     <orderEntry type="library" name="Maven: io.micrometer:micrometer-jakarta9:1.14.6" level="project" />
+    <orderEntry type="library" name="Maven: io.micrometer:micrometer-core:1.14.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.hdrhistogram:HdrHistogram:2.2.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.latencyutils:LatencyUtils:2.0.3" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-spring-boot3:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-spring6:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-annotations:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-consumer:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-core:2.2.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.github.resilience4j:resilience4j-circularbuffer:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-framework-common:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:2.0.17" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-micrometer:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-bulkhead:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-circuitbreaker:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-retry:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-ratelimiter:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: io.github.resilience4j:resilience4j-timelimiter:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.38" level="project" />
   </component>
 </module>

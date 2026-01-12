@@ -5,54 +5,53 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Setter
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class DoctorDto {
 
     @NotBlank(message = "Doctor name is mandatory")
-    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
+    @Size(min = 3, max = 50)
     private String doctorName;
 
-    private String doctorId;
+    // private String doctorId;
 
-    @NotBlank(message = "Mobile number is required")
-    @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid Indian mobile number")
+    @NotBlank
+    @Pattern(regexp = "^[6-9]\\d{9}$")
     private String mobile;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Please provide a valid email address")
-    private String emailId;
+    @NotBlank
+    @Email
+    private String email;
 
-    @NotBlank(message = "Aadhar card is mandatory")
-    @Pattern(regexp = "^\\d{12}$", message = "Aadhar must be exactly 12 digits")
+    @NotBlank
+    @Pattern(regexp = "^\\d{12}$")
     private String aadharCard;
 
-    @NotBlank(message = "PAN card is required")
-    @Pattern(regexp = "^[A-Z]{5}[0-9]{4}[A-Z]{1}$", message = "Invalid PAN card format")
+    @NotBlank
+    @Pattern(regexp = "^[A-Z]{5}[0-9]{4}[A-Z]{1}$")
     private String panCard;
 
-    @NotNull(message = "Date of birth is required")
-    @Past(message = "Date of birth must be in the past")
+    @NotNull
+    @Past
     private LocalDate dateOfBirth;
 
-    @NotBlank(message = "Gender is required")
-    @Pattern(regexp = "Male|Female|Other", message = "Gender must be Male, Female or Other")
+    @NotBlank
+    @Pattern(regexp = "Male|Female|Other")
     private String gender;
 
-    @NotBlank(message = "Years of experience is required")
-    @Pattern(regexp = "\\d+", message = "Experience must be a number")
-    @Size(max = 2, message = "Experience cannot exceed 99 years")
-    private String yearOfExperience;
+    // ← Change this from String to Integer
+    @Min(value = 0, message = "Experience cannot be negative")
+    @Max(value = 99, message = "Experience cannot exceed 99 years")
+    private Integer experience;
 
-    @NotBlank(message = "Qualification is required")
-    @Size(min = 2, max = 100, message = "Qualification must be between 2 and 100 characters")
+    @NotBlank
+    @Size(min = 2, max = 100)
     private String qualification;
 
-    @NotBlank(message = "Specialization is mandatory")
-    @Size(min = 3, max = 50, message = "Specialization must be between 3 and 50 characters")
+    @NotBlank
+    @Size(min = 3, max = 50)
     private String specialization;
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_16">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_X">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -30,7 +30,6 @@
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-webflux:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-json:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.18.3" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-parameter-names:2.18.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-reactor-netty:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: io.projectreactor.netty:reactor-netty-http:1.2.5" level="project" />
@@ -53,8 +52,6 @@
     <orderEntry type="library" name="Maven: io.netty:netty-handler-proxy:4.1.119.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-codec-socks:4.1.119.Final" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:6.2.6" level="project" />
-    <orderEntry type="library" name="Maven: io.micrometer:micrometer-observation:1.14.6" level="project" />
-    <orderEntry type="library" name="Maven: io.micrometer:micrometer-commons:1.14.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webflux:6.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-security:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:3.4.5" level="project" />
@@ -120,5 +117,16 @@
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-cache:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:6.2.6" level="project" />
     <orderEntry type="library" name="Maven: com.stoyanr:evictor:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-actuator:3.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator-autoconfigure:3.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator:3.4.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.3" level="project" />
+    <orderEntry type="library" name="Maven: io.micrometer:micrometer-observation:1.14.6" level="project" />
+    <orderEntry type="library" name="Maven: io.micrometer:micrometer-commons:1.14.6" level="project" />
+    <orderEntry type="library" name="Maven: io.micrometer:micrometer-jakarta9:1.14.6" level="project" />
+    <orderEntry type="library" name="Maven: io.micrometer:micrometer-core:1.14.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.hdrhistogram:HdrHistogram:2.2.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.latencyutils:LatencyUtils:2.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.38" level="project" />
   </component>
 </module>

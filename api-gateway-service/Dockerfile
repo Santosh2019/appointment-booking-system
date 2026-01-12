@@ -1,17 +1,36 @@
-# Use lightweight JRE (smaller image, sufficient for running JAR)
+# Lightweight and secure Alpine-based JRE
 FROM eclipse-temurin:17-jre-alpine
 
-# Set working directory
+# Metadata
+LABEL maintainer="santoshlimbale76" \
+      description="API Gateway Service with JWT Authentication" \
+      version="0.0.1-SNAPSHOT"
+
+# Working directory
 WORKDIR /app
 
-# Copy the pre-built JAR from Maven build
-COPY target/api-gateway-service-0.0.1-SNAPSHOT.jar app.jar
+# Copy executable JAR (wildcard for flexibility)
+COPY target/api-gateway-service-*.jar app.jar
 
-# Expose the API Gateway port
+# Expose Gateway port
 EXPOSE 8081
 
-# Prevent encoding issues on Windows Jenkins agents
+# Fix encoding issues on Windows Jenkins
 ENV JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8"
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Default config - override in docker-compose.yml
+ENV SERVER_PORT=8081 \
+    EUREKA_CLIENT_SERVICEURL_DEFAULTZONE="http://host.docker.internal:8761/eureka/" \
+    LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_GATEWAY="DEBUG" \
+    LOGGING_LEVEL_REACTOR_NETTY="INFO"
+
+# Health check via Actuator (Gateway exposes /actuator/gateway/routes too)
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8081/actuator/health || exit 1
+
+# Run as non-root user (security best practice)
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
+# Start the Gateway
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

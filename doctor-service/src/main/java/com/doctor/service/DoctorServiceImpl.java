@@ -108,7 +108,7 @@ public class DoctorServiceImpl implements DoctorServices {
         if (dto.getMobile() == null || dto.getMobile().trim().isEmpty()) {
             throw new IllegalArgumentException("Mobile Number is already exists");
         }
-        if (dto.getEmailId() == null || dto.getEmailId().trim().isEmpty()) {
+        if (dto.getEmail() == null || dto.getEmail().trim().isEmpty()) {
             throw new IllegalArgumentException("Email Id already exists");
         }
         if (dto.getPanCard() == null || dto.getPanCard().trim().isEmpty()) {
@@ -119,7 +119,7 @@ public class DoctorServiceImpl implements DoctorServices {
         if (doctorRepo.findByMobile(dto.getMobile()).isPresent()) {
             throw new IllegalArgumentException("Mobile Number already exists");
         }
-        if (doctorRepo.findByEmailId(dto.getEmailId()).isPresent()) {
+        if (doctorRepo.findByEmail(dto.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email Id already exists");
         }
         if (doctorRepo.findByPanCard(dto.getPanCard()).isPresent()) {

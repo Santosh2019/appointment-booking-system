@@ -2,32 +2,54 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>appointment-booking-system</artifactId>
-        <groupId>com.hospital</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.hospital</groupId>
+        <artifactId>appointment-booking-system</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <artifactId>eureka-service</artifactId>
+    <name>Eureka Server</name>
+
+    <properties>
+        <java.version>17</java.version>
+        <spring-cloud.version>2024.0.2</spring-cloud.version>
+        <spring-boot.version>3.2.5</spring-boot.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
     <dependencies>
-        <!-- ONLY THIS ONE DEPENDENCY -->
+        <!-- Core Eureka Server dependency -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.github.resilience4j</groupId>
-            <artifactId>resilience4j-spring-boot3</artifactId>
-            <version>2.2.0</version> <!-- Latest as of Dec 2025 -->
-        </dependency>
 
-        <!-- For nice Actuator endpoints (/actuator/circuitbreakers) -->
+        <!-- Actuator for monitoring (optional but useful) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!-- Resilience4j (optional for Eureka, but kept if you plan to use it later) -->
+        <dependency>
+            <groupId>io.github.resilience4j</groupId>
+            <artifactId>resilience4j-spring-boot3</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+        <!-- Lombok (optional, but recommended for clean code) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -39,18 +61,24 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <build>
         <plugins>
+            <!-- Spring Boot Maven Plugin - Critical for executable JAR -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.2.5</version>
-                <configuration>
-                    <image>
-                        <name>santoshlimbale76/${project.artifactId}:latest</name>
-                    </image>
-                </configuration>
+                <version>${spring-boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
+
+            <!-- Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -60,7 +88,6 @@
                     <target>17</target>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>

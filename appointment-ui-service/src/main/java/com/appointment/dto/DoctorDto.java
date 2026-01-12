@@ -1,10 +1,24 @@
 package com.appointment.dto;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+import java.time.LocalDate;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class DoctorDto {
-    private String id;            // doctorId (String असतो तुमच्याकडे)
+
     private String doctorName;
+    private String mobile;
+    private String email;
+    private String aadharCard;
+    private String panCard;
+    private LocalDate dateOfBirth;
+    private String gender;
+    private Integer experience;
+    private String qualification;
     private String specialization;
 }

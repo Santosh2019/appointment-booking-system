@@ -34,7 +34,7 @@ public class Doctor {
     private String mobile;
 
     @Column(name = "email_id", nullable = false, length = 100, unique = true)
-    private String emailId;
+    private String email;
 
     @Column(name = "aadhar_card", nullable = false, length = 12, unique = true)
     private String aadharCard;
@@ -49,7 +49,7 @@ public class Doctor {
     private String gender;
 
     @Column(name = "year_of_experience", nullable = false, length = 2)
-    private String yearOfExperience;
+    private String experience;
 
     @Column(name = "qualification", nullable = false, length = 100)
     private String qualification;

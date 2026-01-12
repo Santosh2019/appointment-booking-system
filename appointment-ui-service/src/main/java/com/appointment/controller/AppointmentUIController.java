@@ -1,11 +1,13 @@
 package com.appointment.controller;
 
-import com.appointement.response.AppointmentResponse;
+import com.appointment.feignclient.DoctorFeignClient;
+import com.appointment.response.AppointmentResponse;
 import com.appointment.dto.AppointmentDto;
-import com.appointment.feignclient.AppointmentFeignClient;
+import com.appointment.dto.DoctorDto;
+import com.appointment.dto.PatientDto;
+import com.appointment.feignclient.AppointmentBookingClient;
 import com.appointment.feignclient.PatientFeignClient;
-import com.patient.dto.PatientDto;
-import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,25 +22,34 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AppointmentUIController {
 
     private final PatientFeignClient patientFeignClient;
-    private final AppointmentFeignClient appointmentFeignClient;
+    private final AppointmentBookingClient appointmentFeignClient;
+    private final DoctorFeignClient doctorFeignClient;
 
-    // Patient Registration - Show form
+    // ────────────────────────────────────────────────
+    // Patient Registration
+    // ────────────────────────────────────────────────
+
     @GetMapping("/register/patient")
     public String showPatientRegistration(Model model) {
         model.addAttribute("patientDto", new PatientDto());
         return "register-patient";
     }
 
-    // Patient Registration - Handle submission
     @PostMapping("/register/patient")
-    public String registerPatient(@Valid @ModelAttribute("patientDto") PatientDto patientDto,
+    public String registerPatient(@ModelAttribute("patientDto") PatientDto patientDto,
                                   BindingResult result,
-                                  Model model) {
+                                  Model model,
+                                  RedirectAttributes redirectAttributes) {
+
+        // If you still want to keep basic validation (optional)
         if (result.hasErrors()) {
             return "register-patient";
         }
+
         try {
             patientFeignClient.addPatient(patientDto);
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "Patient registered successfully! You can now login or go to dashboard.");
             return "redirect:/success-page";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Registration failed. Please try again.");
@@ -46,25 +57,65 @@ public class AppointmentUIController {
         }
     }
 
-    // Success page after registration
     @GetMapping("/success-page")
     public String showSuccessPage() {
         return "success-page";
     }
 
-    // Login page
+    // ────────────────────────────────────────────────
+    // Doctor Registration
+    // ────────────────────────────────────────────────
+
+    @GetMapping("/register/doctor")
+    public String showDoctorRegistrationForm(Model model) {
+        if (!model.containsAttribute("doctorDto")) {
+            model.addAttribute("doctorDto", new DoctorDto());
+        }
+        return "register-doctor";
+    }
+
+    @PostMapping("/register/doctor")
+    public String registerDoctor(
+            @ModelAttribute("doctorDto") DoctorDto doctorDto,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            doctorFeignClient.addDoctor(doctorDto);
+
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "Doctor registered successfully! Your profile is now in the system.");
+            redirectAttributes.addFlashAttribute("successTitle", "Doctor Registration Complete");
+
+            return "redirect:/doctor-registration-success";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Registration failed: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("doctorDto", doctorDto);
+            return "redirect:/register/doctor";
+        }
+    }
+
+
+    // ────────────────────────────────────────────────
+    // Login & Dashboard
+    // ────────────────────────────────────────────────
+
     @GetMapping("/login")
     public String showLoginPage() {
         return "login";
     }
 
-    // Patient dashboard
     @GetMapping("/dashboard")
     public String showDashboard() {
         return "dashboard";
     }
 
-    // Show book appointment form
+    // ────────────────────────────────────────────────
+    // Appointment Booking
+    // ────────────────────────────────────────────────
+
     @GetMapping("/appointments/book")
     public String showBookAppointmentForm(Model model) {
         if (!model.containsAttribute("appointmentDto")) {
@@ -73,14 +124,12 @@ public class AppointmentUIController {
         return "book-appointment";
     }
 
-    // Handle appointment booking submission
     @PostMapping("/appointments/book")
     public String bookAppointment(
-            @Valid @ModelAttribute("appointmentDto") AppointmentDto appointmentDto,
+            @ModelAttribute("appointmentDto") AppointmentDto appointmentDto,
             BindingResult result,
             RedirectAttributes redirectAttributes) {
 
-        // If validation errors → redirect back with form data preserved
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.appointmentDto", result);
             redirectAttributes.addFlashAttribute("appointmentDto", appointmentDto);
@@ -88,15 +137,9 @@ public class AppointmentUIController {
         }
 
         try {
-            // Call microservice to book appointment
             AppointmentResponse response = appointmentFeignClient.bookAppointment(appointmentDto);
-
-            // Pass the full response to the success page via flash attribute
             redirectAttributes.addFlashAttribute("appointmentResponse", response);
-
-            // Redirect to the detailed success page
             return "redirect:/appointments/success";
-
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("errorMessage", "Booking failed. Please try again later.");
@@ -105,9 +148,14 @@ public class AppointmentUIController {
         }
     }
 
-    // New: Dedicated success page after successful booking
     @GetMapping("/appointments/success")
     public String showAppointmentSuccessPage() {
-        return "appointment-success"; // → templates/appointment-success.html
+        return "appointment-success";
+    }
+
+
+    @GetMapping("/doctor-registration-success")
+    public String showDoctorSuccessPage() {
+        return "doctor-registration-success";  // → create templates/doctor-registration-success.html
     }
 }

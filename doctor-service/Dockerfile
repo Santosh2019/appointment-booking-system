@@ -1,22 +1,38 @@
-# Lightweight Java 17 runtime only – no Maven build inside Docker
-FROM eclipse-temurin:17-jre
+# Lightweight and secure Alpine-based JRE
+FROM eclipse-temurin:17-jre-alpine
 
+# Metadata
+LABEL maintainer="santoshlimbale76" \
+      description="Doctor Service for Hospital Appointment Booking System" \
+      version="0.0.1-SNAPSHOT"
+
+# Working directory
 WORKDIR /app
 
-# Copy the JAR that was already built by Jenkins (mvn clean package in root)
-COPY target/doctor-service-0.0.1-SNAPSHOT.jar app.jar
+# Copy executable JAR (wildcard for version flexibility)
+COPY target/doctor-service-*.jar app.jar
 
-# Expose the port your doctor-service uses
+# Expose port
 EXPOSE 9091
 
-# Database & Eureka connection settings (can be overridden at runtime)
-ENV SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/testdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-ENV SPRING_DATASOURCE_USERNAME=root
-ENV SPRING_DATASOURCE_PASSWORD=root
-ENV EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://host.docker.internal:8761/eureka/
-
-# Prevent encoding problems (especially useful on Windows)
+# Fix encoding issues on Windows Jenkins
 ENV JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8"
 
-# Start the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Default config - override in docker-compose.yml for production
+ENV SPRING_DATASOURCE_URL="jdbc:mysql://host.docker.internal:3306/testdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+ENV SPRING_DATASOURCE_USERNAME="root"
+ENV SPRING_DATASOURCE_PASSWORD="root"
+ENV EUREKA_CLIENT_SERVICEURL_DEFAULTZONE="http://host.docker.internal:8761/eureka/"
+ENV SERVER_PORT="9091"
+ENV LOGGING_LEVEL_COM_HOSPITAL="INFO"
+
+# Health check using Actuator
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:9091/actuator/health || exit 1
+
+# Security: Run as non-root user
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
+# Start app
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

@@ -1,7 +1,7 @@
 package com.appointment.controller;
 
+import com.appointment.dto.DoctorDto;
 import com.appointment.feignclient.DoctorFeignClient;
-import com.doctor.dto.DoctorDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

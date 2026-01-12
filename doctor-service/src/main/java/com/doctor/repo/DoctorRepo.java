@@ -11,12 +11,11 @@ import java.util.Optional;
 public interface DoctorRepo extends JpaRepository<Doctor, String> {
     Optional<Doctor> findByAadharCard(String aadharCard);
 
-
     List<Doctor> getDoctorsBySpecialization(String specialization);
 
     Optional<Doctor> findByMobile(String mobile);
 
-    Optional<Doctor> findByEmailId(String emailId);
+    Optional<Doctor> findByEmail(String email);
 
     Optional<Doctor> findByPanCard(String panCard);
 
