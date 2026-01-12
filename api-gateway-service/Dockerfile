@@ -10,13 +10,12 @@ LABEL maintainer="santoshlimbale76" \
 WORKDIR /app
 
 # Copy executable JAR (wildcard for flexibility)
-COPY target/api-gateway-service-*.jar app.jar
+COPY target/*-exec.jar app.jar
 
 # Expose Gateway port
 EXPOSE 8081
 
 # Fix encoding issues on Windows Jenkins
-ENV JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8"
 
 # Default config - override in docker-compose.yml
 ENV SERVER_PORT=8081 \

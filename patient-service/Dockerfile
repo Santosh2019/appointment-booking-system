@@ -10,13 +10,9 @@ LABEL maintainer="santoshlimbale76" \
 WORKDIR /app
 
 # Copy the executable Spring Boot JAR
-COPY target/patient-service-*.jar app.jar
-
+COPY target/*-exec.jar app.jar
 # Expose the port
 EXPOSE 9092
-
-# Prevent encoding issues on Windows-based Jenkins agents
-ENV JAVA_TOOL_OPTIONS=" -Dfile.encoding=UTF-8"
 
 # Spring Boot / App environment variables (override in docker-compose for production)
 ENV SPRING_DATASOURCE_URL="jdbc:mysql://host.docker.internal:3306/testdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"

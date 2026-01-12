@@ -11,7 +11,7 @@ WORKDIR /app
 
 # Copy the exact JAR file name you mentioned
 # (If you prefer flexibility for future versions, you can use wildcard: appointment-service-*.jar)
-COPY target/appointment-service-0.0.1-SNAPSHOT.jar app.jar
+COPY target/*-exec.jar app.jar
 
 # Expose the default port for appointment-service
 # Change 9090 if your application.yml uses a different server.port

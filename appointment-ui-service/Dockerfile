@@ -8,7 +8,7 @@ LABEL maintainer="santoshlimbale76" \
 WORKDIR /app
 
 # Copy executable JAR
-COPY target/appointment-ui-service-*.jar app.jar
+COPY target/*-exec.jar app.jar
 
 # Expose UI port (commonly 8080 or 8085 for frontend services)
 EXPOSE 8085

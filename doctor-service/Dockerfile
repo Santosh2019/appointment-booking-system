@@ -10,7 +10,7 @@ LABEL maintainer="santoshlimbale76" \
 WORKDIR /app
 
 # Copy executable JAR (wildcard for version flexibility)
-COPY target/doctor-service-*.jar app.jar
+COPY target/*-exec.jar app.jar
 
 # Expose port
 EXPOSE 9091
