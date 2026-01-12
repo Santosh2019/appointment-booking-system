@@ -75,7 +75,8 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-                            <classifier>exec</classifier>  <!-- or 'boot', 'uber', etc. -->
+                            <classifier>exec</classifier>
+                            <mainClass>com.hospital.EurekaServiceApplication</mainClass><!-- or 'boot', 'uber', etc. -->
                         </configuration>
                     </execution>
                 </executions>
