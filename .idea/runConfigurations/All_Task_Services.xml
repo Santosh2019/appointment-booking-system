@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="All Task Services" type="CompoundRunConfigurationType">
+    <toRun name="EurekaServiceApplication" type="Application" />
+    <toRun name="AppointmentUiServiceApplication" type="Application" />
+    <toRun name="PatientServiceApplication" type="Application" />
+    <toRun name="ApiGatewayServiceApplication" type="Application" />
+    <toRun name="AppointmentServiceApplication" type="Application" />
+    <toRun name="DoctorServiceApplication" type="Application" />
+    <method v="2" />
+  </configuration>
+</component>

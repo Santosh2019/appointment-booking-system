@@ -16,7 +16,7 @@ public class DoctorDto {
     @Size(min = 3, max = 50)
     private String doctorName;
 
-    // private String doctorId;
+    private String doctorId;
 
     @NotBlank
     @Pattern(regexp = "^[6-9]\\d{9}$")

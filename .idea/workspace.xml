@@ -4,255 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e524a93-9e73-4db2-92a0-4b2f3c33376c" name="Default Changelist" comment="fix(pom): added @Disabled annotation on ui-service">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_5_18.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_5_18.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_7_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_18_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_18_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_18_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_dataformat_jackson_dataformat_xml_2_18_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_18_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_18_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_parameter_names_2_18_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_woodstox_woodstox_core_7_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_stephenc_jcip_jcip_annotations_1_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_errorprone_error_prone_annotations_2_23_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_errorprone_error_prone_annotations_2_27_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_failureaccess_1_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_14_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_33_0_0_jre.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_j2objc_j2objc_annotations_2_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_hospital_common_modules_0_0_1_SNAPSHOT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_9_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mysql_mysql_connector_j_8_0_33.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mysql_mysql_connector_j_9_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_netflix_eureka_eureka_client_2_0_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_netflix_eureka_eureka_client_jersey3_2_0_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_netflix_eureka_eureka_core_2_0_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_netflix_eureka_eureka_core_jersey3_2_0_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_netflix_netflix_commons_netflix_eventbus_0_3_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_netflix_netflix_commons_netflix_infix_0_3_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_netflix_servo_servo_core_0_5_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_netflix_spectator_spectator_api_1_7_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_nimbusds_nimbus_jose_jwt_9_37_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_stoyanr_evictor_1_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_istack_istack_commons_runtime_4_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_thoughtworks_xstream_xstream_1_4_21.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_zaxxer_HikariCP_5_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_17_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_configuration_commons_configuration_1_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_fileupload_commons_fileupload_1_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_jxpath_commons_jxpath_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_openfeign_feign_core_13_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_openfeign_feign_form_13_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_openfeign_feign_form_spring_13_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_openfeign_feign_slf4j_13_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_annotations_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_bulkhead_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_circuitbreaker_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_circularbuffer_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_consumer_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_core_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_framework_common_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_micrometer_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_ratelimiter_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_retry_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_spring6_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_spring_boot3_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_resilience4j_resilience4j_timelimiter_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_x_stream_mxparser_1_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_api_0_12_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_impl_0_12_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_jackson_0_12_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_micrometer_micrometer_commons_1_14_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_micrometer_micrometer_core_1_14_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_micrometer_micrometer_jakarta9_1_14_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_micrometer_micrometer_observation_1_14_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_buffer_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_dns_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_http2_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_http_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_socks_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_common_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_proxy_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_dns_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_dns_classes_macos_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_dns_native_macos_osx_x86_64_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_classes_epoll_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_epoll_linux_x86_64_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_unix_common_4_1_119_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_addons_reactor_extra_3_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_netty_reactor_netty_core_1_2_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_netty_reactor_netty_http_1_2_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_reactor_core_3_7_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_smallrye_jandex_3_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_activation_jakarta_activation_api_2_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_annotation_jakarta_annotation_api_2_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_inject_jakarta_inject_api_2_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_persistence_jakarta_persistence_api_3_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_transaction_jakarta_transaction_api_2_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_validation_jakarta_validation_api_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_ws_rs_jakarta_ws_rs_api_3_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_xml_bind_jakarta_xml_bind_api_4_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_annotation_javax_annotation_api_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__joda_time_joda_time_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_15_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_15_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_accessors_smart_2_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_json_smart_2_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_antlr4_runtime_4_13_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_antlr_runtime_3_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_stringtemplate_3_2_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_math_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_client5_httpclient5_5_4_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_core5_httpcore5_5_3_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_core5_httpcore5_h2_5_3_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_16.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_24_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_to_slf4j_2_24_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_10_1_40.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_10_1_40.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_10_1_40.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_9_24.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_assertj_assertj_core_3_26_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_attoparser_attoparser_2_0_7_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_awaitility_awaitility_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcprov_jdk18on_1_78_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_checkerframework_checker_qual_3_41_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jettison_jettison_1_5_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_woodstox_stax2_api_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_angus_angus_activation_2_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_freemarker_freemarker_2_3_34.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_hk2_hk2_api_3_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_hk2_hk2_locator_3_0_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_hk2_hk2_utils_3_0_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_hk2_osgi_resource_locator_1_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_hk2_spring_bridge_3_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_jaxb_core_4_0_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_jaxb_runtime_4_0_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_txw2_4_0_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_connectors_jersey_apache_connector_3_1_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_containers_jersey_container_servlet_3_1_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_containers_jersey_container_servlet_core_3_1_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_core_jersey_client_3_1_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_core_jersey_common_3_1_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_core_jersey_server_3_1_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_inject_jersey_hk2_3_1_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hdrhistogram_HdrHistogram_2_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_common_hibernate_commons_annotations_7_0_3_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_orm_hibernate_core_6_6_13_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_validator_hibernate_validator_8_0_2_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_30_2_GA.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_6_1_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_5_11_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_11_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_11_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_params_5_11_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_11_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_11_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_latencyutils_LatencyUtils_2_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_core_5_14_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_junit_jupiter_5_14_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_modelmapper_modelmapper_3_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_objenesis_objenesis_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_3_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_9_7_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_projectlombok_lombok_1_18_38.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_reactivestreams_reactive_streams_1_0_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_5_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_2_0_17.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_2_0_17.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_actuator_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_actuator_autoconfigure_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_devtools_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_actuator_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_cache_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_jpa_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_freemarker_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_oauth2_resource_server_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_reactor_netty_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_thymeleaf_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_validation_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_webflux_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_commons_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_context_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_gateway_server_4_2_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_loadbalancer_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_netflix_eureka_client_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_netflix_eureka_server_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_openfeign_core_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_starter_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_starter_gateway_4_2_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_starter_loadbalancer_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_starter_netflix_eureka_client_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_starter_netflix_eureka_server_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_starter_openfeign_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_commons_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_jpa_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_6_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_6_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_crypto_6_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_oauth2_core_6_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_oauth2_jose_6_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_oauth2_resource_server_6_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_web_6_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aspects_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_orm_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webflux_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_6_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_3_1_3_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_spring6_3_1_3_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_unbescape_unbescape_1_1_6_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_xmlunit_xmlunit_core_2_10_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__xmlpull_xmlpull_1_1_3_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway-service/pom.xml" afterDir="false" />
+    <list default="true" id="9e524a93-9e73-4db2-92a0-4b2f3c33376c" name="Default Changelist" comment="fix(pom):updated docker files">
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/All_Task_Services.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/All_Task_Services.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway-service/target/api-gateway-service-0.0.1-SNAPSHOT-exec.jar" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway-service/target/api-gateway-service-0.0.1-SNAPSHOT-exec.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-gateway-service/target/api-gateway-service-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway-service/target/api-gateway-service-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appointment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appointment-ui-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appointment-ui-service/src/test/java/com/appointments/AppointmentUiServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/src/test/java/com/appointments/AppointmentUiServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway-service/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway-service/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appointment-service/src/main/java/com/appointments/AppointmentServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-service/src/main/java/com/appointments/AppointmentServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appointment-ui-service/src/main/java/com/appointment/controller/AppointmentUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/src/main/java/com/appointment/controller/AppointmentUIController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appointment-ui-service/src/main/java/com/appointment/dto/DoctorDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/src/main/java/com/appointment/dto/DoctorDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appointment-ui-service/src/main/resources/templates/book-appointment.html" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/src/main/resources/templates/book-appointment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appointment-ui-service/target/appointment-ui-service-0.0.1-SNAPSHOT-exec.jar" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/target/appointment-ui-service-0.0.1-SNAPSHOT-exec.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appointment-ui-service/target/appointment-ui-service-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/target/appointment-ui-service-0.0.1-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appointment-ui-service/target/classes/templates/book-appointment.html" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/target/classes/templates/book-appointment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appointment-ui-service/target/surefire-reports/TEST-com.appointments.AppointmentUiServiceApplicationTests.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/appointment-ui-service/target/surefire-reports/com.appointments.AppointmentUiServiceApplicationTests.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/au-service/target/au-service-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/au-service/target/au-service-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doctor-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/doctor-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/au-service/target/surefire-reports/TEST-com.aps.AuthServiceApplicationTests.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/au-service/target/surefire-reports/com.aps.AuthServiceApplicationTests.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/doctor-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/doctor-service/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eureka-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-service/target/eureka-service-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/target/eureka-service-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patient-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/patient-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-service/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-service/target/eureka-service-0.0.1-SNAPSHOT-exec.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-service/target/eureka-service-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-service/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-service/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -290,7 +67,7 @@
       <recent name="com.appointments.response" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AppointmentUiServiceApplication">
+  <component name="RunManager" selected="Application.DoctorServiceApplication">
     <configuration name="ApiGatewayServiceApplication" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.hospital.ApiGatewayServiceApplication" />
       <module name="api-gateway-service" />
@@ -369,15 +146,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All Task Services" type="CompoundRunConfigurationType">
-      <toRun name="EurekaServiceApplication" type="Application" />
-      <toRun name="DoctorServiceApplication" type="Application" />
-      <toRun name="PatientServiceApplication" type="Application" />
-      <toRun name="ApiGatewayServiceApplication" type="Application" />
-      <toRun name="AppointmentUiServiceApplication" type="Application" />
-      <toRun name="AppointmentServiceApplication" type="Application" />
-      <method v="2" />
-    </configuration>
     <configuration default="true" type="CompoundRunConfigurationType">
       <toRun name="AppointmentServiceApplication" type="Application" />
       <toRun name="PatientServiceApplication" type="Application" />
@@ -426,8 +194,32 @@
       <option name="project" value="LOCAL" />
       <updated>1768236143779</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix(pom):added &lt;mainClass&gt; tag into eureka-service pom.xml">
+      <created>1768241138320</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1768241138320</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix(pom):updated application.properties of eureka">
+      <created>1768241679215</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1768241679215</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix(pom):updated docker files">
+      <created>1768244786486</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1768244786486</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.sql" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -445,6 +237,9 @@
     <MESSAGE value="fix(pom): clean and update au-service POM for Java 17, Spring Boot 3.2.5, and remove duplicates" />
     <MESSAGE value="fix(pom): update doctor-service and ui-service for doctor registration" />
     <MESSAGE value="fix(pom): added @Disabled annotation on ui-service" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(pom): added @Disabled annotation on ui-service" />
+    <MESSAGE value="fix(pom):added &lt;mainClass&gt; tag into eureka-service pom.xml" />
+    <MESSAGE value="fix(pom):updated application.properties of eureka" />
+    <MESSAGE value="fix(pom):updated docker files" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(pom):updated docker files" />
   </component>
 </project>

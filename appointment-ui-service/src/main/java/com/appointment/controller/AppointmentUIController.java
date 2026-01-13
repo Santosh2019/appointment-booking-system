@@ -153,9 +153,8 @@ public class AppointmentUIController {
         return "appointment-success";
     }
 
-
     @GetMapping("/doctor-registration-success")
     public String showDoctorSuccessPage() {
-        return "doctor-registration-success";  // → create templates/doctor-registration-success.html
+        return "doctor-registration-success";
     }
 }
