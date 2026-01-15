@@ -1,21 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Patient Registration</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { border-radius: 12px; }
+        .bottom-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .btn-dashboard {
+            min-width: 180px;
+        }
+
+
+
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
+
+            <!-- Registration form card -->
             <div class="card shadow">
-                <div class="card-header bg-info text-white text-center">
-                    <h3>Patient Registration</h3>
+                <div class="card-header bg-info text-white text-center py-3">
+                    <h3 class="mb-0">Patient Registration</h3>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body p-4">
                     <form th:action="@{/register/patient}" th:object="${patientDto}" method="post">
 
                         <!-- Full Name -->
@@ -28,7 +51,7 @@
                         <div class="mb-3">
                             <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
                             <input type="text" th:field="*{mobile}" class="form-control"
-                                   placeholder="9876543210" required>
+                                   placeholder="9876543210" required pattern="[0-9]{10}">
                         </div>
 
                         <!-- Email -->
@@ -51,10 +74,7 @@
                         <!-- Date of Birth -->
                         <div class="mb-3">
                             <label class="form-label">Date of Birth <span class="text-danger">*</span></label>
-                            <input type="date"
-                                   th:field="*{dateOfBirth}"
-                                   class="form-control"
-                                   required
+                            <input type="date" th:field="*{dateOfBirth}" class="form-control" required
                                    th:attr="max=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
                         </div>
 
@@ -63,29 +83,27 @@
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">State</label>
                                 <select th:field="*{state}" class="form-select">
-                                    <option value="">-- Select State --</option>
+                                    <option value="">-- Select --</option>
                                     <option value="Maharashtra">Maharashtra</option>
                                     <option value="Karnataka">Karnataka</option>
                                     <option value="Gujarat">Gujarat</option>
                                     <option value="Madhya Pradesh">Madhya Pradesh</option>
                                 </select>
                             </div>
-
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">City</label>
                                 <select th:field="*{city}" class="form-select">
-                                    <option value="">-- Select City --</option>
+                                    <option value="">-- Select --</option>
                                     <option value="Pune">Pune</option>
                                     <option value="Mumbai">Mumbai</option>
                                     <option value="Nagpur">Nagpur</option>
                                     <option value="Nashik">Nashik</option>
                                 </select>
                             </div>
-
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Pincode</label>
                                 <input type="text" th:field="*{pincode}" class="form-control"
-                                       placeholder="6-digit PIN">
+                                       placeholder="4110XX" pattern="[0-9]{6}">
                             </div>
                         </div>
 
@@ -93,29 +111,43 @@
                         <div class="mb-3">
                             <label class="form-label">Address</label>
                             <textarea th:field="*{address}" class="form-control" rows="2"
-                                      placeholder="House No, Street, Area"></textarea>
+                                      placeholder="House No, Street, Area..."></textarea>
                         </div>
 
                         <!-- Aadhar -->
                         <div class="mb-3">
                             <label class="form-label">Aadhar Card Number <span class="text-danger">*</span></label>
                             <input type="text" th:field="*{aadharCard}" class="form-control"
-                                   maxlength="12" placeholder="12 digits" required>
+                                   maxlength="12" placeholder="XXXXXXXXXXXX" required pattern="[0-9]{12}">
                         </div>
 
-                        <button type="submit" class="btn btn-info btn-lg w-100">
-                            Register as Patient
+                        <button type="submit" class="btn btn-info btn-lg w-100 mt-4">
+                            <i class="fas fa-user-plus me-2"></i> Register as Patient
                         </button>
+
                     </form>
 
-                    <div class="text-center mt-3">
-                        <p>Already have an account? <a th:href="@{/login}">Login here</a></p>
+                    <!-- Bottom links: Login here + Back to Dashboard (side by side when logged in) -->
+                    <div class="bottom-links text-center">
+                        <p class="mb-0 me-3">Already have an account?
+                            <a th:href="@{/auth/login}" class="text-info fw-bold">Login here</a>
+                        </p>
+
+                        <!-- Back to Dashboard - only visible when logged in -->
+                        <div sec:authorize="isAuthenticated()">
+                            <a th:href="@{/dashboard}" class="btn btn-outline-secondary btn-sm btn-dashboard">
+                                <i class="fas fa-arrow-left me-2"></i> Back to Dashboard
+                            </a>
+                        </div>
                     </div>
 
                 </div>
             </div>
+
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

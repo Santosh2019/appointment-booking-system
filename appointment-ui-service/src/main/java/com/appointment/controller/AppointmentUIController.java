@@ -1,13 +1,13 @@
 package com.appointment.controller;
 
-import com.appointment.feignclient.DoctorFeignClient;
-import com.appointment.response.AppointmentResponse;
 import com.appointment.dto.AppointmentDto;
 import com.appointment.dto.DoctorDto;
 import com.appointment.dto.PatientDto;
 import com.appointment.feignclient.AppointmentBookingClient;
+import com.appointment.feignclient.DoctorFeignClient;
 import com.appointment.feignclient.PatientFeignClient;
-
+import com.appointment.response.AppointmentResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class AppointmentUIController {
@@ -24,10 +26,6 @@ public class AppointmentUIController {
     private final PatientFeignClient patientFeignClient;
     private final AppointmentBookingClient appointmentFeignClient;
     private final DoctorFeignClient doctorFeignClient;
-
-    // ────────────────────────────────────────────────
-    // Patient Registration
-    // ────────────────────────────────────────────────
 
     @GetMapping("/register/patient")
     public String showPatientRegistration(Model model) {
@@ -40,12 +38,9 @@ public class AppointmentUIController {
                                   BindingResult result,
                                   Model model,
                                   RedirectAttributes redirectAttributes) {
-
-        // If you still want to keep basic validation (optional)
         if (result.hasErrors()) {
             return "register-patient";
         }
-
         try {
             patientFeignClient.addPatient(patientDto);
             redirectAttributes.addFlashAttribute("successMessage",
@@ -61,10 +56,6 @@ public class AppointmentUIController {
     public String showSuccessPage() {
         return "success-page";
     }
-
-    // ────────────────────────────────────────────────
-    // Doctor Registration
-    // ────────────────────────────────────────────────
 
     @GetMapping("/register/doctor")
     public String showDoctorRegistrationForm(Model model) {
@@ -97,24 +88,10 @@ public class AppointmentUIController {
         }
     }
 
-
-    // ────────────────────────────────────────────────
-    // Login & Dashboard
-    // ────────────────────────────────────────────────
-
-    @GetMapping("/login")
-    public String showLoginPage() {
-        return "login";
-    }
-
     @GetMapping("/dashboard")
     public String showDashboard() {
         return "dashboard";
     }
-
-    // ────────────────────────────────────────────────
-    // Appointment Booking
-    // ────────────────────────────────────────────────
 
     @GetMapping("/appointments/book")
     public String showBookAppointmentForm(Model model) {
@@ -147,6 +124,20 @@ public class AppointmentUIController {
             return "redirect:/appointments/book";
         }
     }
+
+    @GetMapping("/appointments/my")
+    public String viewMyAppointments(Model model, HttpSession session) {
+        String patientId = (String) session.getAttribute(" loggedInPatientId ");
+        if (patientId == null) {
+            return "redirect:/auth/login";
+        }
+        List<AppointmentResponse> appointments = appointmentFeignClient.getAppointmentsByPatientId(patientId);
+        model.addAttribute("appointments", appointments);
+        model.addAttribute("patientId", patientId);
+        model.addAttribute("patientName", session.getAttribute("loggedInPatientName"));
+        return "my-appointments";
+    }
+
 
     @GetMapping("/appointments/success")
     public String showAppointmentSuccessPage() {

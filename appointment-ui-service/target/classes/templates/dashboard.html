@@ -61,32 +61,46 @@
             font-size: 0.85rem;
         }
 
-
-
-
-
     </style>
 </head>
 
 <body>
 
 <!-- ================= NAVBAR ================= -->
-<nav class="navbar navbar-dark bg-primary shadow-sm position-relative">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm position-relative">
     <div class="container-fluid">
+        <!-- Left empty for centering -->
         <div></div>
+
+        <!-- Center Brand -->
         <div class="navbar-brand-center text-white">
             <i class="fas fa-calendar-check"></i>
             Appointment Management System
         </div>
-        <div sec:authorize="isAuthenticated()" class="text-white">
-            <i class="fas fa-user-circle"></i>
-            <span sec:authentication="name"></span> |
-            <a th:href="@{/logout}" class="text-white text-decoration-none">Logout</a>
-        </div>
-        <div sec:authorize="isAnonymous()" class="text-white">
-            <a th:href="@{/register/doctor}" class="text-white text-decoration-none">Register as Doctor</a> |
-            <a th:href="@{/register/patient}" class="text-white text-decoration-none">Register as Patient</a> |
-            <a th:href="@{/login}" class="text-white text-decoration-none">Login</a>
+
+        <!-- Right side: Authenticated / Anonymous -->
+        <div class="ms-auto text-white d-flex align-items-center gap-3">
+            <!-- Authenticated User -->
+            <div sec:authorize="isAuthenticated()">
+                <i class="fas fa-user-circle me-2"></i>
+                Welcome, <strong sec:authentication="name"></strong>!
+                <a th:href="@{/logout}" class="text-white text-decoration-none ms-3">
+                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                </a>
+            </div>
+
+            <!-- Anonymous User -->
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/register/doctor}" class="text-white text-decoration-none me-3">
+                    Register as Doctor
+                </a>
+                <a th:href="@{/register/patient}" class="text-white text-decoration-none me-3">
+                    Register as Patient
+                </a>
+                <a th:href="@{/auth/login}" class="text-white text-decoration-none">
+                    <i class="fas fa-sign-in-alt me-1"></i>Login
+                </a>
+            </div>
         </div>
     </div>
 </nav>
@@ -129,8 +143,6 @@
     <div sec:authorize="hasRole('ROLE_DOCTOR')" class="mt-5">
         <h4 class="dashboard-title">Doctor Dashboard</h4>
         <div class="row g-4">
-
-            <!-- Doctor Registration Card -->
             <div class="col-md-4">
                 <div class="action-card">
                     <i class="fas fa-user-md action-icon"></i>
@@ -142,7 +154,6 @@
                 </div>
             </div>
 
-            <!-- My Appointments Card -->
             <div class="col-md-4">
                 <div class="action-card">
                     <i class="fas fa-calendar-day action-icon"></i>
@@ -153,7 +164,6 @@
                     </a>
                 </div>
             </div>
-
         </div>
     </div>
 

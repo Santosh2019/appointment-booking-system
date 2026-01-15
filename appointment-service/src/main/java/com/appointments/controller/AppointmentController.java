@@ -23,9 +23,6 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
-    /**
-     * Book a new appointment - Only accessible to patients
-     */
     @PostMapping
     @PreAuthorize("hasRole('PATIENT')")
     public ResponseEntity<AppointmentResponse> book(@Valid @RequestBody AppointmentRequest request) {
@@ -37,24 +34,16 @@ public class AppointmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    /**
-     * Get all appointments for a patient
-     * Accessible to the patient themselves or admins/doctors if needed
-     */
+
     @GetMapping("/patient/{patientId}")
     @PreAuthorize("hasRole('PATIENT') and #patientId == authentication.name or hasRole('ADMIN') or hasRole('DOCTOR')")
     public ResponseEntity<List<AppointmentResponse>> getByPatientId(@PathVariable("patientId") String patientId) {
         log.debug("Fetching appointments for patient: {}", patientId);
-
         List<AppointmentResponse> appointments = appointmentService.getAppointmentsByPatientId(patientId);
-
+        log.info("Fetching appointments for patient  vikram.desai90@gmail.com: {}", patientId);
         return ResponseEntity.ok(appointments);
     }
 
-    /**
-     * Get all appointments for a doctor
-     * Accessible to the doctor themselves or admins
-     */
     @GetMapping("/doctor/{doctorId}")
     @PreAuthorize("hasRole('DOCTOR') and #doctorId == authentication.name or hasRole('ADMIN')")
     public ResponseEntity<List<AppointmentResponse>> getByDoctorId(@PathVariable("doctorId") String doctorId) {

@@ -22,7 +22,6 @@ public interface PatientFeignClient {
     @GetMapping("/api/v1/patients/email/{email}")
     PatientDto findByEmail(@PathVariable("email") String email);  // Fixed annotation
 
-    // Optional fallback
     default PatientDto fallBackPatient(String patientId, Throwable t) {
         PatientDto patientDto = new PatientDto();
         patientDto.setPatientId("Temporary Not Available");

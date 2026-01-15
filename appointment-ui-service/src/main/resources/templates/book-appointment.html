@@ -20,7 +20,6 @@
         .invalid-feedback { display: block; }
         .loading { color: #6c757d; font-style: italic; }
 
-
     </style>
 </head>
 <body>
@@ -71,8 +70,9 @@
                                 <option value="Dermatologist">Dermatology</option>
                                 <option value="Neurologist">Neurology</option>
                                 <option value="Pediatrician">Pediatrics</option>
+                                <option value="General Physician">General Physician</option>
+                                <!-- ← this line must match DB exactly -->
                                 <option value="Orthopedic">Orthopedics</option>
-                                <option value="General Physician">General</option>
                             </select>
                             <div th:if="${#fields.hasErrors('specialization')}" class="invalid-feedback"
                                  th:errors="*{specialization}"></div>
@@ -170,8 +170,9 @@ $(document).ready(function () {
     const $combinedInput = $('#combinedDateTime');
     const $dateFeedback  = $('#dateFeedback');
     const $timeFeedback  = $('#timeFeedback');
-
-    const baseDoctorUrl = /*[[@{/api/v1/doctors/specialization/}]]*/ '';
+<!--
+  /*[[@{/api/v1/doctors/specialization/}]]*/ '';-->
+     const baseDoctorUrl =  '/api/v1/doctors/specialization/';
 
     // ── Load doctors on specialization change
     $specSelect.on('change', function () {
@@ -236,6 +237,11 @@ $(document).ready(function () {
     });
 });
 /*]]>*/
+
+
+
+
+
 
 
 </script>

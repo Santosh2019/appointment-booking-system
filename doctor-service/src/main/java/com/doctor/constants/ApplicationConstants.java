@@ -1,4 +1,5 @@
 package com.doctor.constants;
+/*
 
 public final class ApplicationConstants {
 
@@ -11,4 +12,4 @@ public final class ApplicationConstants {
     public static final String DOCTOR_DELETED = "Doctor record deleted successfully";
     public static final String DOCTOR_NOT_FOUND = "Doctor not found with Aadhar: %s";
     public static final String SERVER_ERROR = "Something went wrong. Please try again later.";
-}
+}*/

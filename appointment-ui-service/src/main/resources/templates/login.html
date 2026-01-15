@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Login | Hospital Management System</title>
@@ -12,7 +12,7 @@
 
     <style>
         body {
-            background-color: #f5f8fc; /* ✅ SAME as Appointment page */
+            background-color: #f5f8fc;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -29,7 +29,7 @@
         }
 
         .login-header {
-            background-color: #0d6efd; /* same blue as appointment header */
+            background-color: #0d6efd;
             color: white;
             padding: 35px;
             text-align: center;
@@ -57,6 +57,10 @@
             box-shadow: 0 8px 20px rgba(13,110,253,0.4);
         }
 
+        .btn-back {
+            font-weight: 500;
+        }
+
         .register-links {
             margin-top: 22px;
             text-align: center;
@@ -66,6 +70,12 @@
             display: block;
             margin-top: 8px;
         }
+
+        .alert {
+            margin-bottom: 20px;
+        }
+
+
     </style>
 </head>
 
@@ -83,30 +93,56 @@
     <!-- BODY -->
     <div class="login-body">
 
+        <!-- Back to Dashboard Button -->
+        <div sec:authorize="isAuthenticated()" class="text-center mb-4">
+            <a th:href="@{/dashboard}" class="btn btn-outline-secondary btn-lg btn-back">
+                <i class="fas fa-arrow-left me-2"></i> Back to Dashboard
+            </a>
+        </div>
+
         <!-- Login Error -->
         <div th:if="${param.error}" class="alert alert-danger">
             <i class="fas fa-exclamation-circle me-2"></i>
-            Invalid username or password
+            <span th:if="${param.error == 'empty_fields'}">Please fill in all fields.</span>
+            <span th:if="${param.error == 'invalid_dob_format'}">Invalid date format. Use yyyy-MM-dd.</span>
+            <span th:if="${param.error == 'empty_token'}">Authentication failed. Please try again.</span>
+            <span th:if="${param.error == 'auth_failed'}">Authentication failed.</span>
+            <span th:if="${param.error == 'invalid_credentials'}">Invalid email or date of birth.</span>
+            <span th:if="${param.error == 'server_error'}">Server error. Please try again later.</span>
+            <span th:if="${param.error == 'service_unavailable'}">Service unavailable. Please try again later.</span>
+            <span th:if="${param.error == 'user_not_found'}">User not found.</span>
+            <span th:if="${param.error == true}">Invalid email or date of birth.</span>
         </div>
 
         <!-- Logout Success -->
         <div th:if="${param.logout}" class="alert alert-success">
             <i class="fas fa-check-circle me-2"></i>
-            Logged out successfully
+            You have been successfully logged out.
         </div>
 
-        <form th:action="@{/login}" method="post">
+        <!-- FIXED: Form action points to /auth/login -->
+        <form th:action="@{/auth/login}" method="post">
+
+            <!-- CSRF Token – commented out because CSRF is disabled -->
+            <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
 
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="username" name="username"
-                       placeholder="Username" required>
-                <label for="username"><i class="fas fa-user me-2"></i>Username</label>
+                <input type="email" class="form-control" id="email" name="email"
+                       placeholder="name@example.com" required autofocus>
+                <label for="email"><i class="fas fa-envelope me-2"></i>Email</label>
             </div>
 
             <div class="form-floating mb-4">
-                <input type="password" class="form-control" id="password" name="password"
-                       placeholder="Password" required>
-                <label for="password"><i class="fas fa-lock me-2"></i>Password</label>
+                <input type="date" class="form-control" id="dob" name="dob" required>
+                <label for="dob"><i class="fas fa-calendar-alt me-2"></i>Date of Birth</label>
+            </div>
+
+            <div class="d-flex justify-content-between mb-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                </div>
+                <a href="#" class="text-muted">Forgot password?</a>
             </div>
 
             <button type="submit" class="btn btn-login w-100">
@@ -118,14 +154,15 @@
         <!-- REGISTER LINKS -->
         <div class="register-links">
             <span class="text-muted">New user?</span>
-            <a th:href="@{/register/patient}" class="btn btn-outline-primary btn-sm">
+            <a th:href="@{/register/patient}" class="btn btn-outline-primary btn-sm mt-2">
                 <i class="fas fa-user-plus me-1"></i> Register Patient
             </a>
-            <a th:href="@{/register/doctor}" class="btn btn-outline-success btn-sm">
+            <a th:href="@{/register/doctor}" class="btn btn-outline-success btn-sm mt-2">
                 <i class="fas fa-user-md me-1"></i> Register Doctor
             </a>
         </div>
     </div>
 </div>
+
 </body>
 </html>

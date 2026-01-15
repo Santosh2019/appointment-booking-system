@@ -45,6 +45,4 @@ public class PatientDto {
     @Pattern(regexp = "^[2-9]\\d{11}$", message = "Aadhar must be 12 digits and not start with 0 or 1")
     private String aadharCard;
     private String patientId;
-    //private Boolean isActive = false;
-
 }

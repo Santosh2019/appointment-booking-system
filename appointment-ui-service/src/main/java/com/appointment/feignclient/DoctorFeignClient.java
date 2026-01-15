@@ -15,7 +15,7 @@ import java.util.List;
 
 @FeignClient(
         name = "doctor-service",
-        contextId = "doctorFeignClient",  // Unique
+        contextId = "doctorFeignClient",
         fallbackFactory = DoctorClientFallbackFactory.class
 )
 @CircuitBreaker(name = "doctorService")

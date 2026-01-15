@@ -17,10 +17,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="api-gateway-service" target="17" />
+      <module name="api-gateway-service" target="16" />
       <module name="appointment-booking-system" target="16" />
       <module name="appointment-service" target="17" />
-      <module name="appointment-ui-service" target="17" />
+      <module name="appointment-ui-service" target="16" />
       <module name="appointmet-booking-system" target="16" />
       <module name="au-service" target="17" />
       <module name="common-models" target="17" />

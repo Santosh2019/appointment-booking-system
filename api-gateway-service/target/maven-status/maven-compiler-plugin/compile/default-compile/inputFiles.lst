@@ -1,2 +1,5 @@
 C:\Users\santosh\IdeaProjects\appointment-booking-system\api-gateway-service\src\main\java\com\hospital\ApiGatewayServiceApplication.java
+C:\Users\santosh\IdeaProjects\appointment-booking-system\api-gateway-service\src\main\java\com\hospital\config\JwtDecoderConfig.java
+C:\Users\santosh\IdeaProjects\appointment-booking-system\api-gateway-service\src\main\java\com\hospital\config\SecurityConfig.java
+C:\Users\santosh\IdeaProjects\appointment-booking-system\api-gateway-service\src\main\java\com\hospital\controller\AuthController.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system\api-gateway-service\src\main\java\com\hospital\filter\JwtAuthenticationFilter.java

@@ -127,7 +127,6 @@ public class DoctorServiceImpl implements DoctorServices {
         }
     }
 
-    // doctor-service → service/DoctorServiceImpl.java
     private String maskAadhar(String aadhar) {
         if (aadhar == null || aadhar.length() < 4) return "XXXX-XXXX-XXXX";
         return "XXXX-XXXX-" + aadhar.substring(aadhar.length() - 4);

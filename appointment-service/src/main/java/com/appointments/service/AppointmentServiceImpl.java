@@ -2,7 +2,6 @@ package com.appointments.service;
 
 import com.appointments.common.IdGenerator;
 import com.appointments.dto.AppointmentStatus;
-
 import com.appointments.dto.DoctorDto;
 import com.appointments.dto.PatientDto;
 import com.appointments.entity.Appointment;
@@ -53,7 +52,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         validateTimeSlot(request.getAppointmentDate());
 
-        // Fetch real patient and doctor details from their services
         PatientDto patient = patientFeignClient.getPatientById(request.getPatientId());
         if (patient == null || patient.getFullName() == null || patient.getFullName().trim().isEmpty()) {
             throw new RuntimeException("Patient not found or invalid data for ID: " + request.getPatientId());
@@ -90,6 +88,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<AppointmentResponse> getAppointmentsByPatientId(String patientId) {
+        log.info("Appointment booked successfully: {}", patientId);
         return repository.findByPatientId(patientId).stream()
                 .map(this::buildAppointmentResponse)
                 .toList();

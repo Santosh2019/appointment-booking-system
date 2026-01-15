@@ -38,7 +38,7 @@ public class DoctorClientFallbackFactory implements FallbackFactory<DoctorFeignC
             public List<DoctorDto> getDoctorsBySpecialization(String spec) {
                 log.info("Fallback → getDoctorsBySpecialization({})", spec);
                 DoctorDto emergency = new DoctorDto();
-                //  emergency.setDoctorId("fallback-999");
+                emergency.setDoctorId("fallback-999");
                 emergency.setDoctorName("Dr. Emergency - " + spec);
                 emergency.setSpecialization(spec);
                 return List.of(emergency);
