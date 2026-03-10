@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment | Appointment Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <style>
+        body { background-color: #f8f9fc; font-family: "Segoe UI", system-ui, sans-serif; }
+        .card { border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; }
+        .card-header { background: linear-gradient(90deg, #0d6efd 0%, #0b5ed7 100%); color: white; font-weight: 600; text-align: center; padding: 1.75rem; }
+        .btn-book { background: #0d6efd; border: none; font-weight: 600; padding: 0.85rem 1.5rem; transition: all 0.2s; }
+        .btn-book:hover { background: #0b5ed7; transform: translateY(-1px); }
+        .form-label { font-weight: 500; }
+        .form-label i { color: #0d6efd; width: 1.4em; text-align: center; }
+        .invalid-feedback { display: block; }
+        .loading { color: #6c757d; font-style: italic; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0"><i class="fas fa-hospital me-2"></i>Book Appointment</h3>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <!-- Server error -->
+                    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        <span th:text="${errorMessage}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    <form th:action="@{/appointments/book}" th:object="${appointmentDto}" method="post" id="bookingForm"
+                          novalidate>
+                        <!-- Patient Full Name -->
+                        <div class="mb-4">
+                            <label class="form-label" for="fullName"><i class="fas fa-user"></i> Patient Full Name <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" th:field="*{fullName}" id="fullName" class="form-control"
+                                   placeholder="Enter full name" required autofocus>
+                            <div th:if="${#fields.hasErrors('fullName')}" class="invalid-feedback"
+                                 th:errors="*{fullName}"></div>
+                        </div>
+
+                        <!-- Patient ID -->
+                        <div class="mb-4">
+                            <label class="form-label" for="patientId"><i class="fas fa-id-card"></i> Patient ID <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" th:field="*{patientId}" id="patientId" class="form-control"
+                                   placeholder="Enter Patient ID (e.g. PT-12345)" required>
+                            <div th:if="${#fields.hasErrors('patientId')}" class="invalid-feedback"
+                                 th:errors="*{patientId}"></div>
+                        </div>
+
+                        <!-- Specialization -->
+                        <div class="mb-4">
+                            <label class="form-label" for="specialization"><i class="fas fa-stethoscope"></i>
+                                Specialization <span class="text-danger">*</span></label>
+                            <select th:field="*{specialization}" id="specialization" class="form-select" required>
+                                <option value="">-- Select Specialization --</option>
+                                <option value="Cardiologist">Cardiologist</option>
+                                <option value="Dermatologist">Dermatologist</option>
+                                <option value="Neurologist">Neurologist</option>
+                                <option value="Pediatrician">Pediatrician</option>
+                                <option value="General Physician">General Physician</option>
+                                <option value="Orthopedic">Orthopedic</option>
+                            </select>
+                            <div th:if="${#fields.hasErrors('specialization')}" class="invalid-feedback"
+                                 th:errors="*{specialization}"></div>
+                        </div>
+
+                        <!-- Doctor -->
+                        <div class="mb-4">
+                            <label class="form-label" for="doctorId"><i class="fas fa-user-md"></i> Select Doctor <span
+                                    class="text-danger">*</span></label>
+                            <select th:field="*{doctorId}" id="doctorId" class="form-select" required>
+                                <option value="">-- First select specialization --</option>
+                            </select>
+                            <div th:if="${#fields.hasErrors('doctorId')}" class="invalid-feedback"
+                                 th:errors="*{doctorId}"></div>
+                        </div>
+
+                        <!-- Date & Time -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label" for="appointmentDateInput"><i class="fas fa-calendar-day"></i>
+                                    Date <span class="text-danger">*</span></label>
+                                <input type="date" id="appointmentDateInput" class="form-control" required>
+                                <small class="text-muted d-block mt-1">Clinic closed on Sundays</small>
+                                <div id="dateFeedback" class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="appointmentTime"><i class="fas fa-clock"></i> Time Slot
+                                    <span class="text-danger">*</span></label>
+                                <select id="appointmentTime" class="form-select" required>
+                                    <option value="">-- Select Time --</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="10:30">10:30 AM</option>
+                                    <option value="11:00">11:00 AM</option>
+                                    <option value="11:30">11:30 AM</option>
+                                    <option value="12:00">12:00 PM</option>
+                                    <option value="12:30">12:30 PM</option>
+                                    <option value="14:00">02:00 PM</option>
+                                    <option value="14:30">02:30 PM</option>
+                                    <option value="15:00">03:00 PM</option>
+                                    <option value="15:30">03:30 PM</option>
+                                    <option value="16:00">04:00 PM</option>
+                                    <option value="16:30">04:30 PM</option>
+                                    <option value="17:00">05:00 PM</option>
+                                    <option value="17:30">05:30 PM</option>
+                                    <option value="18:00">06:00 PM</option>
+                                </select>
+                                <div id="timeFeedback" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden ISO datetime -->
+                        <input type="hidden" th:field="*{appointmentDate}" id="combinedDateTime"/>
+
+                        <!-- Reason -->
+                        <div class="mb-4">
+                            <label class="form-label" for="reason"><i class="fas fa-notes-medical"></i> Reason for Visit
+                                <span class="text-danger">*</span></label>
+                            <select th:field="*{reason}" id="reason" class="form-select" required>
+                                <option value="">-- Select Reason --</option>
+                                <option value="CONSULTATION">Consultation</option>
+                                <option value="FOLLOW_UP">Follow-up</option>
+                                <option value="CHECK_UP">Routine Check-up</option>
+                                <option value="EMERGENCY">Emergency</option>
+                                <option value="SURGERY">Surgery / Procedure</option>
+                                <option value="VACCINATION">Vaccination</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+                            <div th:if="${#fields.hasErrors('reason')}" class="invalid-feedback"
+                                 th:errors="*{reason}"></div>
+                        </div>
+
+                        <button type="submit" class="btn btn-book btn-lg w-100 mt-3" id="submitBtn">
+                            <i class="fas fa-check-circle me-2"></i>Confirm & Book Appointment
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <a th:href="@{/dashboard}" class="btn btn-outline-secondary"><i
+                                class="fas fa-arrow-left me-2"></i>Back to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+$(document).ready(function () {
+    const $specSelect    = $('#specialization');
+    const $doctorSelect  = $('#doctorId');
+    const $dateInput     = $('#appointmentDateInput');
+    const $timeSelect    = $('#appointmentTime');
+    const $form          = $('#bookingForm');
+    const $combinedInput = $('#combinedDateTime');
+    const $dateFeedback  = $('#dateFeedback');
+    const $timeFeedback  = $('#timeFeedback');
+
+    // Use the correct port – change here or make configurable later
+    const baseDoctorUrl = '/api/v1/doctors/specialization/';
+
+    // ── Load doctors when specialization changes
+    $specSelect.on('change', function () {
+        const spec = $(this).val()?.trim();
+        $doctorSelect.empty().append('<option value="">-- Select Doctor --</option>');
+
+        if (!spec) return;
+
+        $doctorSelect.append('<option class="loading">Loading doctors...</option>');
+
+        $.ajax({
+            url: baseDoctorUrl + encodeURIComponent(spec),
+            method: 'GET',
+            dataType: 'json',                  // ← Critical: tells jQuery to parse as JSON
+            cache: false,                      // prevent browser caching issues
+            success: function (doctors, textStatus, jqXHR) {
+                console.log('AJAX Success - Status:', jqXHR.status);
+                console.log('Content-Type:', jqXHR.getResponseHeader('Content-Type'));
+                console.log('Raw doctors data:', doctors);
+
+                $doctorSelect.empty().append('<option value="">-- Select Doctor --</option>');
+
+                if (Array.isArray(doctors) && doctors.length > 0) {
+                    doctors.forEach(d => {
+                        // Safely handle possible missing fields
+                        const name = d.doctorName || 'Unknown Doctor';
+                        const specLabel = d.specialization || '';
+                        $doctorSelect.append(
+                            `<option value="${d.doctorId}">${name} (${specLabel})</option>`
+                        );
+                    });
+                } else {
+                    $doctorSelect.append('<option value="">No doctors available for this specialization</option>');
+                    console.warn('No doctors found in response (empty or not array)');
+                }
+            },
+           error: function (jqXHR, textStatus, errorThrown) {
+         console.error("AJAX Failed - Full details:");
+         console.log("→ HTTP Status:", jqXHR.status);               // e.g. 200, 400, 500
+         console.log("→ jQuery textStatus:", textStatus);           // e.g. "error", "parsererror"
+         console.log("→ Error thrown:", errorThrown);
+         console.log("→ Response body:", jqXHR.responseText);       // crucial: what server sent
+         console.log("→ All response headers:", jqXHR.getAllResponseHeaders());
+            let msg = 'Error loading doctors';
+           if (jqXHR.status === 0) {
+        msg = 'Network/connection refused – check if service is running';
+        } else if (jqXHR.status === 404) {
+        msg = 'Endpoint not found (404)';
+        } else if (textStatus === 'parsererror') {
+        msg = 'Invalid JSON from server (parser error)';
+        } else if (jqXHR.status >= 400 && jqXHR.status < 600) {
+        msg = `Server replied with error ${jqXHR.status}`;
+    }
+
+    $doctorSelect.empty().append(`<option value="">${msg} – see browser console</option>`);
+}
+        });
+    });
+
+    // ── Date validation: no past dates & no Sundays
+    const today = new Date().toISOString().split('T')[0];
+    $dateInput.attr('min', today);
+
+    $dateInput.on('change', function () {
+        const selected = new Date(this.value);
+        if (selected.getDay() === 0) {  // 0 = Sunday
+            $dateFeedback.text('Clinic is closed on Sundays.');
+            this.value = '';
+        } else {
+            $dateFeedback.text('');
+        }
+    });
+
+    // ── Combine date + time → ISO format before submit
+    $form.on('submit', function (e) {
+        const date  = $dateInput.val();
+        const time  = $timeSelect.val();
+        const doctor = $doctorSelect.val();
+
+        let valid = true;
+        $timeFeedback.text('');
+
+        if (!date)  { $dateFeedback.text('Please select a date'); valid = false; }
+        if (!time)  { $timeFeedback.text('Please select a time'); valid = false; }
+        if (!doctor || doctor === '') {
+            alert('Please select a doctor');
+            valid = false;
+        }
+
+        if (!valid) {
+            e.preventDefault();
+            return false;
+        }
+
+        const isoDateTime = date + 'T' + time;  // e.g. 2025-02-10T14:30
+        $combinedInput.val(isoDateTime);
+    });
+});
+/*]]>*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

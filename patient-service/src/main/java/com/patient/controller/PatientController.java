@@ -1,0 +1,112 @@
+package com.patient.controller;
+
+import com.patient.dto.ActivationResponseDto;
+import com.patient.dto.ApiResponse;
+import com.patient.dto.PatientDto;
+import com.patient.exception.ResourceNotFoundException;
+import com.patient.service.PatientService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/v1/patients")
+@RequiredArgsConstructor
+public class PatientController {
+
+    private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
+    private final PatientService patientService;
+
+    @PostMapping
+    public ResponseEntity<PatientDto> savePatient(@Valid @RequestBody PatientDto patientDto) {
+        logger.debug("POST /api/v1/patients → Creating patient | Aadhar: {}", maskAadhar(patientDto.getAadharCard()));
+        PatientDto saved = null;
+        try {
+            saved = patientService.addPatient(patientDto);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
+        saved.setAadharCard(maskAadhar(saved.getAadharCard()));
+        logger.debug("Patient created successfully | Aadhar ending: {}", maskAadhar(saved.getAadharCard()));
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/aadharCard/{aadharCard}")
+    @PreAuthorize("hasRole('PATIENT') or hasRole('DOCTOR') or hasRole('ADMIN')")
+    public ResponseEntity<PatientDto> getPatient(@PathVariable("aadharCard") String aadharCard) {
+        logger.debug("GET /api/v1/patients/{} → Fetching patient", maskAadhar(aadharCard));
+        PatientDto patient = null;
+        try {
+            patient = patientService.getDetails(aadharCard);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
+        patient.setAadharCard(maskAadhar(patient.getAadharCard()));
+        logger.debug("Patient fetched successfully | Aadhar ending: {}", maskAadhar(aadharCard));
+        return ResponseEntity.ok(patient);
+    }
+
+    @PatchMapping("/{aadharCard}/activate")
+    public ResponseEntity<ApiResponse<ActivationResponseDto>> activatePatient(
+            @PathVariable String aadharCard) {
+        PatientDto activated = null;
+        try {
+            activated = patientService.activatePatient(aadharCard);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ActivationResponseDto responseData = new ActivationResponseDto(
+                activated.getFullName(),
+                maskAadhar(activated.getAadharCard()),
+                activated.getPatientId(),
+                true
+        );
+        ApiResponse<ActivationResponseDto> response = new ApiResponse<>(
+                "Patient account activated successfully",
+                responseData
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/delete/{aadharCard}")
+    public ResponseEntity<String> deletePatient(@PathVariable String aadharCard) {
+        logger.debug("DELETE /api/v1/patients/{} → Deleting patient", maskAadhar(aadharCard));
+        try {
+            patientService.deleteDetails(aadharCard);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
+        logger.debug("Patient deleted successfully | Aadhar ending: {}", maskAadhar(aadharCard));
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<PatientDto> findByEmail(@PathVariable("email") String email) {
+        logger.debug("GET /api/v1/patients/email/{} → Fetching patient by email", email);
+        PatientDto patient = patientService.getPatientByEmail(email);  // ← implement this in PatientService
+        // Optional: mask sensitive fields if needed (like you do for Aadhar)
+        patient.setAadharCard(maskAadhar(patient.getAadharCard()));
+        logger.debug("Patient fetched successfully by email | PatientId: {}", patient.getPatientId());
+        return ResponseEntity.ok(patient);
+    }
+
+    @GetMapping("/{patientId}")
+    public ResponseEntity<PatientDto> getPatientById(@PathVariable("patientId") String patientId) {
+        PatientDto patient = patientService.getPatientById(patientId);
+        return ResponseEntity.ok(patient);
+    }
+
+    private String maskAadhar(String aadhar) {
+        if (aadhar == null || aadhar.length() < 4) {
+            return "XXXX-XXXX-XXXX";
+        }
+        return "XXXX-XXXX-" + aadhar.substring(aadhar.length() - 4);
+    }
+}
