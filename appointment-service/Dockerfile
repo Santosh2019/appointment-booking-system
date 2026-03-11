@@ -4,9 +4,9 @@ FROM eclipse-temurin:17-jre-alpine
 
 # Image metadata
 
-LABEL maintainer="santoshlimbale76"
-description="Appointment Service - Core microservice for managing hospital appointments"
-version="0.0.1-SNAPSHOT"
+LABEL maintainer="santoshlimbale76" \
+      description="Appointment Service - Core microservice for managing hospital appointments" \
+      version="0.0.1-SNAPSHO
 
 # Working directory inside container
 

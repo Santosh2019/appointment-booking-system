@@ -2,9 +2,9 @@
 
 FROM eclipse-temurin:17-jre-alpine
 
-LABEL maintainer="santoshlimbale76"
-description="Appointment UI Service (Thymeleaf Frontend)"
-version="0.0.1-SNAPSHOT"
+LABEL maintainer="santoshlimbale76" \
+      description="Appointment UI Service (Thymeleaf Frontend)" \
+      version="0.0.1-SNAPSHOT"
 
 WORKDIR /app
 
