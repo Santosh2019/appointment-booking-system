@@ -16,12 +16,10 @@
         <module>appointment-service</module>
         <module>patient-service</module>
         <module>doctor-service</module>
-        <module>au-service</module>
         <module>api-gateway-service</module>
         <module>eureka-service</module>
         <module>appointment-ui-service</module>
     </modules>
-
 
     <dependencyManagement>
         <dependencies>
