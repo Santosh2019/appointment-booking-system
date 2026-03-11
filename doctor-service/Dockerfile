@@ -7,7 +7,8 @@ LABEL maintainer="santoshlimbale76" \
 # Working directory
 WORKDIR /app
 # Copy executable JAR (wildcard for version flexibility)
-COPY target/*-exec.jar app.jar
+# Copy Spring Boot JAR
+COPY target/*.jar app.jar
 # Expose port
 EXPOSE 9091
 # Fix encoding issues on Windows Jenkins

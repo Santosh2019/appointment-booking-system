@@ -6,8 +6,9 @@ LABEL maintainer="santoshlimbale76" \
 
 WORKDIR /app
 
-# ── THIS IS THE FIX ──
-COPY target/*-exec.jar app.jar
+# Copy Spring Boot JAR
+COPY target/*.jar app.jar
+
 # or COPY target/eureka-service-*-exec.jar app.jar
 # or COPY target/eureka-service-0.0.1-SNAPSHOT-exec.jar app.jar
 

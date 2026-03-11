@@ -9,8 +9,8 @@ LABEL maintainer="santoshlimbale76" \
 # Set working directory
 WORKDIR /app
 
-# Copy the executable Spring Boot JAR
-COPY target/*-exec.jar app.jar
+# Copy Spring Boot JAR
+COPY target/*.jar app.jar
 # Expose the port
 EXPOSE 9092
 
