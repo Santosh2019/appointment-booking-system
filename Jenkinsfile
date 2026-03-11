@@ -1,113 +1,85 @@
 pipeline {
-    agent any
+agent any
 
-    environment {
-        DOCKERHUB = 'santoshlimbale76'
-        TAG = "${BUILD_NUMBER}"
-    }
+environment {
+    DOCKERHUB = 'santoshlimbale76'
+    TAG = "${BUILD_NUMBER}"
+}
 
-    stages {
+stages {
 
-        stage('Clean & Checkout') {
-            steps {
-                cleanWs()
-                checkout scm
-            }
-        }
-
-        stage('Maven Build') {
-            steps {
-                bat 'mvn -B -DskipTests clean package'
-            }
-        }
-
-        stage('Build & Push Docker Images') {
-            steps {
-                // Use Jenkins Credentials for DockerHub login
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    bat '''
-                    REM ==============================
-                    REM DOCKER LOGIN
-                    REM ==============================
-                    docker login -u %DOCKER_USER% -p %DOCKER_PASS%
-
-                    REM ========== Build Images ==========
-                    docker build -t %DOCKERHUB%/appointment-service:%TAG% ./appointment-service
-                    docker build -t %DOCKERHUB%/patient-service:%TAG% ./patient-service
-                    docker build -t %DOCKERHUB%/doctor-service:%TAG% ./doctor-service
-                    docker build -t %DOCKERHUB%/api-gateway-service:%TAG% ./api-gateway-service
-                    docker build -t %DOCKERHUB%/eureka-service:%TAG% ./eureka-service
-                    docker build -t %DOCKERHUB%/appointment-ui-service:%TAG% ./appointment-ui-service
-
-                    REM ========== Push Images ==========
-                    docker push %DOCKERHUB%/appointment-service:%TAG%
-                    docker push %DOCKERHUB%/patient-service:%TAG%
-                    docker push %DOCKERHUB%/doctor-service:%TAG%
-                    docker push %DOCKERHUB%/api-gateway-service:%TAG%
-                    docker push %DOCKERHUB%/eureka-service:%TAG%
-                    docker push %DOCKERHUB%/appointment-ui-service:%TAG%
-                    '''
-                }
-            }
-        }
-
-        stage('Tag as Latest (master only)') {
-            when {
-                branch 'master'
-            }
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    bat '''
-                    docker login -u %DOCKER_USER% -p %DOCKER_PASS%
-
-                    docker tag %DOCKERHUB%/appointment-service:%TAG% %DOCKERHUB%/appointment-service:latest
-                    docker tag %DOCKERHUB%/patient-service:%TAG% %DOCKERHUB%/patient-service:latest
-                    docker tag %DOCKERHUB%/doctor-service:%TAG% %DOCKERHUB%/doctor-service:latest
-                    docker tag %DOCKERHUB%/api-gateway-service:%TAG% %DOCKERHUB%/api-gateway-service:latest
-                    docker tag %DOCKERHUB%/eureka-service:%TAG% %DOCKERHUB%/eureka-service:latest
-                    docker tag %DOCKERHUB%/appointment-ui-service:%TAG% %DOCKERHUB%/appointment-ui-service:latest
-
-                    docker push %DOCKERHUB%/appointment-service:latest
-                    docker push %DOCKERHUB%/patient-service:latest
-                    docker push %DOCKERHUB%/doctor-service:latest
-                    docker push %DOCKERHUB%/api-gateway-service:latest
-                    docker push %DOCKERHUB%/eureka-service:latest
-                    docker push %DOCKERHUB%/appointment-ui-service:latest
-                    '''
-                }
-            }
-        }
-
-        stage('Deploy & Run Application') {
-            when {
-                branch 'master'
-            }
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    bat '''
-                    REM ==============================
-                    REM DEPLOY APPLICATION
-                    REM ==============================
-
-                    docker login -u %DOCKER_USER% -p %DOCKER_PASS%
-
-                    REM Stop existing containers
-                    docker-compose down
-
-                    REM Pull latest images
-                    docker-compose pull
-
-                    REM Start application
-                    docker-compose up -d
-                    '''
-                }
-            }
-        }
-    }
-
-    post {
-        always {
+    stage('Clean & Checkout') {
+        steps {
             cleanWs()
+            checkout scm
         }
     }
+
+    stage('Maven Build') {
+        steps {
+            bat 'mvn -B -DskipTests clean package'
+        }
+    }
+
+    stage('Verify JAR Files') {
+        steps {
+            bat 'dir appointment-service\\target'
+            bat 'dir patient-service\\target'
+            bat 'dir doctor-service\\target'
+            bat 'dir api-gateway-service\\target'
+            bat 'dir eureka-service\\target'
+            bat 'dir appointment-ui-service\\target'
+        }
+    }
+
+    stage('Build Docker Images') {
+        steps {
+            bat '''
+            docker build -t %DOCKERHUB%/appointment-service:%TAG% ./appointment-service
+            docker build -t %DOCKERHUB%/patient-service:%TAG% ./patient-service
+            docker build -t %DOCKERHUB%/doctor-service:%TAG% ./doctor-service
+            docker build -t %DOCKERHUB%/api-gateway-service:%TAG% ./api-gateway-service
+            docker build -t %DOCKERHUB%/eureka-service:%TAG% ./eureka-service
+            docker build -t %DOCKERHUB%/appointment-ui-service:%TAG% ./appointment-ui-service
+            '''
+        }
+    }
+
+    stage('Push Docker Images') {
+        steps {
+            withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                bat '''
+                docker login -u %DOCKER_USER% -p %DOCKER_PASS%
+
+                docker push %DOCKERHUB%/appointment-service:%TAG%
+                docker push %DOCKERHUB%/patient-service:%TAG%
+                docker push %DOCKERHUB%/doctor-service:%TAG%
+                docker push %DOCKERHUB%/api-gateway-service:%TAG%
+                docker push %DOCKERHUB%/eureka-service:%TAG%
+                docker push %DOCKERHUB%/appointment-ui-service:%TAG%
+                '''
+            }
+        }
+    }
+
+    stage('Deploy Application') {
+        when {
+            branch 'master'
+        }
+        steps {
+            bat '''
+            docker-compose down
+            docker-compose pull
+            docker-compose up -d
+            '''
+        }
+    }
+}
+
+post {
+    always {
+        cleanWs()
+    }
+}
+
 }
