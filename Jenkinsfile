@@ -26,26 +26,15 @@ pipeline {
             }
         }
 
-        stage('Verify JAR Files') {
-            steps {
-                bat "dir appointment-service\\target"
-                bat "dir patient-service\\target"
-                bat "dir doctor-service\\target"
-                bat "dir api-gateway-service\\target"
-                bat "dir eureka-service\\target"
-                bat "dir appointment-ui-service\\target"
-            }
-        }
-
         stage('Build Docker Images') {
             steps {
                 bat """
-                docker build -t %DOCKERHUB%/appointment-service:%TAG% appointment-service
-                docker build -t %DOCKERHUB%/patient-service:%TAG% patient-service
-                docker build -t %DOCKERHUB%/doctor-service:%TAG% doctor-service
-                docker build -t %DOCKERHUB%/api-gateway-service:%TAG% api-gateway-service
-                docker build -t %DOCKERHUB%/eureka-service:%TAG% eureka-service
-                docker build -t %DOCKERHUB%/appointment-ui-service:%TAG% appointment-ui-service
+                docker build -t %DOCKERHUB%/appointment-service:%TAG% -t %DOCKERHUB%/appointment-service:latest appointment-service
+                docker build -t %DOCKERHUB%/patient-service:%TAG% -t %DOCKERHUB%/patient-service:latest patient-service
+                docker build -t %DOCKERHUB%/doctor-service:%TAG% -t %DOCKERHUB%/doctor-service:latest doctor-service
+                docker build -t %DOCKERHUB%/api-gateway-service:%TAG% -t %DOCKERHUB%/api-gateway-service:latest api-gateway-service
+                docker build -t %DOCKERHUB%/eureka-service:%TAG% -t %DOCKERHUB%/eureka-service:latest eureka-service
+                docker build -t %DOCKERHUB%/appointment-ui-service:%TAG% -t %DOCKERHUB%/appointment-ui-service:latest appointment-ui-service
                 """
             }
         }
@@ -66,11 +55,22 @@ pipeline {
             steps {
                 bat """
                 docker push %DOCKERHUB%/appointment-service:%TAG%
+                docker push %DOCKERHUB%/appointment-service:latest
+
                 docker push %DOCKERHUB%/patient-service:%TAG%
+                docker push %DOCKERHUB%/patient-service:latest
+
                 docker push %DOCKERHUB%/doctor-service:%TAG%
+                docker push %DOCKERHUB%/doctor-service:latest
+
                 docker push %DOCKERHUB%/api-gateway-service:%TAG%
+                docker push %DOCKERHUB%/api-gateway-service:latest
+
                 docker push %DOCKERHUB%/eureka-service:%TAG%
+                docker push %DOCKERHUB%/eureka-service:latest
+
                 docker push %DOCKERHUB%/appointment-ui-service:%TAG%
+                docker push %DOCKERHUB%/appointment-ui-service:latest
                 """
             }
         }
@@ -78,7 +78,6 @@ pipeline {
         stage('Deploy Application') {
             when {
                 anyOf {
-                    branch 'main'
                     branch 'master'
                 }
             }
@@ -94,7 +93,7 @@ pipeline {
 
     post {
         success {
-            echo "✅ Build & Deployment Successful - Version %TAG%"
+            echo "✅ Build & Deployment Successful - Version ${TAG}"
         }
 
         failure {

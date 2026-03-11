@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+
+  mysql:
+    image: mysql:8
+    container_name: hospital-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb
+    ports:
+      - "3306:3306"
+
+  eureka-service:
+    image: santoshlimbale76/eureka-service
+    ports:
+      - "8761:8761"
+
+  doctor-service:
+    image: santoshlimbale76/doctor-service
+    ports:
+      - "9091:9091"
+    depends_on:
+      - mysql
+      - eureka-service
+
+  patient-service:
+    image: santoshlimbale76/patient-service
+    ports:
+      - "9092:9092"
+    depends_on:
+      - mysql
+      - eureka-service
+
+  appointment-service:
+    image: santoshlimbale76/appointment-service
+    ports:
+      - "9090:9090"
+    depends_on:
+      - mysql
+      - doctor-service
+      - patient-service
+      - eureka-service
+
+  api-gateway-service:
+    image: santoshlimbale76/api-gateway-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka-service
+
+  appointment-ui-service:
+    image: santoshlimbale76/appointment-ui-service
+    ports:
+      - "9096:9096"
+    depends_on:
+      - api-gateway-service
