@@ -31,12 +31,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--  <dependency>
-                  <groupId>org.thymeleaf.extras</groupId>
-                  <artifactId>thymeleaf-extras-springsecurity6</artifactId>
-                  &lt;!&ndash; No <version> needed → inherited from Spring Boot 3.4.5 BOM &ndash;&gt;
-              </dependency>-->
-            <!-- HE NAVA LINE ADD KARA – Spring Boot BOM (critical fix) -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -48,7 +42,7 @@
     </dependencyManagement>
 
     <build>
-        <pluginManagement>   <!-- HE NAVA SECTION ADD KARA -->
+        <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
