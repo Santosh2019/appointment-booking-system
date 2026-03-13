@@ -13,6 +13,12 @@
         .card-header { background-color: #0d6efd; border-radius: 15px 15px 0 0 !important; }
         .form-label { font-weight: 600; }
         .text-danger small { font-size: 0.875em; }
+
+
+
+
+
+
     </style>
 </head>
 
@@ -65,7 +71,9 @@
 
                         <div class="mb-3">
                             <label class="form-label">Doctor's Full Name <span class="text-danger">*</span></label>
-                            <input type="text" th:field="*{doctorName}" class="form-control" placeholder="Dr. John Doe" required>
+                            <input type="text" th:field="*{doctorName}" class="form-control"
+                                   placeholder="John Will Nick"
+                                   required>
                             <div class="text-danger mt-1" th:if="${#fields.hasErrors('doctorName')}">
                                 <small th:errors="*{doctorName}"></small>
                             </div>
@@ -73,7 +81,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
-                            <input type="text" th:field="*{mobile}" class="form-control" placeholder="9876543210" maxlength="10" required>
+                            <input type="text" th:field="*{mobile}" class="form-control" placeholder="9876543210"
+                                   maxlength="10" required>
                             <div class="text-danger mt-1" th:if="${#fields.hasErrors('mobile')}">
                                 <small th:errors="*{mobile}"></small>
                             </div>
@@ -81,7 +90,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Email Address <span class="text-danger">*</span></label>
-                            <input type="email" th:field="*{email}" class="form-control" placeholder="doctor@example.com" required>
+                            <input type="email" th:field="*{email}" class="form-control"
+                                   placeholder="doctor@example.com" required>
                             <div class="text-danger mt-1" th:if="${#fields.hasErrors('email')}">
                                 <small th:errors="*{email}"></small>
                             </div>
@@ -89,7 +99,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Aadhaar Card Number <span class="text-danger">*</span></label>
-                            <input type="text" th:field="*{aadharCard}" class="form-control" placeholder="123456789012" maxlength="12" required>
+                            <input type="text" th:field="*{aadharCard}" class="form-control" placeholder="123456789012"
+                                   maxlength="12" required>
                             <div class="text-danger mt-1" th:if="${#fields.hasErrors('aadharCard')}">
                                 <small th:errors="*{aadharCard}"></small>
                             </div>
@@ -97,7 +108,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">PAN Card Number <span class="text-danger">*</span></label>
-                            <input type="text" th:field="*{panCard}" class="form-control" placeholder="ABCDE1234F" style="text-transform:uppercase" required>
+                            <input type="text" th:field="*{panCard}" class="form-control" placeholder="ADVPL8769K"
+                                   style="text-transform:uppercase" required>
                             <div class="text-danger mt-1" th:if="${#fields.hasErrors('panCard')}">
                                 <small th:errors="*{panCard}"></small>
                             </div>
@@ -126,7 +138,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Years of Experience <span class="text-danger">*</span></label>
-                            <input type="number" th:field="*{experience}" class="form-control" min="0" max="99" placeholder="5" required>
+                            <input type="number" th:field="*{experience}" class="form-control" min="0" max="99"
+                                   placeholder="5" required>
                             <div class="text-danger mt-1" th:if="${#fields.hasErrors('experience')}">
                                 <small th:errors="*{experience}"></small>
                             </div>
@@ -134,7 +147,23 @@
 
                         <div class="mb-3">
                             <label class="form-label">Qualification <span class="text-danger">*</span></label>
-                            <input type="text" th:field="*{qualification}" class="form-control" placeholder="MBBS, MD (Cardiology)" required>
+
+                            <select th:field="*{qualification}" class="form-control" required>
+                                <option value="">-- Select Qualification --</option>
+                                <option value="MBBS">MBBS</option>
+                                <option value="MD">MD</option>
+                                <option value="MS">MS</option>
+                                <option value="DM">DM</option>
+                                <option value="MCh">MCh</option>
+                                <option value="BAMS">BAMS</option>
+                                <option value="BHMS">BHMS</option>
+                                <option value="BUMS">BUMS</option>
+                                <option value="BDS">BDS</option>
+                                <option value="MDS">MDS</option>
+                                <option value="DNB">DNB</option>
+                                <option value="PhD">PhD</option>
+                            </select>
+
                             <div class="text-danger mt-1" th:if="${#fields.hasErrors('qualification')}">
                                 <small th:errors="*{qualification}"></small>
                             </div>
@@ -169,9 +198,9 @@
 
                     <div class="text-center mt-4">
                         <p>Already registered? <a th:href="@{/login}" class="text-primary">Login here</a></p>
-                        <p>Are you a patient? <a th:href="@{/register/patient}" class="text-primary">Register as Patient</a></p>
+                        <!--<p>Are you a patient? <a th:href="@{/register/patient}" class="text-primary">Register as
+                            Patient</a></p>-->
                     </div>
-
                 </div>
             </div>
         </div>

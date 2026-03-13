@@ -12,11 +12,7 @@ import java.util.List;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, String> {
 
-    //AppointmentResponse bookAppointment(AppointmentRequest request);
 
-    List<AppointmentResponse> getAppointmentsByPatientId(String patientId);
-
-    List<AppointmentResponse> getAppointmentsByDoctorId(String doctorId);
 
     List<Appointment> findByPatientId(String patientId);
 

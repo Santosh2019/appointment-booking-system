@@ -1,8 +1,9 @@
 package com.appointment.config;
 
+import com.appointment.dto.DoctorDto;
 import com.appointment.dto.PatientDto;
+import com.appointment.feignclient.DoctorFeignClient;
 import com.appointment.feignclient.PatientFeignClient;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -16,32 +17,72 @@ import java.io.IOException;
 
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    private static final Logger log = LoggerFactory.getLogger(CustomAuthenticationSuccessHandler.class);
-    private final PatientFeignClient patientFeignClient;
 
-    public CustomAuthenticationSuccessHandler(PatientFeignClient patientFeignClient) {
+    private static final Logger log = LoggerFactory.getLogger(CustomAuthenticationSuccessHandler.class);
+
+    private final PatientFeignClient patientFeignClient;
+    private final DoctorFeignClient doctorFeignClient;
+
+    public CustomAuthenticationSuccessHandler(PatientFeignClient patientFeignClient,
+                                              DoctorFeignClient doctorFeignClient) {
         this.patientFeignClient = patientFeignClient;
+        this.doctorFeignClient = doctorFeignClient;
     }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+                                        Authentication authentication)
+            throws IOException {
+
         String email = authentication.getName();
-        log.info("Authentication success for email: {}", email);
         HttpSession session = request.getSession();
+
+        log.info("Login attempt for email: {}", email);
+
+        // 1️⃣ Try Doctor Login
         try {
+
+            DoctorDto doctor = doctorFeignClient.doctorByEmail(email);
+
+            if (doctor != null) {
+
+                session.setAttribute("loggedInDoctorId", doctor.getDoctorId());
+                session.setAttribute("loggedInDoctorName", doctor.getDoctorName());
+                session.setAttribute("loggedInDoctorQualification", doctor.getQualification());
+
+                log.info("Doctor login successful: {}", doctor.getDoctorId());
+
+                response.sendRedirect("/appointments/doctor");
+                return;
+            }
+
+        } catch (Exception ex) {
+            log.warn("Doctor login attempt failed for email: {}", email);
+        }
+
+        // 2️⃣ Try Patient Login
+        try {
+
             PatientDto patient = patientFeignClient.findByEmail(email);
+
             if (patient != null) {
+
                 session.setAttribute("loggedInPatientId", patient.getPatientId());
                 session.setAttribute("loggedInPatientName", patient.getFullName());
-                log.info("Session updated: patientId = {}, name = {}", patient.getPatientId(), patient.getFullName());
-            } else {
-                log.warn("No patient found for email: {}", email);
+
+                log.info("Patient login successful: {}", patient.getPatientId());
+
+                response.sendRedirect("/dashboard");
+                return;
             }
-        } catch (Exception e) {
-            log.error("Failed to fetch patient after login for email: {}", email, e);
+
+        } catch (Exception ex) {
+            log.warn("Patient login attempt failed for email: {}", email);
         }
-        response.sendRedirect("/dashboard");
+
+        // 3️⃣ If nothing matched
+        log.warn("Login failed for email: {}", email);
+        response.sendRedirect("/auth/login?error=true");
     }
 }

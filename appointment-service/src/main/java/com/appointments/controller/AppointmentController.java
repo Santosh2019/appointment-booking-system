@@ -50,10 +50,16 @@ public class AppointmentController {
     }
 
     @GetMapping("/doctor/{doctorId}")
-    @PreAuthorize("hasRole('DOCTOR') and #doctorId == authentication.name or hasRole('ADMIN')")
-    public ResponseEntity<List<AppointmentResponse>> getByDoctorId(@PathVariable("doctorId") String doctorId) {
+    /* @PreAuthorize("hasRole('DOCTOR') and #doctorId == authentication.name or hasRole('ADMIN')")*/
+    @PreAuthorize("hasRole('DOCTOR') or hasRole('ADMIN')")
+    public ResponseEntity<List<AppointmentResponse>> getAppointsByDoctorId(@PathVariable("doctorId") String doctorId) {
         log.debug("Fetching appointments for doctor: {}", doctorId);
         List<AppointmentResponse> appointments = appointmentService.getAppointmentsByDoctorId(doctorId);
         return ResponseEntity.ok(appointments);
+    }
+
+    @GetMapping("/appointments/{doctorId}")
+    public List<AppointmentResponse> getDoctorAppointments(@PathVariable("doctorId") String doctorId) {
+        return appointmentService.getAppointmentsByDoctorId(doctorId);
     }
 }

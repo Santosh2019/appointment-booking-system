@@ -17,10 +17,10 @@ import java.util.List;
 @RequestMapping("/api/v1/doctors")
 @RequiredArgsConstructor
 @CrossOrigin(
-        origins = "http://localhost:9096",   // ← exact origin of your UI page
+        origins = "http://localhost:9096",
         allowedHeaders = "*",
         methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS},
-        allowCredentials = "false"           // ← set false temporarily to allow testing
+        allowCredentials = "false"
 )
 public class DoctorController {
 
@@ -73,6 +73,13 @@ public class DoctorController {
         DoctorDto doctor = doctorServices.getDoctorById(doctorId);
         return ResponseEntity.ok(doctor);
     }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<DoctorDto> doctorByEmail(@PathVariable("email") String email) throws ResourceNotFoundException {
+        DoctorDto doctor = doctorServices.doctorByEmail(email);
+        return ResponseEntity.ok(doctor);
+    }
+
 
     private String maskAadhar(String aadhar) {
         if (aadhar == null || aadhar.length() < 4) return "XXXX-XXXX-XXXX";

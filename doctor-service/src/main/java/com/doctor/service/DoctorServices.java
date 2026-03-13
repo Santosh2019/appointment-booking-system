@@ -19,4 +19,8 @@ public interface DoctorServices {
     DoctorDto getDoctorById(String doctorId) throws ResourceNotFoundException;
 
     List<DoctorDto> getDoctorsBySpecialization(String specialization);
+
+    public DoctorDto doctorByEmail(String email) throws ResourceNotFoundException;
+
+
 }

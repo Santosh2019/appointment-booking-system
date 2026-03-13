@@ -32,12 +32,13 @@ public class Appointment {
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
 
+    @Enumerated(EnumType.STRING)
+    private AppointmentReason reason;
+
     public Appointment() {
         this.createdAt = LocalDateTime.now();
     }
 
-    @Enumerated(EnumType.STRING)
-    private AppointmentReason reason;
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public void generateId(IdGenerator idGen) {

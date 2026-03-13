@@ -1,6 +1,6 @@
--- =====================================================================
--- Insert sample doctors (compatible with your current entity & frontend)
--- =====================================================================
+-- ==========================================================
+-- Insert New Doctors Sample Data (Completely New Users)
+-- ==========================================================
 
 -- Cardiologist
 INSERT IGNORE INTO doctors (
@@ -8,10 +8,10 @@ INSERT IGNORE INTO doctors (
     date_of_birth, gender, year_of_experience, qualification, specialization,
     created_at, updated_at, created_by, updated_by
 ) VALUES (
-    'DOC0002', 'Dr. Priya Sharma', '9123456789', 'priya.sharma@hospital.com',
-    '123456789012', 'ABCDE1234F', '1972-03-15', 'Female', '11',
+    'DOC0101', 'Dr. Rahul Deshmukh', '9321456789', 'rahul.deshmukh@hospital.com',
+    '112233445566', 'AAAPL1234A', '1976-02-10', 'Male', '15',
     'MBBS, MD Cardiology', 'Cardiologist',
-    '2026-01-01 17:57:19', '2026-01-01 17:57:19', 'admin', 'admin'
+    NOW(), NOW(), 'admin', 'admin'
 );
 
 -- Dermatologist
@@ -20,10 +20,10 @@ INSERT IGNORE INTO doctors (
     date_of_birth, gender, year_of_experience, qualification, specialization,
     created_at, updated_at, created_by, updated_by
 ) VALUES (
-    'DOC0003', 'Dr. Amit Patel', '9876543210', 'amit.patel@hospital.com',
-    '234567890123', 'BCDEF2345G', '1973-04-20', 'Male', '14',
+    'DOC0102', 'Dr. Sneha Kulkarni', '9345678901', 'sneha.kulkarni@hospital.com',
+    '223344556677', 'BBAPL2345B', '1980-06-14', 'Female', '12',
     'MBBS, MD Dermatology', 'Dermatologist',
-    '2026-01-01 17:57:19', '2026-01-01 17:57:19', 'admin', 'admin'
+    NOW(), NOW(), 'admin', 'admin'
 );
 
 -- Neurologist
@@ -32,10 +32,10 @@ INSERT IGNORE INTO doctors (
     date_of_birth, gender, year_of_experience, qualification, specialization,
     created_at, updated_at, created_by, updated_by
 ) VALUES (
-    'DOC0004', 'Dr. Neha Singh', '9988776655', 'neha.singh@hospital.com',
-    '345678901234', 'CDEFG3456H', '1974-05-25', 'Female', '17',
+    'DOC0103', 'Dr. Arvind Nair', '9356789012', 'arvind.nair@hospital.com',
+    '334455667788', 'CCAPL3456C', '1975-08-22', 'Male', '18',
     'MBBS, DM Neurology', 'Neurologist',
-    '2026-01-01 17:57:19', '2026-01-01 17:57:19', 'admin', 'admin'
+    NOW(), NOW(), 'admin', 'admin'
 );
 
 -- Pediatrician
@@ -44,22 +44,22 @@ INSERT IGNORE INTO doctors (
     date_of_birth, gender, year_of_experience, qualification, specialization,
     created_at, updated_at, created_by, updated_by
 ) VALUES (
-    'DOC0005', 'Dr. Vikram Rao', '9765432109', 'vikram.rao@hospital.com',
-    '456789012345', 'DEFGH4567I', '1975-06-10', 'Male', '20',
+    'DOC0104', 'Dr. Meera Iyer', '9367890123', 'meera.iyer@hospital.com',
+    '445566778899', 'DDAPL4567D', '1983-09-05', 'Female', '10',
     'MBBS, MD Pediatrics', 'Pediatrician',
-    '2026-01-01 17:57:19', '2026-01-01 17:57:19', 'admin', 'admin'
+    NOW(), NOW(), 'admin', 'admin'
 );
 
--- General Physician (matches frontend dropdown value exactly)
+-- General Physician
 INSERT IGNORE INTO doctors (
     doctor_id, doctor_name, mobile, email_id, aadhar_card, pan_card,
     date_of_birth, gender, year_of_experience, qualification, specialization,
     created_at, updated_at, created_by, updated_by
 ) VALUES (
-    'DOC0011', 'Dr. Mohan Lal', '9012345678', 'mohan.lal@hospital.com',
-    '567890123456', 'EFGHI5678J', '1981-12-05', 'Male', '18',
+    'DOC0105', 'Dr. Sandeep Patil', '9378901234', 'sandeep.patil@hospital.com',
+    '556677889900', 'EEAPL5678E', '1984-11-12', 'Male', '9',
     'MBBS', 'General Physician',
-    '2026-01-01 17:57:19', '2026-01-01 17:57:19', 'admin', 'admin'
+    NOW(), NOW(), 'admin', 'admin'
 );
 
 -- Another General Physician
@@ -68,10 +68,10 @@ INSERT IGNORE INTO doctors (
     date_of_birth, gender, year_of_experience, qualification, specialization,
     created_at, updated_at, created_by, updated_by
 ) VALUES (
-    'DOC0012', 'Dr. Sunita Reddy', '9123456780', 'sunita.reddy@hospital.com',
-    '678901234567', 'FGHIJ6789K', '1982-01-15', 'Female', '21',
-    'MBBS, DNB', 'General Physician',
-    '2026-01-01 17:57:19', '2026-01-01 17:57:19', 'admin', 'admin'
+    'DOC0106', 'Dr. Kavita Sharma', '9389012345', 'kavita.sharma@hospital.com',
+    '667788990011', 'FFAPL6789F', '1986-03-18', 'Female', '13',
+    'MBBS, DNB General Medicine', 'General Physician',
+    NOW(), NOW(), 'admin', 'admin'
 );
 
 -- Orthopedic
@@ -80,8 +80,8 @@ INSERT IGNORE INTO doctors (
     date_of_birth, gender, year_of_experience, qualification, specialization,
     created_at, updated_at, created_by, updated_by
 ) VALUES (
-    'DOC0013', 'Dr. Karan Joshi', '9234567890', 'karan.joshi@hospital.com',
-    '789012345678', 'GHIJK7890L', '1983-02-20', 'Male', '24',
+    'DOC0107', 'Dr. Rohit Verma', '9390123456', 'rohit.verma@hospital.com',
+    '778899001122', 'GGAPL7890G', '1979-12-25', 'Male', '16',
     'MBBS, MS Orthopedics', 'Orthopedic',
-    '2026-01-01 17:57:19', '2026-01-01 17:57:19', 'admin', 'admin'
+    NOW(), NOW(), 'admin', 'admin'
 );

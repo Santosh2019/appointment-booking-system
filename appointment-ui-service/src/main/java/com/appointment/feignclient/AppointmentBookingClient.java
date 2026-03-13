@@ -2,6 +2,7 @@ package com.appointment.feignclient;
 
 import com.appointment.dto.AppointmentDto;
 import com.appointment.response.AppointmentResponse;
+import jakarta.ws.rs.Path;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,16 @@ public interface AppointmentBookingClient {
     @PostMapping("/api/v1/appointments")
     AppointmentResponse bookAppointment(@RequestBody AppointmentDto request);
 
+    @GetMapping("/api/v1/appointments/patient/{patientId}")
+    List<AppointmentResponse> getAppointmentsByPatientId(@PathVariable("patientId") String patientId);
+
+    @PostMapping("/api/v1/appointments/cancel/{id}")
+    void cancelAppointment(@PathVariable("id") String id);
+
+    @GetMapping("/api/v1/appointments/doctor/{doctorId}")
+    List<AppointmentResponse> getAppointsByDoctorId(@PathVariable("doctorId") String doctorId);
+
+
     // Fallbacks
     default AppointmentResponse fallbackBook(AppointmentDto request, Throwable t) {
         System.out.println("Appointment booking fallback triggered: " + t.getMessage());
@@ -23,10 +34,4 @@ public interface AppointmentBookingClient {
         resp.setAppointmentId("FAILED");
         return resp;
     }
-
-    @GetMapping("/api/v1/appointments/patient/{patientId}")
-    List<AppointmentResponse> getAppointmentsByPatientId(@PathVariable("patientId") String patientId);
-
-    @PostMapping("/api/v1/appointments/cancel/{id}")
-    void cancelAppointment(@PathVariable("id") String id);
 }

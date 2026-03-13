@@ -10,6 +10,8 @@ import com.appointments.feignClient.PatientFeignClient;
 import com.appointments.repo.AppointmentRepository;
 import com.appointments.request.AppointmentRequest;
 import com.appointments.response.AppointmentResponse;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,41 +49,58 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public AppointmentResponse bookAppointment(AppointmentRequest request) {
+
         log.info("Booking appointment for patientId: {}, doctorId: {}, date: {}",
                 request.getPatientId(), request.getDoctorId(), request.getAppointmentDate());
 
         validateTimeSlot(request.getAppointmentDate());
 
+
         PatientDto patient = patientFeignClient.getPatientById(request.getPatientId());
+
         if (patient == null || patient.getFullName() == null || patient.getFullName().trim().isEmpty()) {
-            throw new RuntimeException("Patient not found or invalid data for ID: " + request.getPatientId());
+            log.error("Patient not found: {}", request.getPatientId());
+            throw new RuntimeException("Patient not found for ID: " + request.getPatientId());
         }
 
         DoctorDto doctor = doctorFeignClient.getDoctorById(request.getDoctorId());
+
         if (doctor == null || doctor.getDoctorName() == null || doctor.getDoctorName().trim().isEmpty()) {
-            throw new RuntimeException("Doctor not found or invalid data for ID: " + request.getDoctorId());
+            log.error("Doctor not found: {}", request.getDoctorId());
+            throw new RuntimeException("Doctor not found for ID: " + request.getDoctorId());
         }
 
         Appointment appointment = new Appointment();
+
         appointment.generateId(idGenerator);
         appointment.setPatientId(request.getPatientId());
         appointment.setFullName(patient.getFullName());
+
         appointment.setDoctorId(request.getDoctorId());
         appointment.setDoctorName(doctor.getDoctorName());
-        appointment.setSpecialization(doctor.getSpecialization() != null ? doctor.getSpecialization() : "General");
+
+        appointment.setSpecialization(
+                doctor.getSpecialization() != null
+                        ? doctor.getSpecialization()
+                        : "General"
+        );
+
         appointment.setAppointmentDate(request.getAppointmentDate());
         appointment.setReason(request.getReason());
+
         appointment.setStatus(AppointmentStatus.SCHEDULED);
 
+
         Appointment saved = repository.save(appointment);
-        log.info("Appointment booked successfully: {}", saved.getAppointmentId());
+
+        log.info("Appointment booked successfully with ID: {}", saved.getAppointmentId());
 
         return buildAppointmentResponse(saved);
     }
 
     @Override
     public List<AppointmentResponse> getAppointmentsByPatientId(String patientId) {
-        log.info("Appointment booked successfully: {}", patientId);
+        log.info("Appointment Fetched successfully: {}", patientId);
         return repository.findByPatientId(patientId).stream()
                 .map(this::buildAppointmentResponse)
                 .toList();
@@ -89,10 +108,26 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<AppointmentResponse> getAppointmentsByDoctorId(String doctorId) {
-        return repository.findByDoctorId(doctorId).stream()
+        List<Appointment> appointments = repository.findByDoctorId(doctorId);
+        return appointments.stream()
                 .map(this::buildAppointmentResponse)
                 .toList();
     }
+
+/*
+    @Transactional
+    public void confirmAppointment(String id) {
+        Appointment appointment = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Appointment not found with id: " + id));
+
+        if (appointment.getStatus() != AppointmentStatus.SCHEDULED) {
+            throw new IllegalStateException(
+                    "Cannot confirm appointment. Current status: " + appointment.getStatus()
+            );
+        }
+        appointment.setStatus(AppointmentStatus.CONFIRMED);
+    }*/
+
 
     @Override
     public void cancelAppointment(String appointmentId) {

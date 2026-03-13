@@ -31,4 +31,9 @@ public interface DoctorFeignClient {
 
     @PostMapping("/api/v1/doctors")
     DoctorDto addDoctor(@Valid @RequestBody DoctorDto doctorDto);
+
+    @GetMapping("/api/v1/doctors/email/{email}")
+    DoctorDto doctorByEmail(@PathVariable("email") String email);
+
+
 }

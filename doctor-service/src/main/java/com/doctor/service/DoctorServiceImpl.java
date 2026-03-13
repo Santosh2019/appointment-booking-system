@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -99,6 +100,13 @@ public class DoctorServiceImpl implements DoctorServices {
                 .map(doctor -> modelMapper.map(doctor, DoctorDto.class))
                 .peek(dto -> dto.setAadharCard(maskAadhar(dto.getAadharCard()))) // Mask Aadhaar
                 .toList();
+    }
+
+    @Override
+    public DoctorDto doctorByEmail(String email) throws ResourceNotFoundException {
+        Doctor emailIdNotFound = doctorRepo.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("Doctor email id not found"));
+        DoctorDto doctorDto = modelMapper.map(emailIdNotFound, DoctorDto.class);
+        return doctorDto;
     }
 
     private void validateDoctor(DoctorDto dto) {

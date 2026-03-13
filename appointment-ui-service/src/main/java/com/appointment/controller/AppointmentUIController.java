@@ -39,60 +39,12 @@ public class AppointmentUIController {
         return "register-patient";
     }
 
-    @PostMapping("/register/patient")
-    public String registerPatient(@ModelAttribute("patientDto") PatientDto patientDto,
-                                  BindingResult result,
-                                  Model model,
-                                  RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            return "register-patient";
-        }
-        try {
-            patientFeignClient.addPatient(patientDto);
-            redirectAttributes.addFlashAttribute("successMessage",
-                    "Patient registered successfully! You can now login or go to dashboard.");
-            return "redirect:/success-page";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Registration failed. Please try again.");
-            return "register-patient";
-        }
-    }
 
     @GetMapping("/success-page")
     public String showSuccessPage() {
         return "success-page";
     }
 
-    @GetMapping("/register/doctor")
-    public String showDoctorRegistrationForm(Model model) {
-        if (!model.containsAttribute("doctorDto")) {
-            model.addAttribute("doctorDto", new DoctorDto());
-        }
-        return "register-doctor";
-    }
-
-    @PostMapping("/register/doctor")
-    public String registerDoctor(
-            @ModelAttribute("doctorDto") DoctorDto doctorDto,
-            RedirectAttributes redirectAttributes) {
-
-        try {
-            doctorFeignClient.addDoctor(doctorDto);
-
-            redirectAttributes.addFlashAttribute("successMessage",
-                    "Doctor registered successfully! Your profile is now in the system.");
-            redirectAttributes.addFlashAttribute("successTitle", "Doctor Registration Complete");
-
-            return "redirect:/doctor-registration-success";
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("errorMessage",
-                    "Registration failed: " + e.getMessage());
-            redirectAttributes.addFlashAttribute("doctorDto", doctorDto);
-            return "redirect:/register/doctor";
-        }
-    }
 
     @GetMapping("/dashboard")
     public String showDashboard() {
@@ -174,8 +126,8 @@ public class AppointmentUIController {
         return "redirect:/appointments/my";
     }
 
-    @GetMapping("/api/v1/doctors/specialization/{specialization}")
     @ResponseBody
+    @GetMapping("/api/v1/doctors/specialization/{specialization}")
     public ResponseEntity<List<DoctorDto>> getDoctors(
             @PathVariable("specialization") String specialization,
             @RequestParam(required = false, defaultValue = "true") boolean availableOnly) {
@@ -192,9 +144,6 @@ public class AppointmentUIController {
         return "appointment-success";
     }
 
-    @GetMapping("/doctor-registration-success")
-    public String showDoctorSuccessPage() {
-        return "doctor-registration-success";
-    }
+
 }
 

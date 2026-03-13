@@ -35,6 +35,11 @@ public class DoctorClientFallbackFactory implements FallbackFactory<DoctorFeignC
             }
 
             @Override
+            public DoctorDto doctorByEmail(String email) {
+                return null;
+            }
+
+            @Override
             public List<DoctorDto> getDoctorsBySpecialization(String spec) {
                 log.info("Fallback → getDoctorsBySpecialization({})", spec);
                 DoctorDto emergency = new DoctorDto();

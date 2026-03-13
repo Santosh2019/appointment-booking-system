@@ -7,7 +7,9 @@ C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-s
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\config\ThymeleafConfig.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\controller\AppointmentUIController.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\controller\AuthController.java
+C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\controller\DoctorController.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\controller\DoctorProxyController.java
+C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\controller\PatientController.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\dto\AppointmentDto.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\dto\DoctorDto.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\dto\PatientDto.java
