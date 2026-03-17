@@ -122,9 +122,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDto getPatientByEmail(String email) throws ResourceNotFoundException {
-
         logger.debug("Fetching patient by email");
-
         Patient patient = patientRepo.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Patient not found with email"));
