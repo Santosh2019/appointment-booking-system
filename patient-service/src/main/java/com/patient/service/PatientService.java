@@ -15,8 +15,8 @@ public interface PatientService {
 
     PatientDto activatePatient(String aadharCard) throws ResourceNotFoundException;
 
-    PatientDto getPatientById(String patientId);
+    PatientDto getPatientById(String patientId) throws ResourceNotFoundException;
 
-    PatientDto getPatientByEmail(String email);
+    PatientDto getPatientByEmail(String email) throws ResourceNotFoundException;
 
 }
