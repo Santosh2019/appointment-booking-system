@@ -1,28 +1,23 @@
 package com.appointment.config;
 
-import com.appointment.feignclient.PatientFeignClient;
-import com.appointment.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public UserDetailsService userDetailsService(PatientFeignClient patientFeignClient) {
-        return new CustomUserDetailsService(patientFeignClient);
-    }
-
-    @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance(); // TODO: Change to BCrypt in production
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -40,25 +35,28 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                                    CustomAuthenticationSuccessHandler successHandler) throws Exception {
+
         http
                 .authorizeHttpRequests(auth -> auth
-                        // Public pages - no auth required
                         .requestMatchers(
                                 "/auth/**",
                                 "/register/**",
                                 "/success-page",
-                                "/css/**", "/js/**", "/images/**",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
                                 "/error",
                                 "/appointments/success",
                                 "/dashboard",
                                 "/appointments/book",
-                                "/appointments/my",                    // ← already here
-                                "/api/v1/doctors/specialization/**"
+                                "/appointments/my",
+                                "/appointments/doctor",
+                                "/api/v1/doctors/specialization/**",
+                                "/actuator/prometheus", "/actuator/health", "/actuator/info"
                         ).permitAll()
-
-                        // All other URLs require authentication
                         .anyRequest().authenticated()
                 )
+
                 .formLogin(form -> form
                         .loginPage("/auth/login")
                         .loginProcessingUrl("/auth/login")
@@ -68,12 +66,14 @@ public class SecurityConfig {
                         .failureUrl("/auth/login?error=true")
                         .permitAll()
                 )
+
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/auth/login?logout")
                         .deleteCookies("jwt_token")
                         .permitAll()
                 )
+
                 .csrf(csrf -> csrf.disable());
 
         return http.build();
