@@ -1,6 +1,5 @@
 package com.patient.service;
 
-import com.hospital.service.EmailService;
 import com.patient.common.IdGenerator;
 import com.patient.dto.PatientDto;
 import com.patient.entity.Patient;
@@ -55,16 +54,13 @@ public class PatientServiceImpl implements PatientService {
                     "buttonLink", "http://localhost:9096/auth/login"
             );
             emailRequest.put("variables", variables);
-
             notificationFeignClient.sendPatientWelcomeEmail(emailRequest);
 
             logger.info("Welcome email request sent to notification-service for patient: {}", savedPatient.getEmail());
         } catch (Exception e) {
             logger.error("Failed to send email via notification-service", e);
         }
-
         logger.info("Patient registered successfully | ID: {}", savedPatient.getPatientId());
-
         return modelMapper.map(savedPatient, PatientDto.class);
     }
 
@@ -94,7 +90,6 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = patientRepo.findByAadharCard(aadharCard)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Patient not found with Aadhar ending: " + maskAadhar(aadharCard)));
-
         logger.info("Patient details retrieved successfully | ID: {}", patient.getPatientId());
 
         return modelMapper.map(patient, PatientDto.class);

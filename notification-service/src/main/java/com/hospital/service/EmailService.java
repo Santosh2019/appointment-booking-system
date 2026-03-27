@@ -1,7 +1,5 @@
 package com.hospital.service;
 
-import com.patient.entity.Patient;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -45,7 +43,7 @@ public class EmailService {
 
             javaMailSender.send(message);
 
-            System.out.println("✅ Email sent to: " + to);
+            System.out.println("Email sent to: " + to);
 
         } catch (Exception e) {
             System.err.println("Email failed: " + to);
