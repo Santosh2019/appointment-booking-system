@@ -1,5 +1,3 @@
-/*
-// Replace your SecurityConfig with this (Reactive version):
 package com.hospital.config;
 
 import org.springframework.context.annotation.Bean;
@@ -9,24 +7,22 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
-@EnableWebFluxSecurity  // NOTE: This is different from @EnableWebSecurity
+@EnableWebFluxSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        return http
+        http
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/login", "/register/**", "/css/**", "/js/**", "/images/**").permitAll()
-                        .pathMatchers("/dashboard", "/appointments/**").authenticated()
+                        .pathMatchers("/actuator/prometheus", "/actuator/health", "/actuator/info").permitAll()
+
+                        .pathMatchers("/api/**").authenticated()
                         .anyExchange().authenticated()
                 )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                )
-                .csrf(ServerHttpSecurity.CsrfSpec::disable)
-                .build();
+                .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
+        ;
+
+        return http.build();
     }
-}*/
+}

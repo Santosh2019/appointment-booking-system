@@ -1,10 +1,12 @@
 package com.patient.service;
 
+import com.hospital.service.EmailService;
 import com.patient.common.IdGenerator;
 import com.patient.dto.PatientDto;
 import com.patient.entity.Patient;
 import com.patient.exception.DuplicateResourceException;
 import com.patient.exception.ResourceNotFoundException;
+import com.patient.feignClients.NotificationFeignClient;
 import com.patient.repo.PatientRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,9 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +28,7 @@ public class PatientServiceImpl implements PatientService {
     private final PatientRepo patientRepo;
     private final ModelMapper modelMapper;
     private final IdGenerator idGenerator;
+    private final NotificationFeignClient notificationFeignClient;
 
     @Override
     public PatientDto addPatient(PatientDto patientDto) {
@@ -38,6 +44,24 @@ public class PatientServiceImpl implements PatientService {
         }
 
         Patient savedPatient = patientRepo.save(patientEntity);
+        try {
+            Map<String, Object> emailRequest = new HashMap<>();
+            emailRequest.put("to", savedPatient.getEmail());
+            emailRequest.put("subject", "Welcome to Appointment Management System");
+
+            Map<String, Object> variables = Map.of(
+                    "greeting", "Dear " + savedPatient.getFullName(),
+                    "patientId", savedPatient.getPatientId(),
+                    "buttonLink", "http://localhost:9096/auth/login"
+            );
+            emailRequest.put("variables", variables);
+
+            notificationFeignClient.sendPatientWelcomeEmail(emailRequest);
+
+            logger.info("Welcome email request sent to notification-service for patient: {}", savedPatient.getEmail());
+        } catch (Exception e) {
+            logger.error("Failed to send email via notification-service", e);
+        }
 
         logger.info("Patient registered successfully | ID: {}", savedPatient.getPatientId());
 
@@ -78,32 +102,22 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void deleteDetails(String aadharCard) throws ResourceNotFoundException {
-
         logger.info("Deleting patient");
-
         Patient patient = patientRepo.findByAadharCard(aadharCard)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Patient not found with Aadhar ending: " + maskAadhar(aadharCard)));
-
         patientRepo.delete(patient);
-
         logger.info("Patient deleted successfully | ID: {}", patient.getPatientId());
     }
 
     @Override
     public PatientDto activatePatient(String aadharCard) throws ResourceNotFoundException {
-
         logger.info("Activating patient");
-
         Patient patient = patientRepo.findByAadharCard(aadharCard)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Patient not found with Aadhar ending: " + maskAadhar(aadharCard)));
-
-
         Patient savedPatient = patientRepo.save(patient);
-
         logger.info("Patient activated successfully | ID: {}", savedPatient.getPatientId());
-
         return modelMapper.map(savedPatient, PatientDto.class);
     }
 
@@ -115,7 +129,6 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = patientRepo.findById(patientId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Patient not found with ID: " + patientId));
-
         return modelMapper.map(patient, PatientDto.class);
     }
 
@@ -126,15 +139,14 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = patientRepo.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Patient not found with email"));
-
         return modelMapper.map(patient, PatientDto.class);
     }
-
 
     private String maskAadhar(String aadhar) {
         if (aadhar == null || aadhar.length() < 4) return "XXXX-XXXX-XXXX";
         return "XXXX-XXXX-" + aadhar.substring(aadhar.length() - 4);
     }
+
 
     private void validatePatient(PatientDto patientDto) {
         logger.debug("Validating patient data");

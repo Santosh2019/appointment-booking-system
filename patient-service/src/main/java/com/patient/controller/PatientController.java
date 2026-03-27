@@ -88,7 +88,7 @@ public class PatientController {
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<PatientDto> findByEmail(@PathVariable("email") String email) {
+    public ResponseEntity<PatientDto> findByEmail(@PathVariable("email") String email) throws ResourceNotFoundException {
         logger.debug("GET /api/v1/patients/email/{} → Fetching patient by email", email);
         PatientDto patient = patientService.getPatientByEmail(email);  // ← implement this in PatientService
         // Optional: mask sensitive fields if needed (like you do for Aadhar)
@@ -98,7 +98,7 @@ public class PatientController {
     }
 
     @GetMapping("/{patientId}")
-    public ResponseEntity<PatientDto> getPatientById(@PathVariable("patientId") String patientId) {
+    public ResponseEntity<PatientDto> getPatientById(@PathVariable("patientId") String patientId) throws ResourceNotFoundException {
         PatientDto patient = patientService.getPatientById(patientId);
         return ResponseEntity.ok(patient);
     }

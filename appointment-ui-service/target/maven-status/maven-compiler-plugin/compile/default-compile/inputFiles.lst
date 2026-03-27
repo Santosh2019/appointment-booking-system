@@ -5,6 +5,7 @@ C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-s
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\config\FeignInterceptor.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\config\SecurityConfig.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\config\ThymeleafConfig.java
+C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\controller\AdminController.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\controller\AppointmentUIController.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\controller\AuthController.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\controller\DoctorController.java
@@ -15,7 +16,7 @@ C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-s
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\dto\PatientDto.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\dto\User.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\exception\GlobalExceptionHandler.java
-C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\feignclient\AppointmentBookingClient.java
+C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\feignclient\AppointmentFeignClient.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\feignclient\DoctorClientFallbackFactory.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\feignclient\DoctorFeignClient.java
 C:\Users\santosh\IdeaProjects\appointment-booking-system-master\appointment-ui-service\src\main\java\com\appointment\feignclient\PatientFeignClient.java

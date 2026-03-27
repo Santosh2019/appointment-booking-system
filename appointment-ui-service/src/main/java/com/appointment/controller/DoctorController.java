@@ -1,7 +1,7 @@
 package com.appointment.controller;
 
 import com.appointment.dto.DoctorDto;
-import com.appointment.feignclient.AppointmentBookingClient;
+import com.appointment.feignclient.AppointmentFeignClient;
 import com.appointment.feignclient.DoctorFeignClient;
 import com.appointment.response.AppointmentResponse;
 import feign.FeignException;
@@ -17,12 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,7 +27,7 @@ public class DoctorController {
 
     private final DoctorFeignClient doctorFeignClient;
 
-    private final AppointmentBookingClient appointmentFeignClient;
+    private final AppointmentFeignClient appointmentFeignClient;
 
     @GetMapping("/register/doctor")
     public String showDoctorRegistrationForm(Model model) {

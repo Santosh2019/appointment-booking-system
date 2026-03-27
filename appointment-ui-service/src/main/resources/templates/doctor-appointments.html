@@ -4,81 +4,135 @@
     <meta charset="UTF-8">
     <title>Doctor Appointments</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
-        body{ background:#f5f8fc; }
-        .status{ font-weight:600; }
-        .SCHEDULED{ color:#ffc107; }
-        .CONFIRMED{ color:#0d6efd; }
-        .COMPLETED{ color:#198754; }
-        .CANCELLED{ color:#dc3545; }
-        .card{ border-radius:12px; }
-        .top-buttons{ margin-bottom: 20px; }
+        body {
+            background: #f5f8fc;
+            font-family: "Segoe UI", sans-serif;
+        }
+        .navbar {
+            min-height: 70px;
+        }
+        .navbar-brand-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: white !important;
+        }
+        .status { font-weight: 600; }
+        .SCHEDULED { color: #ffc107; }
+        .CONFIRMED { color: #0d6efd; }
+        .COMPLETED { color: #198754; }
+        .CANCELLED { color: #dc3545; }
+        .card { border-radius: 12px; }
+        .top-buttons { margin-bottom: 20px; }
+        h5.mb-3, h3.mb-4 {
+            color: #1f2d3d;
+        }
+
 
     </style>
 </head>
 <body>
+
+<!-- ================= NAVBAR (same as dashboard) ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm position-relative">
+    <div class="container-fluid">
+        <!-- Left empty for centering -->
+        <div></div>
+
+        <!-- Center Brand / Application Name -->
+        <div class="navbar-brand-center">
+            <i class="fas fa-calendar-check me-2"></i>
+            Appointment Management System
+        </div>
+
+        <!-- Right side: Doctor name + Logout -->
+        <div class="ms-auto d-flex align-items-center gap-3 text-white">
+            <div>
+                <i class="fas fa-user-md me-1"></i>
+                <span th:text="${session.loggedInDoctorName}"></span>
+            </div>
+            <a th:href="@{/logout}" class="btn btn-sm btn-outline-light">
+                <i class="fas fa-sign-out-alt me-1"></i> Logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= MAIN CONTENT ================= -->
 <div class="container mt-5">
 
-    <!-- Top buttons: Back to Dashboard + Logout -->
-    <div class="top-buttons d-flex justify-content-between">
+    <!-- Back button -->
+    <div class="top-buttons mb-4">
         <a th:href="@{/dashboard}" class="btn btn-outline-secondary">
             <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
-        </a>
-
-        <a th:href="@{/logout}" class="btn btn-outline-danger">
-            <i class="fas fa-sign-out-alt me-1"></i> Logout
         </a>
     </div>
 
     <!-- Doctor welcome -->
     <h5 class="mb-3">
-        Welcome
-        <span th:text="${session.loggedInDoctorName}"></span>
-        (<span th:text="${session.loggedInDoctorQualification}"></span>)
+        Welcome, <span th:text="${session.loggedInDoctorName}"></span>
+        <small class="text-muted">(<span th:text="${session.loggedInDoctorQualification}"></span>)</small>
     </h5>
 
     <h3 class="mb-4">Your Appointments</h3>
 
     <div class="card shadow">
         <div class="card-body">
-            <table class="table table-hover">
-                <thead class="table-light">
-                <tr>
-                    <th>Patient</th>
-                    <th>Date</th>
-                    <th>Reason</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="appt : ${appointments}">
-                    <td th:text="${appt.fullName}"></td>
-                    <td th:text="${appt.appointmentDate}"></td>
-                    <td th:text="${appt.reason}"></td>
-                    <td><span th:text="${appt.status}" th:class="'status ' + ${appt.status}"></span></td>
-                    <td>
-                        <a th:href="@{'/appointments/confirm/' + ${appt.appointmentId}}"
-                           class="btn btn-sm btn-success"
-                           th:if="${appt.status == 'SCHEDULED'}">Confirm</a>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                    <tr>
+                        <th>Patient</th>
+                        <th>Date</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="appt : ${appointments}">
+                        <td th:text="${appt.fullName}"></td>
+                        <td th:text="${appt.appointmentDate}"></td>
+                        <td th:text="${appt.reason}"></td>
+                        <td>
+                            <span th:text="${appt.status}" th:class="'status badge ' + ${appt.status}"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{'/appointments/confirm/' + ${appt.appointmentId}}"
+                               class="btn btn-sm btn-success me-1"
+                               th:if="${appt.status == 'SCHEDULED'}">Confirm</a>
 
-                        <a th:href="@{'/appointments/cancel/' + ${appt.appointmentId}}"
-                           class="btn btn-sm btn-danger"
-                           th:if="${appt.status == 'SCHEDULED'}">Cancel</a>
+                            <a th:href="@{'/appointments/cancel/' + ${appt.appointmentId}}"
+                               class="btn btn-sm btn-danger me-1"
+                               th:if="${appt.status == 'SCHEDULED'}">Cancel</a>
 
-                        <a th:href="@{'/appointments/complete/' + ${appt.appointmentId}}"
-                           class="btn btn-sm btn-primary"
-                           th:if="${appt.status == 'CONFIRMED'}">Complete</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                            <a th:href="@{'/appointments/complete/' + ${appt.appointmentId}}"
+                               class="btn btn-sm btn-primary"
+                               th:if="${appt.status == 'CONFIRMED'}">Complete</a>
+
+                            <!-- Optional: show nothing or disabled state for other statuses -->
+                        </td>
+                    </tr>
+
+                    <!-- Optional: no appointments message -->
+                    <tr th:if="${#lists.isEmpty(appointments)}">
+                        <td colspan="5" class="text-center text-muted py-4">
+                            No appointments found.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
 </div>
 
-<!-- Font Awesome -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

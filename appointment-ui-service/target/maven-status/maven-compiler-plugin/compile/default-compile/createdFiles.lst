@@ -4,12 +4,13 @@ com\appointment\repository\UserRepository.class
 com\appointment\feignclient\DoctorFeignClient.class
 com\appointment\config\FeignAuthInterceptor.class
 com\appointment\config\CustomLoginFailureHandler.class
+com\appointment\feignclient\AppointmentFeignClient.class
 com\appointment\service\CustomUserDetailsService.class
 com\appointment\config\AppConfig.class
 com\appointment\controller\PatientController.class
 com\appointment\response\AppointmentResponse.class
 com\appointment\config\CustomAuthenticationSuccessHandler.class
-com\appointment\feignclient\AppointmentBookingClient.class
+com\appointment\controller\AdminController.class
 com\appointment\dto\PatientDto.class
 com\appointment\dto\AppointmentDto.class
 com\appointment\feignclient\DoctorClientFallbackFactory$1.class

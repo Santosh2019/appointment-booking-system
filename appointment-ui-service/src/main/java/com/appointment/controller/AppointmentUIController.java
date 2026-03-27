@@ -3,7 +3,7 @@ package com.appointment.controller;
 import com.appointment.dto.AppointmentDto;
 import com.appointment.dto.DoctorDto;
 import com.appointment.dto.PatientDto;
-import com.appointment.feignclient.AppointmentBookingClient;
+import com.appointment.feignclient.AppointmentFeignClient;
 import com.appointment.feignclient.DoctorFeignClient;
 import com.appointment.feignclient.PatientFeignClient;
 import com.appointment.response.AppointmentResponse;
@@ -30,7 +30,7 @@ import java.util.Locale;
 public class AppointmentUIController {
 
     private final PatientFeignClient patientFeignClient;
-    private final AppointmentBookingClient appointmentFeignClient;
+    private final AppointmentFeignClient appointmentFeignClient;
     private final DoctorFeignClient doctorFeignClient;
 
     @GetMapping("/register/patient")
