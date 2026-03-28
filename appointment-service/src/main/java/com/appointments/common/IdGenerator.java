@@ -8,7 +8,7 @@ import java.security.SecureRandom;
 public class IdGenerator {
 
     private static final SecureRandom random = new SecureRandom();
-    private static final String CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // 0,O,1,I,l removed – clean look
+    private static final String CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
     public String generatePatientId() {
         return "PAT-" + randomString(7);

@@ -55,16 +55,19 @@ public class EmailService {
     @Async
     public void sendRegistrationEmail(String to, String name, String patientId, String mobileNo) {
         Map<String, Object> variables = new HashMap<>();
-        variables.put("greeting", "Dear " + name + ",");
-        variables.put("name", name);
-        variables.put("email", to);
-        variables.put("patientId", patientId);
+
+        String displayName = (name != null && !name.trim().isEmpty()) ? name.trim() : "Patient";
+
+        variables.put("name", displayName);
+        variables.put("patientId", (patientId != null && !patientId.trim().isEmpty()) ? patientId : "N/A");
+        variables.put("email", to != null ? to : "");
+        variables.put("mobileNo", (mobileNo != null && !mobileNo.trim().isEmpty()) ? mobileNo.trim() : "Not Provided");
         variables.put("registrationDate", java.time.LocalDate.now().toString());
         variables.put("loginLink", "http://localhost:9096/auth/login");
-
-        sendEmail(to, "Registration Successful", "patient-email", variables);
+        sendEmail(to,
+                "Registration Successful" + (patientId != null ? " - " + patientId : ""),
+                "patient-email", variables);
     }
-
 
     @Async
     public void sendToDoctor(String to, String doctorName, String patientName, String dateTime) {

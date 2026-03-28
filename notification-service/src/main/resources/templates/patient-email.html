@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xml:lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Patient Registration Successful</title>
@@ -61,12 +61,6 @@
 
 
 
-
-
-
-
-
-
     </style>
 </head>
 <body>
@@ -81,22 +75,14 @@
         <p>Congratulations! Your patient account has been successfully created in our
             <strong>Appointment Management System</strong>.</p>
 
+        <h2 th:text="${greeting} ?: 'Dear Patient,'">Dear Patient,</h2>
+
         <div class="highlight">
-            <strong>Patient Name:</strong>
-            <span th:text="${name}"></span><br><br>
-
-            <strong>Email:</strong>
-            <span th:text="${email}"></span><br><br>
-
-            <strong>Patient ID:</strong>
-            <span th:text="${patientId}"></span><br><br>
-
-            <strong>Mobile No:</strong>
-            <span th:text="${mobileNo}"></span><br><br>
-
-            <strong>Registration Date:</strong>
-            <span th:text="${registrationDate}"></span><br><br>
-
+            <strong>Patient ID:</strong> <span th:text="${patientId} ?: 'N/A'"></span><br><br>
+            <strong>Patient Name:</strong> <span th:text="${name} ?: 'Not Provided'"></span><br><br>
+            <strong>Email:</strong> <span th:text="${email}"></span><br><br>
+            <strong>Mobile No:</strong> <span th:text="${mobileNo} ?: 'Not Provided'"></span><br><br>
+            <strong>Registration Date:</strong> <span th:text="${registrationDate}"></span>
         </div>
 
         <p>You can now login to your account and start booking appointments with doctors.</p>
