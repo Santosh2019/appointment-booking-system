@@ -90,24 +90,17 @@ public class AuthController {
 
                     session.setAttribute("userEmail", user.getEmail());
                     session.setAttribute("userRole", user.getRole());
-
                     // PATIENT LOGIN
                     if ("PATIENT".equalsIgnoreCase(user.getRole())) {
-
                         PatientDto patient = patientFeignClient.findByEmail(email);
-
                         session.setAttribute("loggedInPatientId", patient.getPatientId());
                         session.setAttribute("loggedInPatientName", patient.getFullName());
-
                         return "redirect:/dashboard";
                     }
-
                     // DOCTOR LOGIN
                     if ("DOCTOR".equalsIgnoreCase(user.getRole())) {
-
                         session.setAttribute("loggedInDoctorId", user.getId());
                         session.setAttribute("loggedInDoctorName", user.getEmail());
-
                         return "redirect:/appointments/doctor";
                     }
                 }
@@ -127,17 +120,14 @@ public class AuthController {
         deleteCookie.setPath("/");
         deleteCookie.setMaxAge(0);
         response.addCookie(deleteCookie);
-
         return "redirect:/auth/login?logout";
     }
 
     private void setJwtCookie(HttpServletResponse response, String token) {
-
         Cookie jwtCookie = new Cookie("jwt_token", token);
         jwtCookie.setHttpOnly(true);
         jwtCookie.setPath("/");
         jwtCookie.setMaxAge(7 * 24 * 60 * 60);
-
         response.addCookie(jwtCookie);
     }
 
