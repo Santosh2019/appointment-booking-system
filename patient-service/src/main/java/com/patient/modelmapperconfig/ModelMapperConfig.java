@@ -1,4 +1,4 @@
-// File: src/main/java/com/patient/config/BeanConfig.java   (नाव बदला!)
+
 package com.patient.modelmapperconfig;
 
 import com.patient.dto.PatientDto;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ModelMapperConfig {   // नाव काहीही ठेवा – BeanConfig, AppConfig, MappingConfig
+public class ModelMapperConfig {
 
     @Bean
     public ModelMapper modelMapper() {

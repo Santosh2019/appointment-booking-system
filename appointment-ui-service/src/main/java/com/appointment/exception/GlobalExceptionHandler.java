@@ -16,7 +16,6 @@ public class GlobalExceptionHandler {
         model.addAttribute("message", ex.getMessage());
         model.addAttribute("status", 500);
         model.addAttribute("timestamp", java.time.LocalDateTime.now());
-        // Return the error view
         return new ModelAndView("error");
     }
 }

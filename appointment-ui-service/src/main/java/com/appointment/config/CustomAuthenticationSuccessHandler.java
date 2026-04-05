@@ -40,7 +40,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         log.info("Login attempt for email: {}", email);
 
-        // 1️⃣ Try Doctor Login
         try {
 
             DoctorDto doctor = doctorFeignClient.doctorByEmail(email);
@@ -61,7 +60,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             log.warn("Doctor login attempt failed for email: {}", email);
         }
 
-        // 2️⃣ Try Patient Login
         try {
 
             PatientDto patient = patientFeignClient.findByEmail(email);
@@ -81,7 +79,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             log.warn("Patient login attempt failed for email: {}", email);
         }
 
-        // 3️⃣ If nothing matched
         log.warn("Login failed for email: {}", email);
         response.sendRedirect("/auth/login?error=true");
     }

@@ -1,4 +1,4 @@
-// File: src/main/java/com/patient/dto/ActivationResponseDto.java
+
 package com.patient.dto;
 
 import lombok.Data;

@@ -20,11 +20,9 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
                                         AuthenticationException exception)
             throws IOException, ServletException {
 
-        // Optional: log with more context
         System.out.println("Login failed for IP " + request.getRemoteAddr() +
                 " → " + exception.getClass().getSimpleName() + ": " + exception.getMessage());
 
-        // You can customize per-exception type if needed
         if (exception.getMessage().contains("Bad credentials")) {
             getRedirectStrategy().sendRedirect(request, response, "/auth/login?error=invalid_credentials");
         } else {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
         name = "patient-service",
-        contextId = "patientFeignClient"  // Unique
+        contextId = "patientFeignClient"
 )
 public interface PatientFeignClient {
 
@@ -20,7 +20,7 @@ public interface PatientFeignClient {
     PatientDto addPatient(@RequestBody PatientDto patientDto);
 
     @GetMapping("/api/v1/patients/email/{email}")
-    PatientDto findByEmail(@PathVariable("email") String email);  // Fixed annotation
+    PatientDto findByEmail(@PathVariable("email") String email);
 
     // Fallbacks
     default PatientDto fallbackPatientById(String patientId, Throwable t) {

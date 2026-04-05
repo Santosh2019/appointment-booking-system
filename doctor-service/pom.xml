@@ -130,7 +130,7 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-                            <classifier>exec</classifier>  <!-- or 'boot', 'uber', etc. -->
+                            <classifier>exec</classifier>
                         </configuration>
                     </execution>
                 </executions>
@@ -146,6 +146,10 @@
                     <target>17</target>
                     <parameters>true</parameters>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

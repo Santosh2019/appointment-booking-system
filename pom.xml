@@ -13,12 +13,12 @@
         <spring-cloud.version>2024.0.2</spring-cloud.version>
     </properties>
     <modules>
+        <module>eureka-service</module>
+        <module>api-gateway-service</module>
+        <module>appointment-ui-service</module>
         <module>appointment-service</module>
         <module>patient-service</module>
         <module>doctor-service</module>
-        <module>api-gateway-service</module>
-        <module>eureka-service</module>
-        <module>appointment-ui-service</module>
         <module>notification-service</module>
     </modules>
     <dependencies>

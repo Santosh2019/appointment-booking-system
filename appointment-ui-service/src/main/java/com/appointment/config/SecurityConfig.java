@@ -52,7 +52,10 @@ public class SecurityConfig {
                                 "/appointments/my",
                                 "/appointments/doctor",
                                 "/api/v1/doctors/specialization/**",
-                                "/actuator/prometheus", "/actuator/health", "/actuator/info"
+                                "/actuator/prometheus",
+                                "/actuator/health",
+                                "/actuator/info",
+                                "/actuator/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

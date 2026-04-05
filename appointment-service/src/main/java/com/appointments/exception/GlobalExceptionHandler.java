@@ -84,7 +84,7 @@ public class GlobalExceptionHandler {
         body.put("timestamp", LocalDateTime.now());
         int status = ex.status();
         if (status < 100 || status > 599) {
-            status = 503; // fallback: Service Unavailable
+            status = 503;
         }
         body.put("status", status);
         body.put("error", "Downstream Service Error");
