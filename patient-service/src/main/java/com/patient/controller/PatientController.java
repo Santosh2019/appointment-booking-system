@@ -4,6 +4,7 @@ import com.patient.dto.ActivationResponseDto;
 import com.patient.dto.ApiResponse;
 import com.patient.dto.PatientDto;
 import com.patient.exception.ResourceNotFoundException;
+import com.patient.feignClients.NotificationFeignClient;
 import com.patient.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/patients")
 @RequiredArgsConstructor
@@ -21,18 +25,25 @@ public class PatientController {
 
     private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
     private final PatientService patientService;
+    private final NotificationFeignClient notificationFeignClient;
 
     @PostMapping
-    public ResponseEntity<PatientDto> savePatient(@Valid @RequestBody PatientDto patientDto) {
-        logger.debug("POST /api/v1/patients → Creating patient | Aadhar: {}", maskAadhar(patientDto.getAadharCard()));
-        PatientDto saved = null;
+    public ResponseEntity<PatientDto> savePatient(@Valid @RequestBody PatientDto patientDto) throws ResourceNotFoundException {
+
+        PatientDto saved = patientService.addPatient(patientDto);
+        Map<String, Object> emailRequest = new HashMap<>();
+        emailRequest.put("to", saved.getEmail());
+        emailRequest.put("name", saved.getFullName());
+        emailRequest.put("patientId", saved.getPatientId());
+        emailRequest.put("mobileNo", saved.getMobile());
+
         try {
-            saved = patientService.addPatient(patientDto);
-        } catch (ResourceNotFoundException e) {
+            notificationFeignClient.sendPatientWelcomeEmail(emailRequest);
+        } catch (Exception e) {
+            System.out.println("Email sending failed");
             e.printStackTrace();
         }
-        saved.setAadharCard(maskAadhar(saved.getAadharCard()));
-        logger.debug("Patient created successfully | Aadhar ending: {}", maskAadhar(saved.getAadharCard()));
+
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
