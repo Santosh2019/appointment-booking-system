@@ -143,7 +143,5 @@ public class AppointmentUIController {
     public String showAppointmentSuccessPage() {
         return "appointment-success";
     }
-
-
 }
 
