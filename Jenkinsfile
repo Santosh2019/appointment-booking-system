@@ -92,11 +92,11 @@ pipeline {
 
     post {
         success {
-            echo "✅ Build & Deployment Successful - Version ${TAG}"
+            echo " Build & Deployment Successful - Version ${TAG}"
         }
 
         failure {
-            echo "❌ Pipeline Failed - Check Logs"
+            echo "Pipeline Failed - Check Logs"
         }
 
         always {

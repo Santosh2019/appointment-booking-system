@@ -1,57 +1,85 @@
-version: '3.8'
-
 services:
 
   mysql:
     image: mysql:8
     container_name: hospital-mysql
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: testdb
     ports:
       - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
 
   eureka-service:
-    image: santoshlimbale76/eureka-service
+    image: santoshlimbale76/eureka-service:latest
     ports:
       - "8761:8761"
+    depends_on:
+      mysql:
+        condition: service_healthy
 
   doctor-service:
-    image: santoshlimbale76/doctor-service
+    image: santoshlimbale76/doctor-service:latest
     ports:
       - "9091:9091"
     depends_on:
-      - mysql
-      - eureka-service
+      mysql:
+        condition: service_healthy
+      eureka-service:
+        condition: service_started
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/testdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
 
   patient-service:
-    image: santoshlimbale76/patient-service
+    image: santoshlimbale76/patient-service:latest
     ports:
       - "9092:9092"
     depends_on:
-      - mysql
-      - eureka-service
+      mysql:
+        condition: service_healthy
+      eureka-service:
+        condition: service_started
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/testdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
 
   appointment-service:
-    image: santoshlimbale76/appointment-service
+    image: santoshlimbale76/appointment-service:latest
     ports:
       - "9090:9090"
     depends_on:
-      - mysql
-      - doctor-service
-      - patient-service
-      - eureka-service
+      mysql:
+        condition: service_healthy
+      doctor-service:
+        condition: service_started
+      patient-service:
+        condition: service_started
+      eureka-service:
+        condition: service_started
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/testdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
 
   api-gateway-service:
-    image: santoshlimbale76/api-gateway-service
+    image: santoshlimbale76/api-gateway-service:latest
     ports:
       - "8080:8080"
     depends_on:
-      - eureka-service
+      eureka-service:
+        condition: service_started
 
   appointment-ui-service:
-    image: santoshlimbale76/appointment-ui-service
+    image: santoshlimbale76/appointment-ui-service:latest
     ports:
       - "9096:9096"
     depends_on:
-      - api-gateway-service
+      api-gateway-service:
+        condition: service_started
