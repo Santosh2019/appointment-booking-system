@@ -43,10 +43,8 @@ public class PatientController {
             System.out.println("Email sending failed");
             e.printStackTrace();
         }
-
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
-
 
     @GetMapping("/aadharCard/{aadharCard}")
     @PreAuthorize("hasRole('PATIENT') or hasRole('DOCTOR') or hasRole('ADMIN')")
@@ -101,8 +99,7 @@ public class PatientController {
     @GetMapping("/email/{email}")
     public ResponseEntity<PatientDto> findByEmail(@PathVariable("email") String email) throws ResourceNotFoundException {
         logger.debug("GET /api/v1/patients/email/{} → Fetching patient by email", email);
-        PatientDto patient = patientService.getPatientByEmail(email);  // ← implement this in PatientService
-        // Optional: mask sensitive fields if needed (like you do for Aadhar)
+        PatientDto patient = patientService.getPatientByEmail(email);
         patient.setAadharCard(maskAadhar(patient.getAadharCard()));
         logger.debug("Patient fetched successfully by email | PatientId: {}", patient.getPatientId());
         return ResponseEntity.ok(patient);

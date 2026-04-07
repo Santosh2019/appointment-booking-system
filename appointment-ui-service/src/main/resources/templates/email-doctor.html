@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${subject}"></title>
+    <style>
+        /* Same styles as above (copy-paste karayla) */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background:#f5f8fc; margin:0; padding:0; }
+        .container { max-width:600px; margin:20px auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.08); }
+        .header { background: linear-gradient(135deg, #198754, #146c43); color:white; padding:25px; text-align:center; }
+        .content { padding:30px; line-height:1.7; color:#333; }
+        .footer { background:#f8f9fa; padding:20px; text-align:center; font-size:13px; color:#6c757d; }
+        .btn { display:inline-block; padding:12px 25px; background:#198754; color:white; text-decoration:none; border-radius:6px; font-weight:500; }
+        .highlight { background:#f0fdf4; padding:15px; border-left:4px solid #198754; margin:20px 0; }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Doctor Portal</h1>
+        <p>New Appointment / Update</p>
+    </div>
+
+    <div class="content">
+        <h2 th:text="${greeting}">Dear Dr. [Doctor Name],</h2>
+
+        <p th:text="${message}"></p>
+
+        <div class="highlight">
+            <strong>Patient Name:</strong> <span th:text="${patientName}"></span><br>
+            <strong>Date & Time:</strong> <span th:text="${appointmentDate}"></span><br>
+            <strong>Reason:</strong> <span th:text="${reason}"></span>
+        </div>
+
+        <a th:href="${buttonLink}" class="btn">View Appointment Details</a>
+
+        <p>Thank you for your service.</p>
+    </div>
+
+    <div class="footer">
+        © 2026 Appointment Management System<br>
+        Pune, Maharashtra
+    </div>
+</div>
+</body>
+</html>

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = "com.patient")
 @EntityScan(basePackages = "com.patient.entity")
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.patient.feignClients")
 @EnableDiscoveryClient
 public class PatientServiceApplication {
     public static void main(String[] args) {
