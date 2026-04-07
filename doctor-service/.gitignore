@@ -3,6 +3,7 @@
 # ===============================
 target/
 *.class
+*.jar
 
 # Keep target inside src if needed
 !**/src/main/**/target/

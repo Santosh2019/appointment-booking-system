@@ -22,7 +22,8 @@ pipeline {
 
         stage('Maven Build') {
             steps {
-                bat "mvn -B -DskipTests clean package"
+                // ✅ FIX: encoding add केलं
+                bat "mvn -B -DskipTests -Dfile.encoding=UTF-8 clean package"
             }
         }
 
@@ -77,9 +78,7 @@ pipeline {
 
         stage('Deploy Application') {
             when {
-                anyOf {
-                    branch 'master'
-                }
+                branch 'master'
             }
             steps {
                 bat """
