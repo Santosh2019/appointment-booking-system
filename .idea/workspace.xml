@@ -4,21 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e524a93-9e73-4db2-92a0-4b2f3c33376c" name="Default Changelist" comment="fix : improved frontend pages">
-      <change beforePath="$PROJECT_DIR$/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/Jenkinsfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway-service/target/api-gateway-service-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway-service/target/api-gateway-service-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appointment-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-service/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appointment-ui-service/src/main/resources/templates/book-appointment.html" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/src/main/resources/templates/book-appointment.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appointment-ui-service/target/appointment-ui-service-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/target/appointment-ui-service-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appointment-ui-service/target/classes/com/appointment/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/target/classes/com/appointment/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appointment-ui-service/target/classes/com/appointment/controller/AppointmentUIController.class" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/target/classes/com/appointment/controller/AppointmentUIController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appointment-ui-service/target/classes/templates/appointment.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/appointment-ui-service/target/classes/templates/book-appointment.html" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-ui-service/target/classes/templates/book-appointment.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doctor-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/doctor-service/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patient-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/patient-service/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patient-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/patient-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patient-service/src/main/java/com/patient/PatientServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/patient-service/src/main/java/com/patient/PatientServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patient-service/src/main/java/com/patient/controller/PatientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/patient-service/src/main/java/com/patient/controller/PatientController.java" afterDir="false" />
+    <list default="true" id="9e524a93-9e73-4db2-92a0-4b2f3c33376c" name="Default Changelist" comment="fix : updated docker and jenkins file">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appointment-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/appointment-service/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -393,7 +381,14 @@
       <option name="project" value="LOCAL" />
       <updated>1775580428574</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="fix : updated docker and jenkins file">
+      <created>1775584782927</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1775584782927</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -434,6 +429,7 @@
     <MESSAGE value="fix: updated email field pattern" />
     <MESSAGE value="fix : remove spaces" />
     <MESSAGE value="fix : improved frontend pages" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix : improved frontend pages" />
+    <MESSAGE value="fix : updated docker and jenkins file" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix : updated docker and jenkins file" />
   </component>
 </project>
